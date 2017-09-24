@@ -1,6 +1,6 @@
 uuid: 241058f3-1277-43b4-b7b9-a1ddfb05f9cc
-name: 'Site-Install Prod'
-mail: admin@example.com
+name: Site-Install Dev
+mail: dev@local.com
 slogan: ''
 page:
   403: ''

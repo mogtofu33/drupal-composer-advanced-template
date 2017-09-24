@@ -1,0 +1,25 @@
+uuid: 70a7b829-a5dd-4546-824d-ed381dacd171
+langcode: en
+status: true
+dependencies: {  }
+id: dev_config
+label: 'Dev config'
+folder: ../config/dev
+module:
+  devel: 0
+  kint: 0
+  webprofiler: 0
+theme: {  }
+blacklist: {  }
+graylist:
+  - system.cron
+  - system.logging
+  - system.mail
+  - system.maintenance
+  - system.performance
+  - system.site
+  - update.settings
+  - views.settings
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0
