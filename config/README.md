@@ -1,5 +1,7 @@
 # Workflow (With merge request)
 
+This is a sample to manage all config settings and override by environment in config folders.
+
 ## Summary
 
 * /dev
