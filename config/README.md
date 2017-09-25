@@ -3,10 +3,10 @@
 ## Summary
 
 * /dev
-> * Include dev modules, contact mails, performance and logging for dev.
+> * Include dev modules, contact mail and global site name and mail, performance and logging settings for dev.
 
 * /sync
-> * Include main config, common for all environments
+> * Include main configuration, common for all environments.
 
 ## Settings
 <pre>
