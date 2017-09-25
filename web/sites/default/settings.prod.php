@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Local development override configuration feature for DEV.
+ * Local development override configuration feature for PROD.
  *
  */
 
