@@ -1,11 +1,15 @@
 toolbar_items:
-  - devel.admin_settings_link
   - devel.cache_clear
+  - devel.configs_list
   - devel.container_info.service
+  - devel.route_info.item
+  - devel.entity_info_page
   - devel.execute_php
+  - devel.field_info_page
+  - devel.layout_info
   - devel.menu_rebuild
   - devel.reinstall
   - devel.route_info
-  - devel.run_cron
-_core:
-  default_config_hash: ysHEvvazIuaJ5BdY0dUw2_my_Q5hM8ypdXwFfaIrvMw
+  - devel.state_system_page
+  - devel.theme_registry
+  - devel.session
