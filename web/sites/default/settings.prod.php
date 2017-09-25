@@ -3,7 +3,6 @@
 /**
  * @file
  * Local development override configuration feature for PROD.
- *
  */
 
 // Config split compatibility, set FALSE for Prod.
