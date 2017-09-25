@@ -33,6 +33,7 @@
         "drupal/bootstrap": "^3",
         "drupal/bootstrap_layouts": "^5.0",
         "drupal/breakpoint_js_settings": "^1.0",
+        "drupal/config_installer": "^1.5",
         "drupal/config_split": "^1.1",
         "drupal/config_update": "^1.0",
         "drupal/console": "^1.0.1",
@@ -103,9 +104,10 @@
     "autoload": {
         "classmap": [
             "scripts/composer/ScriptHandler.php"
-        ],
+        ]
     },
     "scripts": {
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
