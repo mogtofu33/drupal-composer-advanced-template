@@ -2,10 +2,29 @@
 
 ## Settings
 <pre>
-settings.php # Should include dev or prod file depending env.
-settings.dev.php
-settings.prod.php
+settings.php
 </pre>
+
+Must include dev or prod file depending environment:
+<pre>
+// Switch comment for env.
+switch ($_SERVER['HTTP_HOST']) {
+  // Dev
+  case 'localhost':
+    if (file_exists($app_root . '/' . $site_path . '/settings.dev.php')) {
+     include $app_root . '/' . $site_path . '/settings.dev.php';
+    }
+  break;
+  // Default is Prod.
+  default;
+  if (file_exists($app_root . '/' . $site_path . '/settings.prod.php')) {
+   include $app_root . '/' . $site_path . '/settings.prod.php';
+  }
+}
+</pre>
+
+[settings.dev.php](web/sites/default/settings.dev.php)
+[settings.prod.php](web/sites/default/settings.prod.php)
 
 ## Dev > Prod
 
