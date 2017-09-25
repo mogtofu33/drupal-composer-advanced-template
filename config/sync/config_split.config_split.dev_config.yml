@@ -13,14 +13,15 @@ module:
 theme: {  }
 blacklist: {  }
 graylist:
+  - contact.form.feedback
   - system.cron
   - system.logging
   - system.mail
   - system.maintenance
   - system.performance
   - system.site
-  - update.settings
   - views.settings
+  - update.settings
 graylist_dependents: true
 graylist_skip_equal: true
 weight: 0

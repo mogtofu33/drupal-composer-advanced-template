@@ -1,5 +1,13 @@
 # Workflow (With merge request)
 
+## Summary
+
+* /dev
+> * Include dev modules, contact mails, performance and logging for dev.
+
+* /sync
+> * Include main config, common for all environments
+
 ## Settings
 <pre>
 settings.php
