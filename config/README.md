@@ -31,9 +31,9 @@ switch ($_SERVER['HTTP_HOST']) {
 }
 </pre>
 
-[settings.dev.php](web/sites/default/settings.dev.php)
+[settings.dev.php](../web/sites/default/settings.dev.php)
 
-[settings.prod.php](web/sites/default/settings.prod.php)
+[settings.prod.php](../web/sites/default/settings.prod.php)
 
 ## Dev > Prod
 
