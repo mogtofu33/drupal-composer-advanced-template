@@ -1,12 +1,12 @@
 {
-    "name": "drupal-composer/drupal-project",
-    "description": "Project template for Drupal 8 projects with composer",
+    "name": "Mogtofu33/drupal-composer-advanced-template",
+    "description": "Drupal 8 projects with composer",
     "type": "project",
     "license": "GPL-2.0+",
     "authors": [
         {
-            "name": "",
-            "role": ""
+            "name": "Jean Valverde",
+            "role": "Maintainer"
         }
     ],
     "repositories": [
@@ -104,12 +104,8 @@
         "classmap": [
             "scripts/composer/ScriptHandler.php"
         ],
-        "psr-4": {
-            "Acquia\\Lightning\\": "src"
-        }
     },
     "scripts": {
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
@@ -121,8 +117,7 @@
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "enable-asset-packagist": "Acquia\\Lightning\\Composer\\AssetPackagist::execute"
+        ]
     },
     "extra": {
         "installer-types": [
