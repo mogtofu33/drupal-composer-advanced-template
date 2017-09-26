@@ -10,14 +10,25 @@ This is a sample to manage all config settings and override by environment in co
 * /sync
 > * Include main configuration, common for all environments.
 
-## Settings
+## Settings and pre requisites
+
 <pre>
 settings.php
 </pre>
 
+Must include _settings.local.php_ as a common settings for all environments.
+
+<pre>example.settings.local.php</pre>
+
+Must be rename _settings.local.php_
+
+<pre>
+settings.local.php
+</pre>
+
 Must include dev or prod file depending environment:
 <pre>
-// Switch comment for env.
+// Switch comment for env. Adapt to switch based on something else.
 switch ($_SERVER['HTTP_HOST']) {
   // Dev
   case 'localhost':
@@ -33,9 +44,9 @@ switch ($_SERVER['HTTP_HOST']) {
 }
 </pre>
 
-[settings.dev.php](../web/sites/default/settings.dev.php)
-
-[settings.prod.php](../web/sites/default/settings.prod.php)
+* [example.settings.local.php](../web/sites/default/example.settings.local.php)
+* [settings.dev.php](../web/sites/default/settings.dev.php)
+* [settings.prod.php](../web/sites/default/settings.prod.php)
 
 ## Dev > Prod
 

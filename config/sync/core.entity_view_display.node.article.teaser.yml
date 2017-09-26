@@ -11,15 +11,9 @@ dependencies:
     - image.style.medium
     - node.type.article
   module:
-    - field_layout
     - image
-    - layout_discovery
     - text
     - user
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
 _core:
   default_config_hash: 4NcL2hSQZBpJbYtNuh5jC6kyQTcAc1m5bQpTegEWEso
 id: node.article.teaser
@@ -59,3 +53,4 @@ hidden:
   comment: true
   field_image: true
   field_tags: true
+  langcode: true

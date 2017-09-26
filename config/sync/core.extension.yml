@@ -8,13 +8,13 @@ module:
   block_content: 0
   bootstrap_layouts: 0
   breakpoint: 0
-  breakpoint_js_settings: 0
   ckeditor: 0
   color: 0
   comment: 0
   config: 0
   config_filter: 0
   config_split: 0
+  config_translation: 0
   config_update: 0
   config_update_ui: 0
   contact: 0
@@ -28,7 +28,6 @@ module:
   editor: 0
   field: 0
   field_group: 0
-  field_layout: 0
   field_ui: 0
   file: 0
   filter: 0
@@ -36,9 +35,11 @@ module:
   history: 0
   image: 0
   inline_entity_form: 0
+  language: 0
   layout_discovery: 0
   libraries_ui: 0
   link: 0
+  locale: 0
   menu_ui: 0
   node: 0
   options: 0
@@ -59,6 +60,7 @@ module:
   user: 0
   views_ui: 0
   menu_link_content: 1
+  content_translation: 10
   views: 10
   standard: 1000
 theme:
