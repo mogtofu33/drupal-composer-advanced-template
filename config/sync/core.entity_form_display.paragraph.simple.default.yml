@@ -1,0 +1,42 @@
+uuid: 1af3f94a-194f-4f22-a242-267921b3c7c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.simple.field_background
+    - field.field.paragraph.simple.field_text
+    - field.field.paragraph.simple.field_width
+    - paragraphs.paragraphs_type.simple
+  module:
+    - text
+_core:
+  default_config_hash: A6R815u217xdJCxbhQljIBRrBsFds9squXeyl7py-PE
+id: paragraph.simple.default
+targetEntityType: paragraph
+bundle: simple
+mode: default
+content:
+  field_background:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_text:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_width:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

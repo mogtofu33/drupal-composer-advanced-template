@@ -1,0 +1,21 @@
+uuid: ce466aca-3890-48e8-8e1b-2d5f83c70055
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_accordion_section_title
+    - paragraphs.paragraphs_type.accordion_section
+_core:
+  default_config_hash: L0T_UwJo6womVXxIaNJouyvO9yj2kUamusAYyG-qPOo
+id: paragraph.accordion_section.field_accordion_section_title
+field_name: field_accordion_section_title
+entity_type: paragraph
+bundle: accordion_section
+label: 'Accordion Section Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

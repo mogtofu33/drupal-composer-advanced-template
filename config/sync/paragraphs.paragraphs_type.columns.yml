@@ -1,0 +1,11 @@
+uuid: 414b071a-7573-4022-8f8c-98de65bc2032
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: DKNKZvpFzczpwLd_SGHQVJIFjSfglcyiHRyaklzBUOE
+id: columns
+label: 'Columns (Equal)'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

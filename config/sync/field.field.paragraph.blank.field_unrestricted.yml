@@ -1,0 +1,23 @@
+uuid: ab6a693d-bd9d-4d6a-9c59-2c62bff19414
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_unrestricted
+    - paragraphs.paragraphs_type.blank
+  module:
+    - text
+_core:
+  default_config_hash: MObiZ88N_vdnE57cPGtC-j9uFI9A-QWkVnFU5iXR-KE
+id: paragraph.blank.field_unrestricted
+field_name: field_unrestricted
+entity_type: paragraph
+bundle: blank
+label: Unrestricted
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

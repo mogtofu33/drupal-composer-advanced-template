@@ -1,0 +1,11 @@
+uuid: eb48f22f-4e82-44c1-8ddb-536e8c031268
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: PFuWO2NZJE3M9O1DG8pPNmKt7dW58V50zuJ084kd7M4
+id: simple
+label: Simple
+icon_uuid: null
+description: null
+behavior_plugins: {  }

@@ -1,0 +1,52 @@
+uuid: 223a073f-d6ef-4be6-b5a2-5893e074524a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.columns_two_uneven.field_background
+    - field.field.paragraph.columns_two_uneven.field_column_content_2
+    - field.field.paragraph.columns_two_uneven.field_column_style_2
+    - field.field.paragraph.columns_two_uneven.field_width
+    - paragraphs.paragraphs_type.columns_two_uneven
+  module:
+    - paragraphs
+_core:
+  default_config_hash: LatGPoHAgwOUnSn235J35cUeZVB6khq20_Hf3rEN8FU
+id: paragraph.columns_two_uneven.default
+targetEntityType: paragraph
+bundle: columns_two_uneven
+mode: default
+content:
+  field_background:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_column_content_2:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  field_column_style_2:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_width:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

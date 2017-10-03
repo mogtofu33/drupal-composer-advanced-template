@@ -1,0 +1,21 @@
+uuid: 7fc31692-abb2-4803-b340-6a7390deb57b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_modal_title
+    - paragraphs.paragraphs_type.modal
+_core:
+  default_config_hash: Quoe3ub1rL-3dB7XCcb0gkcQGzn3rQXd90yAil5X-wY
+id: paragraph.modal.field_modal_title
+field_name: field_modal_title
+entity_type: paragraph
+bundle: modal
+label: 'Modal Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

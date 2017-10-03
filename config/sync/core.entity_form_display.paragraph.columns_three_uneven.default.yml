@@ -1,0 +1,52 @@
+uuid: eec67611-597f-4d6e-bafa-cd263980d4dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.columns_three_uneven.field_background
+    - field.field.paragraph.columns_three_uneven.field_column_content_3
+    - field.field.paragraph.columns_three_uneven.field_column_style_3
+    - field.field.paragraph.columns_three_uneven.field_width
+    - paragraphs.paragraphs_type.columns_three_uneven
+  module:
+    - paragraphs
+_core:
+  default_config_hash: eJatpieO2jJNudcwVlz50CPus0raGRj8vvsVR750dlc
+id: paragraph.columns_three_uneven.default
+targetEntityType: paragraph
+bundle: columns_three_uneven
+mode: default
+content:
+  field_background:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_column_content_3:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  field_column_style_3:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_width:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
