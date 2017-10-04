@@ -1,0 +1,25 @@
+uuid: 78feca36-bdfb-4deb-b8a0-2639e6aa890f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_in_library
+    - media_entity.bundle.gallery
+_core:
+  default_config_hash: t31uuu__PF3ODvVeNmh50qJcoFNELoKNr6Kjq58IDXY
+id: media.gallery.field_media_in_library
+field_name: field_media_in_library
+entity_type: media
+bundle: gallery
+label: 'Save to my media library'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Saved to my media library'
+  off_label: 'Not in my media library'
+field_type: boolean

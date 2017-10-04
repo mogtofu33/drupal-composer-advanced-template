@@ -1,0 +1,21 @@
+uuid: 7054a82b-6c27-405b-9c2e-3786d5945b81
+langcode: en
+status: true
+dependencies:
+  module:
+    - media_entity
+_core:
+  default_config_hash: 5U03wVCBzAIhSH5nkGknTi9G_XtyWoV4XEg6VgnSu1w
+id: media.field_slide
+field_name: field_slide
+entity_type: media
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -4,6 +4,7 @@ module:
   admin_toolbar_tools: 0
   automated_cron: 0
   big_pipe: 0
+  blazy: 0
   block: 0
   block_content: 0
   bootstrap_carousel_if: 0
@@ -22,28 +23,46 @@ module:
   contact: 0
   contact_formatter: 0
   contextual: 0
+  crop: 0
+  crop_media_entity: 0
   ctools: 0
   ctools_block: 0
   ctools_views: 0
   datetime: 0
   dblog: 0
+  dropzonejs: 0
+  dropzonejs_eb_widget: 0
   dynamic_page_cache: 0
   editor: 0
+  embed: 0
+  entity: 0
+  entity_browser: 0
+  entity_browser_entity_form: 0
+  entity_embed: 0
   entity_reference_revisions: 0
   field: 0
   field_group: 0
   field_ui: 0
   file: 0
   filter: 0
+  focal_point: 0
   help: 0
   history: 0
   image: 0
+  image_widget_crop: 0
   inline_entity_form: 0
   language: 0
   layout_discovery: 0
   libraries_ui: 0
   link: 0
   locale: 0
+  media: 0
+  media_entity: 0
+  media_entity_document: 0
+  media_entity_image: 0
+  media_entity_instagram: 0
+  media_entity_slideshow: 0
+  media_entity_twitter: 0
   menu_ui: 0
   node: 0
   options: 0
@@ -58,12 +77,17 @@ module:
   search_api_db: 0
   shortcut: 0
   simplei: 0
+  slick: 0
+  slick_media: 0
+  slick_ui: 0
   system: 0
   taxonomy: 0
   text: 0
   token: 0
   toolbar: 0
   user: 0
+  video_embed_field: 0
+  video_embed_media: 0
   views_ui: 0
   viewsreference: 0
   menu_link_content: 1

@@ -1,0 +1,38 @@
+uuid: 5de49b99-dfa9-47ee-b383-b5570480e950
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_slide
+    - media_entity.bundle.document
+    - media_entity.bundle.gallery
+    - media_entity.bundle.image
+    - media_entity.bundle.instagram
+    - media_entity.bundle.tweet
+    - media_entity.bundle.video
+_core:
+  default_config_hash: urql--T9pyFUAr2BHCm6pp2ZR409CGTBKH8XTG48TYU
+id: media.gallery.field_slide
+field_name: field_slide
+entity_type: media
+bundle: gallery
+label: Slides
+description: 'Media type items for slideshow'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+      image: image
+      instagram: instagram
+      tweet: tweet
+      video: video
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: image
+field_type: entity_reference

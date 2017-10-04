@@ -1,0 +1,17 @@
+uuid: e45cc678-581f-4861-bbf4-0e3d94353417
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: twHdY8BhFYCQX3qP3Seq4Lv8YDJ4CjN7hE4bhlN-p0Y
+name: media_crop_preview
+label: 'Media Crop Preview'
+effects:
+  30fad5b9-974c-478a-a184-49eceaf12fdb:
+    uuid: 30fad5b9-974c-478a-a184-49eceaf12fdb
+    id: image_scale
+    weight: 1
+    data:
+      width: 800
+      height: null
+      upscale: false

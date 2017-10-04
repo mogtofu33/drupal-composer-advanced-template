@@ -1,0 +1,64 @@
+uuid: 180c4705-5f38-43a9-9f8b-8de224a70720
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.instagram.field_instagram_shortcode
+    - field.field.media.instagram.field_instagram_url
+    - field.field.media.instagram.field_media_in_library
+    - media_entity.bundle.instagram
+  module:
+    - link
+_core:
+  default_config_hash: RvApZ0UDi-Z_QUgzrz26FNhqJMrFXhJTflrKzd2JVuE
+id: media.instagram.default
+targetEntityType: media
+bundle: instagram
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_instagram_url:
+    weight: 11
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_media_in_library:
+    weight: 12
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_instagram_shortcode: true

@@ -1,0 +1,8 @@
+settings:
+  allowed_values:
+    1:
+      label: Étroit
+    2:
+      label: Moyen
+    3:
+      label: Large

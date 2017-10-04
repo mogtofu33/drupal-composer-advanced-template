@@ -1,0 +1,118 @@
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Anwenden
+          reset_button_label: Zurücksetzen
+          exposed_sorts_label: 'Sortieren nach'
+          sort_asc_label: Aufsteigend
+          sort_desc_label: Absteigend
+      pager:
+        options:
+          expose:
+            items_per_page_options_all_label: '- Alle -'
+            offset_label: Offset
+          tags:
+            previous: ‹‹
+            next: ››
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+      sorts:
+        created:
+          expose:
+            label: 'Erstellt am'
+  gallery_media_select_modal:
+    display_options:
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        bundle_1:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+  gallery_user_media_select_modal:
+    display_options:
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        bundle_1:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+      arguments:
+        uid:
+          exception:
+            title: Alle
+  global_media_library_page:
+    display_options:
+      menu:
+        title: Medien
+      fields:
+        bundle:
+          label: Typ
+        status:
+          settings:
+            format_custom_true: Veröffentlicht
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+  media_select_modal:
+    display_options:
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+  user_media_library:
+    display_options:
+      menu:
+        title: Medien
+      arguments:
+        uid:
+          exception:
+            title: Alle
+      fields:
+        bundle:
+          label: Typ
+        status:
+          settings:
+            format_custom_true: Veröffentlicht
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+  user_media_select_modal:
+    display_options:
+      filters:
+        bundle:
+          expose:
+            label: Bundle
+        status:
+          expose:
+            label: Veröffentlichungsstatus
+      arguments:
+        uid:
+          exception:
+            title: Alle
