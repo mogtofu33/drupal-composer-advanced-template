@@ -6,7 +6,7 @@
  */
 
 // Config split compatibility, set FALSE for Prod.
-$config['config_split.config_split.dev_config']['status'] = TRUE;
+$config['config_split.config_split.config_dev']['status'] = TRUE;
 
 // Local settings.
 $settings['file_private_path'] = 'sites/default/files/private';
@@ -27,8 +27,8 @@ $settings['simple_environment_indicator'] = 'DarkGreen Dev';
 // Drupal default dev settings from example.settings.local.php.
 
 // Assertions
-assert_options(ASSERT_ACTIVE, TRUE);
-\Drupal\Component\Assertion\Handle::register();
+// assert_options(ASSERT_ACTIVE, TRUE);
+// \Drupal\Component\Assertion\Handle::register();
 
 // Drupal no cache from example.settings.local.php.
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
@@ -39,5 +39,5 @@ $settings['rebuild_access'] = TRUE;
 $settings['skip_permissions_hardening'] = TRUE;
 
 // Webprofiler specific settings
-$class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
-$settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';
+// $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
+// $settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';
