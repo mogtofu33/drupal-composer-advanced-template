@@ -4,7 +4,7 @@ _core:
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: ''
-  url: 'http://150.242.43.220/drupal/web/themes/custom/bootstrap_sass/favicon.ico'
+  url: 'http://150.242.43.220/themes/custom/bootstrap_sass/favicon.ico'
   use_default: true
 schemas:
   bootstrap: 8000
@@ -18,6 +18,21 @@ logo:
   path: ''
   url: ''
   use_default: true
+breadcrumb_home: 1
+navbar_inverse: 1
+navbar_position: static-top
+region_wells:
+  navigation: ''
+  navigation_collapsible: ''
+  top: ''
+  header: ''
+  highlighted: ''
+  help: ''
+  content: ''
+  sidebar_first: ''
+  sidebar_second: well
+  bottom: ''
+  footer: ''
 fluid_container: 1
 table_responsive: '-1'
 table: ''

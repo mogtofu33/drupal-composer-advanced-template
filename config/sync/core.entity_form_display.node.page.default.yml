@@ -1,4 +1,4 @@
-uuid: 4613dab1-da8a-4357-beaa-1b71acc46a8e
+uuid: 3ec2fd2f-b448-4e0b-944c-eefd855d8948
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ dependencies:
     - path
     - text
 _core:
-  default_config_hash: sWCotip3wyA0CvZUxyo-StTDU8TyTAhx5fcfOiHS6s4
+  default_config_hash: sb0qCkzU_8mNq29NehYAU8jCBXWPLeX0UN8sYFVGVcw
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -30,12 +30,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  langcode:
-    type: language_select
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   path:
     type: path
     weight: 30
@@ -47,6 +41,13 @@ content:
     settings:
       display_label: true
     weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
     region: content
     third_party_settings: {  }
   sticky:

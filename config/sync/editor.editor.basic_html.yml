@@ -1,4 +1,4 @@
-uuid: d2d87017-c143-4622-8448-7b7ba848c392
+uuid: ab5481f3-30d6-43e2-b79a-c73742cfc108
 langcode: en
 status: true
 dependencies:
@@ -34,7 +34,6 @@ settings:
           items:
             - Blockquote
             - DrupalImage
-            - media
         -
           name: 'Block Formatting'
           items:

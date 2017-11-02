@@ -1,4 +1,4 @@
-uuid: 1f71f9f5-955a-4e6e-b7c8-377cef620041
+uuid: 02f0f75d-109f-49fe-9b1a-8c99aa2e4800
 langcode: en
 status: true
 dependencies:
@@ -61,4 +61,3 @@ content:
 hidden:
   field_image: true
   field_tags: true
-  langcode: true

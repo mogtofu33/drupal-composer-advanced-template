@@ -1,4 +1,4 @@
-uuid: d42c088c-8ece-4f80-99ad-15dfea7fcf9e
+uuid: 481f0ffd-9cc2-40fb-804a-2f636b0d3d35
 langcode: en
 status: true
 dependencies:
@@ -41,7 +41,6 @@ settings:
             - DrupalImage
             - Table
             - HorizontalRule
-            - media
         -
           name: 'Block Formatting'
           items:

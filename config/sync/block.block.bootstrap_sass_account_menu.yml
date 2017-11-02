@@ -1,0 +1,26 @@
+uuid: d026f0cd-a7b8-42e9-a2b0-feebe53a60ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - bootstrap_sass
+_core:
+  default_config_hash: 1bXi08z6LAtjfAxJBxcsvEmEFcYctD6jcSBSvqLvvxU
+id: bootstrap_sass_account_menu
+theme: bootstrap_sass
+region: navigation_collapsible
+weight: 11
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 2
+visibility: {  }

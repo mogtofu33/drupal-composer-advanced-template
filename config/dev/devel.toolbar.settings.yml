@@ -4,12 +4,13 @@ toolbar_items:
   - devel.container_info.service
   - devel.route_info.item
   - devel.entity_info_page
+  - devel.event_info
   - devel.execute_php
   - devel.field_info_page
-  - devel.layout_info
   - devel.menu_rebuild
   - devel.reinstall
   - devel.route_info
+  - devel.run_cron
   - devel.state_system_page
-  - devel.theme_registry
-  - devel.session
+_core:
+  default_config_hash: ysHEvvazIuaJ5BdY0dUw2_my_Q5hM8ypdXwFfaIrvMw
