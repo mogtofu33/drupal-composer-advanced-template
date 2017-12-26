@@ -165,18 +165,8 @@
                 "https://www.drupal.org/files/issues/2877383-23.patch"
             },
             "drupal/media_entity": {
-                "Reset D.O packaging information so subsequent patches apply":
-                "https://www.drupal.org/files/issues/media_entity-reset-packaging--add-version.patch",
-                "2880334 - Add update path of media_entity config changes from 1.x to core media module":
-                "https://www.drupal.org/files/issues/media-entity-1.6--c564fc4.diff",
                 "2918172 - Media Entity upgrade -> core fails on absent column revision_uid":
-                "https://www.drupal.org/files/issues/2918172-5.patch",
-                "2918166 - Media Entity should uninstall itself after migration to core Media is complete":
-                "https://www.drupal.org/files/issues/2918166-7.patch",
-                "2919381 - Don't cache media_entity_type_plugins":
-                "https://www.drupal.org/files/issues/2919381-2.patch",
-                "2919754 - non-existent service 'plugin.manager.media_entity.type'":
-                "https://www.drupal.org/files/issues/media_entity-drush_updatedb-2919754-6-D8.patch"
+                "https://www.drupal.org/files/issues/2918172-5.patch"
             },
             "drupal/field_group": {
                 "Form mode ignored as field groups always attached to 'default' form mode": "https://www.drupal.org/files/issues/field_group-form-mode-ignored-2842354-2.patch"
