@@ -8,12 +8,13 @@
 /web/libraries/
 /web/themes/custom/bootstrap_sass/bootstrap/
 !/web/themes/custom/bootstrap_sass
-!/web/sites/default/services.*
-!/web/sites/default/settings.*
 
 # Ignore sensitive information
 /web/sites/*/settings.php
 /web/sites/*/settings.local.php
+!/web/sites/*/services.dev.yml
+!/web/sites/*/settings.dev.yml
+!/web/sites/*/settings.prod.yml
 
 # Ignore Drupal's file directory
 /web/sites/*/files/
