@@ -20,6 +20,7 @@
     ],
     "require": {
         "bower-asset/blazy": "^1.6.0",
+        "bower-asset/bootstrap-sass": "3.3.7",
         "bower-asset/cropper": "^2.3",
         "bower-asset/dropzone": "^5.1",
         "bower-asset/exif-js": "^2.3.0",
@@ -148,7 +149,7 @@
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
-        "nuke": "rm -r -f docroot vendor"
+        "nuke": "rm -r -f web/core web/libraries web/modules web/profiles web/sites/default/files web/themes/contrib web/themes/custom/bootstrap_sass/bootstrap vendor"
     },
     "extra": {
         "installer-types": [
@@ -159,6 +160,9 @@
             "web/core": ["type:drupal-core"],
             "web/libraries/slick": [
                 "bower-asset/slick-carousel"
+            ],
+            "web/themes/custom/bootstrap_sass/bootstrap": [
+                "bower-asset/bootstrap-sass"
             ],
             "web/libraries/{$name}": [
                 "type:drupal-library",
