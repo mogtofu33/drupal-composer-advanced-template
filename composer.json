@@ -149,7 +149,7 @@
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
-        "nuke": "rm -r -f web/core web/libraries web/modules web/profiles web/sites/default/files web/themes/contrib web/themes/custom/bootstrap_sass/bootstrap vendor"
+        "nuke": "rm -r -f web vendor"
     },
     "extra": {
         "installer-types": [
