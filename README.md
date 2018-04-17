@@ -5,14 +5,14 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
 ## What's added ?
 
 * Drupal basic config with Dev / Prod environment, see [Workflow readme](config/README.md).
-* Base contrib modules, Core patches and a [Bootstrap Sass subtheme](https://www.drupal.org/project/bootstrap).
+* Base contrib modules, Core patches.
 * Third party libraries download with https://asset-packagist.org.
 
 ## Install
 
 #### Requirements
 
-Package creation require [Composer 1.2+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer. To create the styles files you need [Compass 1+](http://compass-style.org/install)
+Package creation require [Composer 1.6+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer. To create the styles files you need if using Bootsrap Sass  [Compass 1+](http://compass-style.org/install)
 
 Recommended:
 * [Composer prestissimo](https://github.com/hirak/prestissimo)
@@ -23,17 +23,18 @@ composer global require "hirak/prestissimo:^0.3"
 
 #### Grab code and libraries
 
-Clone this project locally.
+Clone this project locally in your web root folder.
+```
+git clone git@github.com:Mogtofu33/drupal-composer-advanced-template.git drupal
+```
 
 Download project code, from this folder run
 ```
 composer install --no-dev
 ```
 
-Run compass to compile css
-```
-compass compile web/themes/custom/bootstrap_sass/
-```
+Optional: Install any bootstrap starter kit
+* https://drupal-bootstrap.org/api/bootstrap/docs%21Sub-Theming.md/group/sub_theming/8
 
 Set **/web** as root of your host (Apache).
 
