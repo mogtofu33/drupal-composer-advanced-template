@@ -44,9 +44,9 @@ switch ($_SERVER['HTTP_HOST']) {
 }
 </pre>
 
-* [example.settings.local.php](../web/sites/default/example.settings.local.php)
-* [settings.dev.php](../web/sites/default/settings.dev.php)
-* [settings.prod.php](../web/sites/default/settings.prod.php)
+* [example.settings.local.php](example.settings.local.php)
+* [example.settings.dev.phpp](example.settings.dev.php)
+* [example.settings.prod.php](example.settings.prod.phpp)
 
 ## Dev > Prod
 
