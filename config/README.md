@@ -115,7 +115,7 @@ git pull origin master
 #### Import to merge last prod changes
 <pre>
 drush cr
-drush csim dev_config
+drush csim config_dev
 </pre>
 
 #### Check for config overrides from production, and get those back into code.
