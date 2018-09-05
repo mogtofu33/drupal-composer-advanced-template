@@ -1,13 +1,13 @@
-uuid: d2c86061-4b64-4c43-bfdf-12658ea98cb0
+uuid: 16c3d83a-7651-4e48-b64f-5d339a20fb9b
 langcode: en
 status: true
 dependencies:
   module:
     - comment
 _core:
-  default_config_hash: VetuwpecspsjqMCd8e7wKyr2l-AZEh1UNYWNtNywHXM
+  default_config_hash: vpBH8OmL4sdesCdeZLsW8KOutB5gkbreWJbfjhfFKaQ
 id: comment_delete_action
 label: 'Delete comment'
 type: comment
-plugin: comment_delete_action
+plugin: 'entity:delete_action:comment'
 configuration: {  }

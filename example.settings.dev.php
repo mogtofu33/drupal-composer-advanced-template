@@ -11,6 +11,7 @@ $config['config_split.config_split.config_dev']['status'] = TRUE;
 // Local settings.
 $settings['file_private_path'] = 'sites/default/files/private';
 $settings['simple_environment_indicator'] = 'DarkGreen Dev';
+$settings['simple_environment_anonymous'] = TRUE;
 
 // Trusted host patterns settings.
 // $settings['trusted_host_patterns'][] = '^MY_ENV_IP_OR_DOMAIN$';
@@ -33,6 +34,8 @@ $settings['simple_environment_indicator'] = 'DarkGreen Dev';
 // Drupal no cache from example.settings.local.php.
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
 $settings['cache']['bins']['render'] = 'cache.backend.null';
+$settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
+$settings['cache']['bins']['page'] = 'cache.backend.null';
 $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 $settings['extension_discovery_scan_tests'] = TRUE;
 $settings['rebuild_access'] = TRUE;

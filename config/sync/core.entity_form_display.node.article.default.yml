@@ -1,4 +1,4 @@
-uuid: 0765b0cd-e680-418c-97b2-080bc1b6ab7f
+uuid: 521a4862-be87-4fad-9f78-d14c76a0a46b
 langcode: en
 status: true
 dependencies:
@@ -15,7 +15,7 @@ dependencies:
     - path
     - text
 _core:
-  default_config_hash: buc38w3gxCqFnjINJhMiJvPpj9jWflKvlKDyBVMPVvw
+  default_config_hash: vPb_yvhA-xuNoV_yOmOwYxGuHNRIH1CoMK2qi7BSga0
 id: node.article.default
 targetEntityType: node
 bundle: article
@@ -54,7 +54,10 @@ content:
     type: entity_reference_autocomplete_tags
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   path:
     type: path

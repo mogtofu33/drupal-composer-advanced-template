@@ -8,13 +8,14 @@ folder: ../config/dev
 module:
   devel: 0
   kint: 0
-  webprofiler: 0
   update: 0
+  webprofiler: 0
 theme: {  }
 blacklist: {  }
 graylist:
   - automated_cron.settings
   - contact.form.feedback
+  - core.extension
   - dblog.settings
   - system.cron
   - system.logging
@@ -22,8 +23,8 @@ graylist:
   - system.maintenance
   - system.performance
   - system.site
-  - views.settings
   - update.settings
+  - views.settings
 graylist_dependents: true
 graylist_skip_equal: true
 weight: 0

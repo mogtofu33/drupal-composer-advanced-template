@@ -1,4 +1,4 @@
-uuid: e3fb7ba0-dd15-4de9-b19c-95d64c8ec9fc
+uuid: 167fdcef-21fd-4de7-b5f1-cafa54998ba0
 langcode: en
 status: true
 dependencies: {  }
@@ -7,7 +7,7 @@ _core:
 id: feedback
 label: 'Website feedback'
 recipients:
-  - test@catalyst.co.nz
+  - admin@example.com
 reply: ''
 weight: 0
 message: 'Your message has been sent.'

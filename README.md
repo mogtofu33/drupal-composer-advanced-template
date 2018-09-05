@@ -4,10 +4,10 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
 
 ## What's added?
 
-* Drupal basic config with Dev / Prod environment, see [Workflow readme](config/README.md)
 * Base contrib modules, Core patches
-* Third party libraries download with https://asset-packagist.org
+* Third party libraries download with [Asset packagist](https://asset-packagist.org)
 * Bootstrap Sass sub theme
+* Drupal basic config with Dev / Prod environment, see [Workflow readme](config/README.md)
 
 ## Install
 
@@ -19,18 +19,25 @@ Recommended:
 
 * [Composer prestissimo](https://github.com/hirak/prestissimo)
 
-    composer global require "hirak/prestissimo:^0.3"
+```
+composer global require "hirak/prestissimo:^0.3"
+```
 
 ### Grab code and libraries
 
 Clone this project locally in your web root folder.
 
-    git clone git@github.com:Mogtofu33/drupal-composer-advanced-template.git drupal
+    git clone git@gitlab.com:mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
 
 Download project code, from this folder run
 
     cd drupal
-    composer install --no-dev
+    composer install
+
+Optional with Bootstrap Sass
+
+    composer install-boostrap-sass
+    compass compile drupal/web/themes/custom/bootstrap_sass
 
 Set **/web** as root of your host (Apache).
 
@@ -51,16 +58,12 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
         --account-pass=ADMIN_PASSWORD \
         --account-mail=ADMIN_MAIL@MAIL.COM
 
-
-* Edit _web/sites/default/settings.php_, at the end of the file uncomment
-  settings.local.php inclusion.
+* Edit _web/sites/default/settings.php_, at the end of the file uncomment settings.local.php inclusion.
 
     if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-      include $app_root . '/' . $site_path . '/settings.local.php';
+        include $app_root . '/' . $site_path . '/settings.local.php';
     }
 
-* Copy and rename _web/sites/default/example.settings.local.php_ to
-  _web/sites/default/example.settings.local.php_ and edit to adapt environment
-  switch.
+* Copy and rename _web/sites/default/example.settings.local.php_ to _web/sites/default/example.settings.local.php_ and edit to adapt environment switch.
 
     sudo cp web/sites/default/example.settings.local.php web/sites/default/settings.local.php

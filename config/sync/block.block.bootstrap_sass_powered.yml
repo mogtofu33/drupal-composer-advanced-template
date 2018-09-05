@@ -1,15 +1,15 @@
-uuid: 3185fdbb-d6c3-4b97-9707-94ff6cfc72a5
+uuid: 91417847-fdec-4528-b828-b7a412db3744
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - bootstrap_sass
 _core:
-  default_config_hash: iggZSiUKz4mYP1YPJ8SsUfFu79HIgOTt6IDy3Up59aM
-id: bootstrap_powered
-theme: bootstrap
+  default_config_hash: 94jGyJlIW19MzlGQP_fZ91Bnh6X8Ga8sBs_efn0HmKg
+id: bootstrap_sass_powered
+theme: bootstrap_sass
 region: footer
 weight: -10
 provider: null

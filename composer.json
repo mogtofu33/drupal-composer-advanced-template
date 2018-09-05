@@ -153,11 +153,13 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "DrupalProject\\composer\\BootstrapSass::create"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "install-boostrap-sass": [
+            "DrupalProject\\composer\\BootstrapSass::create"
         ],
         "nuke": "rm -r -f web vendor"
     },
@@ -173,9 +175,6 @@
             "web/core": ["type:drupal-core"],
             "web/libraries/slick": [
                 "bower-asset/slick-carousel"
-            ],
-            "web/themes/custom/bootstrap_sass/bootstrap": [
-                "bower-asset/bootstrap-sass"
             ],
             "web/libraries/{$name}": [
                 "type:drupal-library",

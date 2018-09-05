@@ -68,11 +68,14 @@ class BootstrapSass {
     ];
     foreach ($files as $source => $target) {
       $content = file_get_contents($customFolder . $source);
-      $content = str_replace('THEMETITLE', 'id: ' . $themeName, $content);
-      $content = str_replace('THEMENAME', 'theme: ' . $themeTitle, $content);
+      $content = str_replace('THEMETITLE', $themeTitle, $content);
+      $content = str_replace('THEMENAME', $themeName, $content);
       $fs->dumpFile($customFolder . $target, $content);
       $fs->remove($customFolder . $source);
     }
+
+    // Copy Boostrap sass framework.
+    $fs->mirror($drupalRoot . '/libraries/bootstrap-sass', $customFolder . '/bootstrap');
 
     // We need a config file for compiling.
     $config = file_get_contents($configRb);

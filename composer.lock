@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0775348e7e6fbc81b7bbd89ff0d6fd73",
+    "content-hash": "8eba48d16b3b12494dfa36615b0f73c7",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -5912,7 +5912,8 @@
                 "patches_applied": {
                     "Issue #2461695: Support translatable paragraph entity reference revision field": "https://www.drupal.org/files/issues/meta_support-2461695-222.patch",
                     "Issue #2868155: Add new hooks to allow easier editing of paragraph forms": "https://www.drupal.org/files/issues/2868155-16.patch",
-                    "Issue #2877927: Show add widget between paragraphs on hover": "https://www.drupal.org/files/issues/2877927_29.patch"
+                    "Issue #2877927: Show add widget between paragraphs on hover": "https://www.drupal.org/files/issues/2877927_29.patch",
+                    "Issue #2924774: Let Editors add/delete/clone paragraphs When [Editing a translation]": "https://www.drupal.org/files/issues/2018-06-03/2924774-29.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",

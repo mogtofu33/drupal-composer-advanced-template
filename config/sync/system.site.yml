@@ -1,6 +1,6 @@
-uuid: 3307bf0b-2815-499a-bb48-7e7a317ec25d
-name: 'My D8'
-mail: test@catalyst.co.nz
+uuid: 992a72e8-22ff-44a7-b62e-74c0b40ca8d4
+name: 'Drush Site-Install'
+mail: admin@example.com
 slogan: ''
 page:
   403: ''
@@ -11,5 +11,4 @@ weight_select_max: 100
 langcode: en
 default_langcode: en
 _core:
-  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo
-mail_notification: ''
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
