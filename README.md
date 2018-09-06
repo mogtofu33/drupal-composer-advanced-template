@@ -39,7 +39,7 @@ Download project code, from this folder run
 Optional with Bootstrap Sass
 
     composer install-boostrap-sass
-    compass compile drupal/web/themes/custom/bootstrap_sass
+    compass compile web/themes/custom/bootstrap_sass
 
 Set **/web** as root of your host (Apache).
 
