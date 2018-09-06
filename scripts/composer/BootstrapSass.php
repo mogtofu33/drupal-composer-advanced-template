@@ -83,7 +83,7 @@ class BootstrapSass {
 
     // Inform about next steps.
     echo "[info] You need to run compass compile, ie:\n  compass compile " . $customFolder . "\n\n";
-    echo "And enable the new theme Boostrap Sass after Drupal installtion.\n";
+    echo "And enable the new theme Boostrap Sass after Drupal installation.\n";
 
   }
 

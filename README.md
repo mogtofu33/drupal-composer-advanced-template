@@ -27,6 +27,8 @@ composer global require "hirak/prestissimo:^0.3"
 
 Clone this project locally in your web root folder.
 
+    git clone https://gitlab.com/mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
+    # Or with a Gitlab account:
     git clone git@gitlab.com:mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
 
 Download project code, from this folder run
