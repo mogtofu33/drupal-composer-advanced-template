@@ -28,23 +28,23 @@ composer global require "hirak/prestissimo:^0.3"
 Clone this project locally in your web root folder.
 
 ```bash
-    git clone https://gitlab.com/mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
-    # Or with a Gitlab account:
-    git clone git@gitlab.com:mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
+git clone https://gitlab.com/mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
+# Or with a Gitlab account:
+git clone git@gitlab.com:mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
 ```
 
 Download project code, from this folder run
 
 ```bash
-    cd drupal
-    composer install
+cd drupal
+composer install
 ```
 
 Optional with Bootstrap Sass
 
 ```bash
-    composer install-boostrap-sass
-    compass compile web/themes/custom/bootstrap_sass
+composer install-boostrap-sass
+compass compile web/themes/custom/bootstrap_sass
 ```
 
 Set **/web** as root of your host (Apache).
@@ -58,26 +58,31 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 * Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
 
 * Drush command installation to run from **web** folder, change uppercase variables to match your environment:
+* 
+_Note_: Currently can not be installed from Drupal install.php, only Drush command.
 
 ```bash
-    ../vendor/bin/drush si config_installer \
-        config_installer_sync_configure_form.sync_directory="../config/sync" \
-        --db-url=mysql://DB_USER:DB_PASS@DB_HOST/DB_NAME \
-        --account-name=admin \
-        --account-pass=ADMIN_PASSWORD \
-        --account-mail=ADMIN_MAIL@MAIL.COM
+cd web
+../vendor/bin/drush si config_installer \
+    config_installer_sync_configure_form.sync_directory="../config/sync" \
+    --account-name=admin \
+    --account-pass=password \
+    --db-url=DB_TYPE://DB_USER:DB_PASS@DB_HOST/DB_NAME
 ```
 
 * Edit _web/sites/default/settings.php_, at the end of the file uncomment settings.local.php inclusion.
 
 ```php
-    if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-        include $app_root . '/' . $site_path . '/settings.local.php';
-    }
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+    include $app_root . '/' . $site_path . '/settings.local.php';
+}
 ```
 
-* Copy and rename _web/sites/default/example.settings.local.php_ to _web/sites/default/example.settings.local.php_ and edit to adapt environment switch.
+* Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/example.settings.*.php_ and edit to adapt environment switch.
 
 ```bash
-    sudo cp web/sites/default/example.settings.local.php web/sites/default/settings.local.php
+cd ..
+sudo cp example.settings.local.php web/sites/default/settings.local.php
+sudo cp example.settings.dev.php web/sites/default/settings.dev.php
+sudo cp example.settings.prod.php web/sites/default/settings.prod.php
 ```
