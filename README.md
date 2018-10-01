@@ -78,7 +78,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 ```
 
-* Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/example.settings.*.php_ and edit to adapt environment switch.
+* Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch.
 
 ```bash
 cd ..
