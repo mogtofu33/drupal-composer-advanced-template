@@ -4,11 +4,12 @@ status: true
 dependencies: {  }
 id: config_dev
 label: 'Dev config'
+description: 'Configuration for development environment.'
 folder: ../config/dev
 module:
+  update: 0
   devel: 0
   kint: 0
-  update: 0
   webprofiler: 0
 theme: {  }
 blacklist: {  }
@@ -17,14 +18,14 @@ graylist:
   - contact.form.feedback
   - core.extension
   - dblog.settings
-  - system.cron
   - system.logging
   - system.mail
   - system.maintenance
   - system.performance
   - system.site
-  - update.settings
   - views.settings
+  - system.cron
+  - update.settings
 graylist_dependents: true
 graylist_skip_equal: true
 weight: 0
