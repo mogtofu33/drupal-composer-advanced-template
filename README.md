@@ -58,7 +58,7 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 * Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
 
 * Drush command installation to run from **web** folder, change uppercase variables to match your environment:
-* 
+
 _Note_: Currently can not be installed from Drupal install.php, only Drush command.
 
 ```bash
