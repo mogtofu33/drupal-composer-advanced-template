@@ -30,7 +30,7 @@
     "cweagans/composer-patches": "^1.6.5",
     "drupal-composer/drupal-scaffold": "^2.5",
     "drupal/console": "^1.0.2",
-    "drupal/core": "^8.6.0",
+    "drupal/core": "^8.6.1",
     "drush/drush": "^9.0.0",
     "vlucas/phpdotenv": "^2.4",
     "webflo/drupal-finder": "^1.0.0",
@@ -54,6 +54,7 @@
     "drupal/config_filter": "^1.2",
     "drupal/config_ignore": "^2.1",
     "drupal/config_installer": "^1.8",
+    "drupal/config_override_warn": "^1.1",
     "drupal/config_split": "^1.3",
     "drupal/config_update": "^1.5",
     "drupal/contact_formatter": "^1.0",
@@ -126,7 +127,7 @@
       "npm-asset/underscore": "*"
   },
   "require-dev": {
-    "webflo/drupal-core-require-dev": "^8.6.0",
+    "webflo/drupal-core-require-dev": "^8.6.1",
     "drupal/devel": "^1.0",
     "drupal/examples": "1.x-dev"
   },
@@ -163,7 +164,7 @@
     "install-boostrap-sass": [
         "DrupalProject\\composer\\BootstrapSass::create"
     ],
-    "nuke": "rm -r -f web vendor"
+    "nuke": "rm -r -f web/core web/modules/contrib web/themes/contrib vendor"
   },
   "extra": {
     "patchLevel": {
