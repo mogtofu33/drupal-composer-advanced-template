@@ -78,11 +78,34 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 ```
 
+* Optional: Change database values with _.env_ file values
+
+```php
+$databases['default']['default'] = [
+  'database' => getenv('MYSQL_DATABASE'),
+  'driver' => 'mysql',
+  'host' => getenv('MYSQL_HOSTNAME'),
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'password' => getenv('MYSQL_PASSWORD'),
+  'port' => getenv('MYSQL_PORT'),
+  'prefix' => '',
+  'username' => getenv('MYSQL_USER'),
+];
+```
+
+* Copy _.env.example_ to _.env_ and edit database values
+
+```bash
+cd ..
+cp .env.example .env
+vi .env
+```
+
 * Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch.
 
 ```bash
 cd ..
-sudo cp example.settings.local.php web/sites/default/settings.local.php
-sudo cp example.settings.dev.php web/sites/default/settings.dev.php
-sudo cp example.settings.prod.php web/sites/default/settings.prod.php
+cp example.settings.local.php web/sites/default/settings.local.php
+cp example.settings.dev.php web/sites/default/settings.dev.php
+cp example.settings.prod.php web/sites/default/settings.prod.php
 ```
