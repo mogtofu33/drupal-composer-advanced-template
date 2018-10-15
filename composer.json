@@ -1,279 +1,280 @@
 {
-  "name": "Mogtofu33/drupal-composer-advanced-template",
-  "description": "Drupal 8 projects with composer",
-  "type": "project",
-  "license": "GPL-2.0+",
-  "authors": [
-      {
-          "name": "Jean Valverde",
-          "role": "Maintainer",
-          "homepage": "https://dev-drupal.com"
-      }
-  ],
-  "repositories": [
-      {
-          "type": "composer",
-          "url": "https://packages.drupal.org/8"
-      }, {
-          "type": "composer",
-          "url": "https://asset-packagist.org"
-      }
-  ],
-  "require": {
-    "bower-asset/blazy": "^1.6.0",
-    "bower-asset/bootstrap-sass": "3.3.7",
-    "bower-asset/cropper": "^2.3",
-    "bower-asset/dropzone": "^5.1",
-    "bower-asset/exif-js": "^2.3.0",
-    "bower-asset/slick-carousel": "^1.6",
-    "composer/installers": "^1.2",
-    "cweagans/composer-patches": "^1.6.5",
-    "drupal-composer/drupal-scaffold": "^2.5",
-    "drupal/console": "^1.0.2",
-    "drupal/core": "^8.6.1",
-    "drush/drush": "^9.0.0",
-    "vlucas/phpdotenv": "^2.4",
-    "webflo/drupal-finder": "^1.0.0",
-    "webmozart/path-util": "^2.3",
-    "oomphinc/composer-installers-extender": "^1.1",
-    "drupal/access_unpublished": "^1.0",
-    "drupal/admin_toolbar": "^1.23",
-    "drupal/advanced_text_formatter": "^1.0",
-    "drupal/allowed_formats": "^1.1",
-    "drupal/back_to_top": "^1.0",
-    "drupal/autocomplete_deluxe": "^1.0",
-    "drupal/better_normalizers": "^1.0",
-    "drupal/blazy": "^1.0",
-    "drupal/bootstrap": "^3.11",
-    "drupal/bootstrap_carousel_if": "^3.0",
-    "drupal/bootstrap_layouts": "^5.1",
-    "drupal/bootstrap_paragraphs": "^2.0",
-    "drupal/breakpoint_js_settings": "^1.0",
-    "drupal/checklistapi": "^1.0",
-    "drupal/ckeditor_media_embed": "^1.1",
-    "drupal/config_filter": "^1.2",
-    "drupal/config_ignore": "^2.1",
-    "drupal/config_installer": "^1.8",
-    "drupal/config_override_warn": "^1.1",
-    "drupal/config_split": "^1.3",
-    "drupal/config_update": "^1.5",
-    "drupal/contact_formatter": "^1.0",
-    "drupal/contact_storage": "^1.0",
-    "drupal/crop": "^2",
-    "drupal/ctools": "^3.0",
-    "drupal/dropzonejs": "^2.0",
-    "drupal/ds": "^3.1",
-    "drupal/embed": "^1.0",
-    "drupal/entity": "^1.0",
-    "drupal/entity_browser": "^2.0",
-    "drupal/entity_browser_enhanced": "^1.0",
-    "drupal/entity_embed": "^1.0",
-    "drupal/entity_reference_revisions": "^1.0",
-    "drupal/fast_404": "^1.0",
-    "drupal/field_group": "^3.0",
-    "drupal/focal_point": "^1.0",
-    "drupal/google_analytics": "^2.0",
-    "drupal/honeypot": "^1.27",
-    "drupal/image_widget_crop": "^2.0",
-    "drupal/imageapi_optimize": "^2.0",
-    "drupal/inline_entity_form": "^1.0",
-    "drupal/jsonapi": "^1.1",
-    "drupal/libraries_ui": "^1.0",
-    "drupal/media_entity_slideshow": "^2.0",
-    "drupal/media_entity_twitter": "^2.0",
-    "drupal/menu_admin_per_menu": "^1.0",
-    "drupal/menu_block": "^1.4",
-    "drupal/metatag": "^1.2",
-    "drupal/page_manager": "^4.0",
-    "drupal/panelizer": "^4.1",
-    "drupal/panels": "^4.3",
-    "drupal/paragraphs": "^1.2",
-    "drupal/paragraphs_previewer": "^1.2",
-    "drupal/pathauto": "^1.1",
-    "drupal/redirect": "^1.1",
-    "drupal/responsive_preview": "^1.0",
-    "drupal/revision_log_default": "^1.0",
-    "drupal/search_api": "^1.4",
-    "drupal/search_api_solr": "^2.0",
-    "drupal/search_api_sorts": "1.0-beta1",
-    "drupal/simple_sitemap": "^2.0",
-    "drupal/simplei": "^1.0",
-    "drupal/slick": "^1.0",
-    "drupal/slick_media": "^1.0",
-    "drupal/slick_views": "^1.0",
-    "drupal/smart_trim": "^1.1",
-    "drupal/swiftmailer": "^1.0",
-    "drupal/styleguide": "^1.0",
-    "drupal/taxonomy_access_fix": "^2.6",
-    "drupal/token": "^1.1",
-    "drupal/toolbar_anti_flicker": "^2.0",
-    "drupal/userprotect": "^1.0",
-    "drupal/video_embed_field": "^2.0",
-    "drupal/views_bootstrap": "3.x-dev#8a8d1ad",
-    "drupal/views_bulk_edit": "^2.0",
-    "drupal/views_bulk_operations": "^2.2",
-    "drupal/views_infinite_scroll": "^1.1",
-    "drupal/viewsreference": "^1.0",
-    "drupal/vmi": "^1.0"
-  },
-  "replace": {
-      "bower-asset/jquery": "*",
-      "bower-asset/jqueryui": "*",
-      "bower-asset/backbone": "*",
-      "bower-asset/underscore": "*",
-      "npm-asset/jquery": "*",
-      "npm-asset/jqueryui": "*",
-      "npm-asset/backbone": "*",
-      "npm-asset/underscore": "*"
-  },
-  "require-dev": {
-    "webflo/drupal-core-require-dev": "^8.6.1",
-    "drupal/devel": "^1.0",
-    "drupal/examples": "1.x-dev"
-  },
-  "conflict": {
-    "drupal/drupal": "*"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "sort-packages": true
-  },
-  "autoload": {
-    "classmap": [
-      "scripts/composer/ScriptHandler.php",
-      "scripts/composer/BootstrapSass.php"
+    "name": "Mogtofu33/drupal-composer-advanced-template",
+    "description": "Drupal 8 projects with composer",
+    "type": "project",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Jean Valverde",
+            "role": "Maintainer",
+            "homepage": "https://dev-drupal.com"
+        }
     ],
-    "files": [
-      "load.environment.php"
-    ]
-  },
-  "scripts": {
-    "pre-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }, {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
     ],
-    "pre-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
-    "post-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "post-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "install-boostrap-sass": [
-        "DrupalProject\\composer\\BootstrapSass::create"
-    ],
-    "nuke": "rm -r -f web/core web/modules/contrib web/themes/contrib vendor"
-  },
-  "extra": {
-    "patchLevel": {
-      "drupal/core": "-p2"
+    "require": {
+      "bower-asset/blazy": "^1.6.0",
+      "bower-asset/bootstrap-sass": "3.3.7",
+      "bower-asset/cropper": "^2.3",
+      "bower-asset/dropzone": "^5.1",
+      "bower-asset/exif-js": "^2.3.0",
+      "bower-asset/slick-carousel": "^1.6",
+      "composer/installers": "^1.2",
+      "cweagans/composer-patches": "^1.6.5",
+      "drupal-composer/drupal-scaffold": "^2.5",
+      "drupal/console": "^1.0.2",
+      "drupal/core": "8.6.1",
+      "drush/drush": "^9.0.0",
+      "vlucas/phpdotenv": "^2.4",
+      "webflo/drupal-finder": "^1.0.0",
+      "webmozart/path-util": "^2.3",
+      "oomphinc/composer-installers-extender": "^1.1",
+      "drupal/access_unpublished": "^1.0",
+      "drupal/admin_toolbar": "^1.23",
+      "drupal/advanced_text_formatter": "^1.0",
+      "drupal/allowed_formats": "^1.1",
+      "drupal/back_to_top": "^1.0",
+      "drupal/autocomplete_deluxe": "^1.0",
+      "drupal/better_normalizers": "^1.0",
+      "drupal/blazy": "^1.0",
+      "drupal/bootstrap": "^3.11",
+      "drupal/bootstrap_carousel_if": "^3.0",
+      "drupal/bootstrap_layouts": "^5.1",
+      "drupal/bootstrap_paragraphs": "^2.0",
+      "drupal/breakpoint_js_settings": "^1.0",
+      "drupal/checklistapi": "^1.0",
+      "drupal/ckeditor_media_embed": "^1.1",
+      "drupal/config_filter": "^1.2",
+      "drupal/config_ignore": "^2.1",
+      "drupal/config_installer": "^1.8",
+      "drupal/config_override_warn": "^1.1",
+      "drupal/config_split": "^1.3",
+      "drupal/config_update": "^1.5",
+      "drupal/contact_formatter": "^1.0",
+      "drupal/contact_storage": "^1.0",
+      "drupal/crop": "^2",
+      "drupal/ctools": "^3.0",
+      "drupal/dropzonejs": "^2.0",
+      "drupal/ds": "^3.1",
+      "drupal/embed": "^1.0",
+      "drupal/entity": "^1.0",
+      "drupal/entity_browser": "^2.0",
+      "drupal/entity_browser_enhanced": "^1.0",
+      "drupal/entity_embed": "^1.0",
+      "drupal/entity_reference_revisions": "^1.0",
+      "drupal/fast_404": "^1.0",
+      "drupal/field_group": "^3.0",
+      "drupal/focal_point": "^1.0",
+      "drupal/google_analytics": "^2.0",
+      "drupal/honeypot": "^1.27",
+      "drupal/image_widget_crop": "^2.0",
+      "drupal/imageapi_optimize": "^2.0",
+      "drupal/inline_entity_form": "^1.0",
+      "drupal/jsonapi": "^1.1",
+      "drupal/libraries_ui": "^1.0",
+      "drupal/media_entity_slideshow": "^2.0",
+      "drupal/media_entity_twitter": "^2.0",
+      "drupal/menu_admin_per_menu": "^1.0",
+      "drupal/menu_block": "^1.4",
+      "drupal/metatag": "^1.2",
+      "drupal/page_manager": "^4.0",
+      "drupal/panelizer": "^4.1",
+      "drupal/panels": "^4.3",
+      "drupal/paragraphs": "^1.2",
+      "drupal/paragraphs_previewer": "^1.2",
+      "drupal/pathauto": "^1.1",
+      "drupal/redirect": "^1.1",
+      "drupal/responsive_preview": "^1.0",
+      "drupal/revision_log_default": "^1.0",
+      "drupal/search_api": "^1.4",
+      "drupal/search_api_solr": "^2.0",
+      "drupal/search_api_sorts": "1.0-beta1",
+      "drupal/simple_sitemap": "^2.0",
+      "drupal/simplei": "^1.0",
+      "drupal/slick": "^1.0",
+      "drupal/slick_media": "^1.0",
+      "drupal/slick_views": "^1.0",
+      "drupal/smart_trim": "^1.1",
+      "drupal/swiftmailer": "^1.0",
+      "drupal/styleguide": "^1.0",
+      "drupal/taxonomy_access_fix": "^2.6",
+      "drupal/token": "^1.1",
+      "drupal/toolbar_anti_flicker": "^2.0",
+      "drupal/userprotect": "^1.0",
+      "drupal/video_embed_field": "^2.0",
+      "drupal/views_bootstrap": "3.x-dev#8a8d1ad",
+      "drupal/views_bulk_edit": "^2.0",
+      "drupal/views_bulk_operations": "^2.2",
+      "drupal/views_infinite_scroll": "^1.1",
+      "drupal/viewsreference": "^1.0",
+      "drupal/vmi": "^1.0"
     },
-    "installer-types": [
-        "bower-asset",
-        "npm-asset"
-    ],
-    "installer-paths": {
-      "web/core": [
-        "type:drupal-core"
+    "replace": {
+        "bower-asset/jquery": "*",
+        "bower-asset/jqueryui": "*",
+        "bower-asset/backbone": "*",
+        "bower-asset/underscore": "*",
+        "npm-asset/jquery": "*",
+        "npm-asset/jqueryui": "*",
+        "npm-asset/backbone": "*",
+        "npm-asset/underscore": "*"
+    },
+    "require-dev": {
+      "webflo/drupal-core-require-dev": "^8.6.1",
+      "drupal/devel": "^1.0",
+      "drupal/examples": "1.x-dev"
+    },
+    "conflict": {
+      "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+      "sort-packages": true
+    },
+    "autoload": {
+      "classmap": [
+        "scripts/composer/ScriptHandler.php",
+        "scripts/composer/BootstrapSass.php"
       ],
-      "web/libraries/slick": [
-          "bower-asset/slick-carousel"
-      ],
-      "web/libraries/{$name}": [
-        "type:drupal-library",
-        "type:bower-asset",
-        "type:npm-asset"
-      ],
-      "web/modules/contrib/{$name}": [
-        "type:drupal-module"
-      ],
-      "web/profiles/contrib/{$name}": [
-        "type:drupal-profile"
-      ],
-      "web/themes/contrib/{$name}": [
-        "type:drupal-theme"
-      ],
-      "drush/Commands/{$name}": [
-        "type:drupal-drush"
+      "files": [
+        "load.environment.php"
       ]
     },
-    "drupal-scaffold": {
-      "initial": {
-        ".editorconfig": "../.editorconfig",
-        ".gitattributes": "../.gitattributes"
-      }
+    "scripts": {
+      "pre-install-cmd": [
+        "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+      ],
+      "pre-update-cmd": [
+        "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+      ],
+      "post-install-cmd": [
+        "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+      ],
+      "post-update-cmd": [
+        "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+      ],
+      "install-boostrap-sass": [
+          "DrupalProject\\composer\\BootstrapSass::create"
+      ],
+      "nuke": "rm -r -f web/core web/modules/contrib web/themes/contrib vendor"
     },
-    "patches": {
-      "drupal/core": {
-        "Issue #1170362: Install profile is disabled for lots of different reasons and core doesn't allow for that":
-        "https://www.drupal.org/files/issues/1170362-243.patch",
-        "Issue #1356276: Allow profiles to provide a base_parent profile and load them in the correct order":
-        "https://www.drupal.org/files/issues/2018-07-12/1356276-473.patch",
-        "Issue #2720101 Label (Title) not set for Views block (exposed filters in Block)":
-        "https://www.drupal.org/files/issues/2720101-43.patch",
-        "Issue #2599228: Programmatically created translatable content type returns SQL error on content creation":
-        "https://www.drupal.org/files/issues/2599228-31-tests-only.patch",
-        "Issue #2893892: Fixed Warning Invalid argument supplied for foreach() in Drupal":
-        "https://www.drupal.org/files/issues/patch_empty_fix.patch"
+    "extra": {
+      "patchLevel": {
+        "drupal/core": "-p2"
       },
-      "drupal/ckeditor_media_embed": {
-        "Issue #2900313: Add ability to embed tweets and other rich content in WYSIWYG":
-        "https://www.drupal.org/files/issues/embed_rich_content_in_WYSIWYG-2900313-2.patch"
+      "installer-types": [
+          "bower-asset",
+          "npm-asset"
+      ],
+      "installer-paths": {
+        "web/core": [
+          "type:drupal-core"
+        ],
+        "web/libraries/slick": [
+            "bower-asset/slick-carousel"
+        ],
+        "web/libraries/{$name}": [
+          "type:drupal-library",
+          "type:bower-asset",
+          "type:npm-asset"
+        ],
+        "web/modules/contrib/{$name}": [
+          "type:drupal-module"
+        ],
+        "web/profiles/contrib/{$name}": [
+          "type:drupal-profile"
+        ],
+        "web/themes/contrib/{$name}": [
+          "type:drupal-theme"
+        ],
+        "drush/Commands/{$name}": [
+          "type:drupal-drush"
+        ]
       },
-      "drupal/ctools": {
-        "Issue #2820783: Fix Block.php notices and warnings.":
-        "https://www.drupal.org/files/issues/fixblockpager-2820783-27.patch"
+      "drupal-scaffold": {
+        "initial": {
+          ".editorconfig": "../.editorconfig",
+          ".gitattributes": "../.gitattributes"
+        }
       },
-      "drupal/ds": {
-        "Issue #2904575: Warning: Invalid argument supplied for foreach() in /ds/ds.module on line 504":
-        "https://www.drupal.org/files/issues/invalid_argument_in_ds_module-2904575-2.patch",
-        "Issue #2779243: Method declaration incompatibility":
-        "https://www.drupal.org/files/issues/ds-method-declaration-incompatible-2779243-17.patch"
-      },
-      "drupal/entity_browser": {
-        "Issue #2858438: Provide inline entity form FieldWidgetDisplay":
-        "https://www.drupal.org/files/issues/2858438_6.patch"
-      },
-      "drupal/entity_embed": {
-        "Issue #2832504: Send the CKEditor instance ID to the embed.preview route":
-        "https://www.drupal.org/files/issues/2832504-2.patch"
-      },
-      "drupal/focal_point": {
-        "Issue #2916562: Broken image preview":
-        "https://www.drupal.org/files/issues/2916562-16.patch"
-      },
-      "drupal/page_manager": {
-        "Issue #2665328: Variants take entity label not the variant title":
-        "https://www.drupal.org/files/issues/page_manager-fix_contexts_on_get_title-2665328-66.patch"
-      },
-      "drupal/paragraphs": {
-        "Issue #2461695: Support translatable paragraph entity reference revision field":
-        "https://www.drupal.org/files/issues/meta_support-2461695-222.patch",
-        "Issue #2868155: Add new hooks to allow easier editing of paragraph forms":
-        "https://www.drupal.org/files/issues/2868155-16.patch",
-        "Issue #2877927: Show add widget between paragraphs on hover":
-        "https://www.drupal.org/files/issues/2877927_29.patch",
-        "Issue #2924774: Let Editors add/delete/clone paragraphs When [Editing a translation]":
-        "https://www.drupal.org/files/issues/2018-06-03/2924774-29.patch"
-      },
-      "drupal/paragraphs_previewer": {
-        "Issue #2904917: Make paragraph previewer work with new UI/UX improvement patch":
-        "https://www.drupal.org/files/issues/2904917-2.patch"
-      },
-      "drupal/username_enumeration_prevention": {
-        "Issue #2871931: hook_requirements error on install phase":
-        "https://www.drupal.org/files/issues/username_enumeration_prevention-check_phase_runtime-2871931-5.patch"
-      },
-      "drupal/search_api": {
-        "Issue #2931562: Fixed the Notice: Undefined index: total When we enable the module in the installation step.":
-        "https://www.drupal.org/files/issues/2931562-13--undefined_total_in_task_manager_batch_finish.patch"
-      },
-      "drupal/slick": {
-        "Issue #2948735: Adding the alt attribute to the slick thumbnails":
-        "https://www.drupal.org/files/issues/2018-04-02/adding-the-alt-attribute-to-the-slick-thumbnails-2948735-3_0.patch"
+      "patches": {
+        "drupal/core": {
+          "Issue #1170362: Install profile is disabled for lots of different reasons and core doesn't allow for that":
+          "https://www.drupal.org/files/issues/1170362-243.patch",
+          "Issue #1356276: Allow profiles to provide a base_parent profile and load them in the correct order":
+          "https://www.drupal.org/files/issues/2018-07-12/1356276-473.patch",
+          "Issue #2720101 Label (Title) not set for Views block (exposed filters in Block)":
+          "https://www.drupal.org/files/issues/2720101-43.patch",
+          "Issue #2599228: Programmatically created translatable content type returns SQL error on content creation":
+          "https://www.drupal.org/files/issues/2599228-31-tests-only.patch",
+          "Issue #2893892: Fixed Warning Invalid argument supplied for foreach() in Drupal":
+          "https://www.drupal.org/files/issues/patch_empty_fix.patch"
+        },
+        "drupal/ckeditor_media_embed": {
+          "Issue #2900313: Add ability to embed tweets and other rich content in WYSIWYG":
+          "https://www.drupal.org/files/issues/embed_rich_content_in_WYSIWYG-2900313-2.patch"
+        },
+        "drupal/ctools": {
+          "Issue #2820783: Fix Block.php notices and warnings.":
+          "https://www.drupal.org/files/issues/fixblockpager-2820783-27.patch"
+        },
+        "drupal/ds": {
+          "Issue #2904575: Warning: Invalid argument supplied for foreach() in /ds/ds.module on line 504":
+          "https://www.drupal.org/files/issues/invalid_argument_in_ds_module-2904575-2.patch",
+          "Issue #2779243: Method declaration incompatibility":
+          "https://www.drupal.org/files/issues/ds-method-declaration-incompatible-2779243-17.patch"
+        },
+        "drupal/entity_browser": {
+          "Issue #2858438: Provide inline entity form FieldWidgetDisplay":
+          "https://www.drupal.org/files/issues/2858438_6.patch"
+        },
+        "drupal/entity_embed": {
+          "Issue #2832504: Send the CKEditor instance ID to the embed.preview route":
+          "https://www.drupal.org/files/issues/2832504-2.patch"
+        },
+        "drupal/focal_point": {
+          "Issue #2916562: Broken image preview":
+          "https://www.drupal.org/files/issues/2916562-16.patch"
+        },
+        "drupal/page_manager": {
+          "Issue #2665328: Variants take entity label not the variant title":
+          "https://www.drupal.org/files/issues/page_manager-fix_contexts_on_get_title-2665328-66.patch"
+        },
+        "drupal/paragraphs": {
+          "Issue #2461695: Support translatable paragraph entity reference revision field":
+          "https://www.drupal.org/files/issues/meta_support-2461695-222.patch",
+          "Issue #2868155: Add new hooks to allow easier editing of paragraph forms":
+          "https://www.drupal.org/files/issues/2868155-16.patch",
+          "Issue #2877927: Show add widget between paragraphs on hover":
+          "https://www.drupal.org/files/issues/2877927_29.patch",
+          "Issue #2924774: Let Editors add/delete/clone paragraphs When [Editing a translation]":
+          "https://www.drupal.org/files/issues/2018-06-03/2924774-29.patch"
+        },
+        "drupal/paragraphs_previewer": {
+          "Issue #2904917: Make paragraph previewer work with new UI/UX improvement patch":
+          "https://www.drupal.org/files/issues/2904917-2.patch"
+        },
+        "drupal/username_enumeration_prevention": {
+          "Issue #2871931: hook_requirements error on install phase":
+          "https://www.drupal.org/files/issues/username_enumeration_prevention-check_phase_runtime-2871931-5.patch"
+        },
+        "drupal/search_api": {
+          "Issue #2931562: Fixed the Notice: Undefined index: total When we enable the module in the installation step.":
+          "https://www.drupal.org/files/issues/2931562-13--undefined_total_in_task_manager_batch_finish.patch"
+        },
+        "drupal/slick": {
+          "Issue #2948735: Adding the alt attribute to the slick thumbnails":
+          "https://www.drupal.org/files/issues/2018-04-02/adding-the-alt-attribute-to-the-slick-thumbnails-2948735-3_0.patch"
+        }
       }
     }
   }
-}
+  
