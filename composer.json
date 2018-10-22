@@ -7,7 +7,7 @@
         {
             "name": "Jean Valverde",
             "role": "Maintainer",
-            "homepage": "https://dev-drupal.com"
+            "homepage": "https://dev-drupal.com/en"
         }
     ],
     "repositories": [
@@ -106,15 +106,15 @@
       "drupal/styleguide": "^1.0",
       "drupal/taxonomy_access_fix": "^2.6",
       "drupal/token": "^1.1",
-      "drupal/toolbar_anti_flicker": "^2.0",
+      "drupal/toolbar_anti_flicker": "^3.0",
       "drupal/userprotect": "^1.0",
       "drupal/video_embed_field": "^2.0",
-      "drupal/views_bootstrap": "3.x-dev#8a8d1ad",
+      "drupal/views_bootstrap": "3.x-dev#eee11be",
       "drupal/views_bulk_edit": "^2.0",
       "drupal/views_bulk_operations": "^2.2",
       "drupal/views_infinite_scroll": "^1.1",
       "drupal/viewsreference": "^1.0",
-      "drupal/vmi": "^1.0"
+      "drupal/vmi": "^2.0"
     },
     "replace": {
         "bower-asset/jquery": "*",
@@ -227,7 +227,7 @@
         },
         "drupal/ctools": {
           "Issue #2820783: Fix Block.php notices and warnings.":
-          "https://www.drupal.org/files/issues/fixblockpager-2820783-27.patch"
+          "https://www.drupal.org/files/issues/2018-08-08/fixblockpager-2820783-41.patch"
         },
         "drupal/ds": {
           "Issue #2904575: Warning: Invalid argument supplied for foreach() in /ds/ds.module on line 504":
