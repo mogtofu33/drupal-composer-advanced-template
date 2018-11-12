@@ -104,7 +104,6 @@ vi .env
 * Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch.
 
 ```bash
-cd ..
 cp example.settings.local.php web/sites/default/settings.local.php
 cp example.settings.dev.php web/sites/default/settings.dev.php
 cp example.settings.prod.php web/sites/default/settings.prod.php
