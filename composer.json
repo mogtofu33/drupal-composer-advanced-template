@@ -71,6 +71,7 @@
     "drupal/entity_browser_enhanced": "^1.0",
     "drupal/entity_embed": "^1.0",
     "drupal/entity_reference_revisions": "^1.6",
+    "drupal/entity_usage": "^2.0",
     "drupal/fast_404": "^1.0",
     "drupal/field_group": "^3.0",
     "drupal/focal_point": "^1.0",

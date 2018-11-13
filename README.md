@@ -13,36 +13,35 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
 
 ### Requirements
 
-Package creation require [Composer 1.6+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer. To create the styles files you need if using Bootsrap Sass  [Compass 1+](http://compass-style.org/install)
+Package creation require [Composer 1.7+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer. To create the styles files you need if using Bootsrap Sass  [Compass 1+](http://compass-style.org/install)
 
 Recommended:
 
 * [Composer prestissimo](https://github.com/hirak/prestissimo)
 
-```bash
+```shell
 composer global require "hirak/prestissimo:^0.3"
 ```
 
 ### Grab code and libraries
 
-Clone this project locally in your web root folder.
+Grab this project locally in your web root folder:
 
-```bash
-git clone https://gitlab.com/mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
-# Or with a Gitlab account:
-git clone git@gitlab.com:mog33/drupal-composer-advanced-template.git -b 8.x-dev drupal
+```shell
+curl -fSl https://gitlab.com/mog33/drupal-composer-advanced-template/-/archive/8.x-dev/drupal-composer-advanced-template-8.x-dev.tar.gz -o drupal.tar.gz
+tar xf drupal.tar.gz && mv drupal-composer-advanced-template-8.x-dev drupal
 ```
 
-Download project code, from this folder run
+Download project code, from this folder run:
 
-```bash
+```shell
 cd drupal
 composer install
 ```
 
-Optional with Bootstrap Sass
+Optional with Bootstrap Sass:
 
-```bash
+```shell
 composer install-boostrap-sass
 compass compile web/themes/custom/bootstrap_sass
 ```
@@ -57,54 +56,47 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 * Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
 
+* Copy _.env.example_ to _.env_ and edit database values:
+
+```shell
+cp .env.example .env
+```
+
+Set your database connection values.
+
+* Edit _web/sites/default/settings.php_ and uncomment _settings.local.php_ inclusion at the end and add config variable:
+
+```php
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
+$config_directories['sync'] = '../config/sync';
+```
+
+* Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch:
+
+```shell
+cp example.settings.local.php web/sites/default/settings.local.php
+cp example.settings.dev.php web/sites/default/settings.dev.php
+cp example.settings.prod.php web/sites/default/settings.prod.php
+```
+
+Edit _web/sites/default/settings.local.php_ to match _trusted_host_patterns_ and your env switch.
+
 * Drush command installation to run from **web** folder, change uppercase variables to match your environment:
 
 _Note_: Currently can not be installed from Drupal install.php, only Drush command.
 
-```bash
+```shell
 cd web
-../vendor/bin/drush si config_installer \
+../vendor/bin/drush si config_installer --yes \
     config_installer_sync_configure_form.sync_directory="../config/sync" \
     --account-name=admin \
-    --account-pass=password \
-    --db-url=DB_TYPE://DB_USER:DB_PASS@DB_HOST/DB_NAME
+    --account-pass=password
 ```
 
-* Edit _web/sites/default/settings.php_, at the end of the file uncomment settings.local.php inclusion.
+Login to your new website with user admin / password or using drush:
 
-```php
-if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-    include $app_root . '/' . $site_path . '/settings.local.php';
-}
-```
-
-* Optional: Change database values with _.env_ file values
-
-```php
-$databases['default']['default'] = [
-  'database' => getenv('MYSQL_DATABASE'),
-  'driver' => 'mysql',
-  'host' => getenv('MYSQL_HOSTNAME'),
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'password' => getenv('MYSQL_PASSWORD'),
-  'port' => getenv('MYSQL_PORT'),
-  'prefix' => '',
-  'username' => getenv('MYSQL_USER'),
-];
-```
-
-* Copy _.env.example_ to _.env_ and edit database values
-
-```bash
-cd ..
-cp .env.example .env
-vi .env
-```
-
-* Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch.
-
-```bash
-cp example.settings.local.php web/sites/default/settings.local.php
-cp example.settings.dev.php web/sites/default/settings.dev.php
-cp example.settings.prod.php web/sites/default/settings.prod.php
+```shell
+../vendor/bin/drush uli
 ```
