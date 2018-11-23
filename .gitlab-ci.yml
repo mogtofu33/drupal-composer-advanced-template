@@ -33,18 +33,19 @@ cache:
   when: always
 
 .test_template: &test_template
+  image: juampynr/drupal8ci:latest
   dependencies:
     - build
   before_script:
     - mkdir -p ${REPORT_DIR}/coverage-xml
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
-    #- composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile
-    #- composer --verbose install-boostrap-sass
+    - mkdir -p /var/www/html
+    - ln -s $CI_PROJECT_DIR/web /var/www/html/web
+    - apache2-foreground&
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --root="${CI_PROJECT_DIR}/web" --yes minimal --db-url=${SIMPLETEST_DB} -vvv
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install -vvv --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
     - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
@@ -88,12 +89,7 @@ build:
         composer --verbose install-boostrap-sass;
       fi
 
-.Php 7.1:
-  stage: test
-  image: edbizarro/gitlab-ci-pipeline-php:7.1-alpine
-  <<: *test_template
-
-Php 7.2:
+test:
   stage: test
   <<: *test_template
 
