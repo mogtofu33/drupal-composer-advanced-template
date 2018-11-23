@@ -22,7 +22,7 @@ services:
 cache:
   key: $CI_BUILD_REF_NAME
   paths:
-    - drush/contrib/
+    # - drush/contrib/
     - vendor/
     - web/core/
     - web/libraries/
@@ -31,7 +31,7 @@ cache:
     - web/themes/contrib/
     - web/sites/*/settings.php
     - web/sites/*/settings.*.php
-    - web/sites/*/files/
+    # - web/sites/*/files/
 
 .ensure_report:
   - &ensure_report
@@ -51,6 +51,7 @@ cache:
     - mkdir -p ${REPORT_DIR}/coverage-xml
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
+    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
   script:
     - cd ${CI_PROJECT_DIR}/web
     - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://drupal:drupal@mysql/drupal
@@ -69,16 +70,13 @@ cache:
     paths:
       - ${REPORT_DIR}/*
 
-.composer_install: &composer_install
-  script:
-    - composer --verbose --no-check-all --no-check-publish validate
-    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress
-
 build:
   stage: build
-  <<: *composer_install
+  script:
+    - composer --verbose --no-check-all --no-check-publish validate
+    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
 
-test Php 7.1:
+.test Php 7.1:
   stage: test
   image: edbizarro/gitlab-ci-pipeline-php:7.1-alpine
   <<: *test_template
