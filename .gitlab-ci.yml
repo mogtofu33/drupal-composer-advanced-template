@@ -46,7 +46,6 @@ cache:
   script:
     - cd ${CI_PROJECT_DIR}/web
     - ${CI_PROJECT_DIR}/vendor/bin/drush status
-    - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status
     - /usr/local/bin/php -v
     #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     #- ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
