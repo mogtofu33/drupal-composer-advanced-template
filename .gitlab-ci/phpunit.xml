@@ -57,13 +57,17 @@
   <!-- Filter for coverage reports. -->
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
-      <directory>../modules/custom</directory>
+      <directory>./includes</directory>
+      <directory>./lib</directory>
+      <directory>./modules</directory>
+      <directory>../modules</directory>
+      <directory>../sites</directory>
       <!-- By definition test classes have no tests. -->
       <exclude>
         <directory>../modules/custom/*/tests</directory>
         <directory suffix="Test.php">./</directory>
         <directory suffix="TestBase.php">./</directory>
       </exclude>
-    </whitelist>
+     </whitelist>
   </filter>
 </phpunit>
