@@ -1,0 +1,131 @@
+# https://github.com/edbizarro/gitlab-ci-pipeline-php
+image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
+
+stages:
+  - build
+  - test
+  - security
+  - metrics
+
+variables:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: drupal
+  MYSQL_PASSWORD: drupal
+  MYSQL_DATABASE: drupal
+  DB_HOST: mysql
+  REPORT_DIR: "reports"
+  PHPMETRICS: "v2.4.1"
+
+services:
+  - mysql:5.7
+
+cache:
+  key: $CI_BUILD_REF_NAME
+  paths:
+    - drush/contrib/
+    - vendor/
+    - web/core/
+    - web/libraries/
+    - web/modules/contrib/
+    - web/profiles/contrib/
+    - web/themes/contrib/
+    - web/sites/*/settings.php
+    - web/sites/*/settings.*.php
+    - web/sites/*/files/
+
+.ensure_report:
+  - &ensure_report
+    mkdir -p ${REPORT_DIR} && chmod -R 777 ${REPORT_DIR}
+
+.default_artifacts: &default_artifacts
+  paths:
+    - ${REPORT_DIR}/*.html
+  name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+  expire_in: 1 day
+  when: always
+
+.test_template: &test_template
+  dependencies:
+    - build
+  before_script:
+    - mkdir -p ${REPORT_DIR}/coverage-xml
+    - mkdir -p ${REPORT_DIR}/coverage-html
+    - *ensure_report
+  script:
+    - cd ${CI_PROJECT_DIR}/web
+    - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://drupal:drupal@mysql/drupal
+    - ./../vendor/phpunit/phpunit/phpunit -c core 
+      --coverage-xml ./../${REPORT_DIR}/coverage-xml
+      --coverage-html ./../${REPORT_DIR}/coverage-html
+      --coverage-text --colors=never
+      --testsuite unit
+      --exclude-group Composer,DependencyInjection,PageCache,Setup
+    - ./../vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
+    - ./../vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
+  # https://docs.gitlab.com/ee/ci/yaml/#coverage
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/*
+
+.composer_install: &composer_install
+  script:
+    - composer --verbose --no-check-all --no-check-publish validate
+    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress
+
+build:
+  stage: build
+  <<: *composer_install
+
+test Php 7.1:
+  stage: test
+  image: edbizarro/gitlab-ci-pipeline-php:7.1-alpine
+  <<: *test_template
+
+test Php 7.2:
+  stage: test
+  <<: *test_template
+
+security:
+  stage: security
+  dependencies:
+    - build
+  before_script:
+    - if [ ! -f ./phpmetrics ];
+      then
+        curl -fsSL https://get.sensiolabs.org/security-checker.phar -o security-checker;
+      fi
+    - chmod +x security-checker
+    - *ensure_report
+  script:
+    - ./security-checker security-checker > ${REPORT_DIR}/security.txt
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/security.txt
+  cache:
+    paths:
+      - security-checker
+
+metrics:
+  stage: metrics
+  dependencies:
+    - build
+  before_script:
+    - if [ ! -f ./phpmetrics ];
+      then
+        curl -fsSL https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar -o phpmetrics;
+      fi
+    - chmod +x phpmetrics
+    - *ensure_report
+  script:
+    - ./phpmetrics
+        --report-html=${REPORT_DIR}
+        --extensions=php,inc,module
+        web
+  artifacts:
+    <<: *default_artifacts
+  cache:
+    paths:
+      - phpmetrics
