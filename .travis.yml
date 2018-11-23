@@ -27,10 +27,10 @@ script:
   - cd $TRAVIS_BUILD_DIR/web
   - $TRAVIS_BUILD_DIR/vendor/bin/drush site-install config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=$SIMPLETEST_DB
   - $TRAVIS_BUILD_DIR/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
-  - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
+  - until curl -s $SIMPLETEST_BASE_URL; do sleep 2s; done > /dev/null
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
   # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
   # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup
+  #- $TRAVIS_BUILD_DIR/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup
   - $TRAVIS_BUILD_DIR/vendor/bin/drush status
   - $TRAVIS_BUILD_DIR/vendor/bin/drupal site:status

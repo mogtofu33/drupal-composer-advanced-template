@@ -1,6 +1,6 @@
 <?php
 
-$settings['hash_salt'] = '3UL6H2kvtBkYaU8Ex5rP_ZgCTzvGt4sfWvVTLxEAANkZq--LiBsrobmvV-hBh-ZaQ_PgQ60M_6w';
+$settings['hash_salt'] = '3U5rP_ZgCTzvGt4sfWvVTL6H2kvtBkYaU8ExLxrobmvV-hBh-ZaQ_PgEAANkZq--LiBsQ60M_6w';
 $settings['update_free_access'] = FALSE;
 $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 $settings['file_scan_ignore_directories'] = [

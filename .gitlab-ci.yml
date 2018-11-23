@@ -15,6 +15,8 @@ cache:
   paths:
     - vendor
     - web
+    - load.environment.php
+    - composer.json
     - composer.lock
     - security-checker.phar
     - phpmetrics.phar
@@ -30,7 +32,36 @@ cache:
   expire_in: 1 day
   when: always
 
-.test_template: &test_template
+.report_template: &report_template
+  dependencies:
+    - build
+  before_script:
+    - if [ ! -f ./${TOOL_PHAR} ];
+      then
+        curl -fsSL ${TOOL_URL} -o ${TOOL_PHAR};
+      fi
+    - chmod +x ${TOOL_PHAR}
+    - *ensure_report
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/*
+
+build:
+  stage: build
+  script:
+    - composer --verbose --no-check-all --no-check-publish validate
+    - if [ ! -f "web/index.php" ];
+      then
+        composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile;
+      fi
+    - if [ ! -f "web/themes/custom/bootstrap_sass/bootstrap_sass.theme" ];
+      then
+        composer --verbose install-boostrap-sass;
+      fi
+
+test:
+  stage: test
   image: juampynr/drupal8ci:latest
   services:
     - mariadb:latest
@@ -64,47 +95,12 @@ cache:
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/*
-
-.report_template: &report_template
-  dependencies:
-    - build
-  before_script:
-    - if [ ! -f ./${TOOL_PHAR} ];
-      then
-        curl -fsSL ${TOOL_URL} -o ${TOOL_PHAR};
-      fi
-    - chmod +x ${TOOL_PHAR}
-    - *ensure_report
-  artifacts:
-    <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/*.txt
-
-build:
-  stage: build
-  script:
-    - composer --verbose --no-check-all --no-check-publish validate
-    - if [ ! -f "web/index.php" ];
-      then
-        composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile;
-      fi
-    - if [ ! -f "web/themes/custom/bootstrap_sass/bootstrap_sass.theme" ];
-      then
-        composer --verbose install-boostrap-sass;
-      fi
-
-.test:
-  stage: test
-  <<: *test_template
 
 security report:
   stage: test
   <<: *report_template
   script:
     - ./${TOOL_PHAR} security:check
-    - ./${TOOL_PHAR} security:check > ${REPORT_DIR}/security.txt
   variables:
     TOOL_PHAR: "security-checker.phar"
     TOOL_URL: "https://get.sensiolabs.org/security-checker.phar"
@@ -122,5 +118,3 @@ metrics:
     TOOL_URL: "https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar"
   artifacts:
     <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}
