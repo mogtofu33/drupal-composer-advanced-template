@@ -111,7 +111,7 @@ metrics:
   stage: metrics
   <<: *report_template
   script:
-    - ./phpmetrics
+    - ./${TOOL_PHAR}
         --report-html=${REPORT_DIR}
         --extensions=php,inc,module
         web
