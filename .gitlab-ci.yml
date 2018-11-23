@@ -59,6 +59,14 @@ build:
       then
         composer --verbose install-boostrap-sass;
       fi
+  artifacts:
+    <<: *default_artifacts
+  paths:
+    - vendor
+    - web
+    - load.environment.php
+    - composer.json
+    - composer.lock
 
 test:
   stage: test
