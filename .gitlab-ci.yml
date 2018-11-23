@@ -22,6 +22,7 @@ cache:
     - web/profiles/contrib/
     - web/themes/contrib/
     - web/sites/*/settings.php
+    - composer.lock
 
 .ensure_report:
   - &ensure_report
@@ -41,13 +42,16 @@ cache:
     - mkdir -p ${REPORT_DIR}/coverage-xml
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
-    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile
+    - composer --verbose install-boostrap-sass
   script:
     - cd ${CI_PROJECT_DIR}/web
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
     - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
+  # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
+  # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
+  # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
     - ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
     - ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
     - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
@@ -62,7 +66,7 @@ build:
   stage: build
   script:
     - composer --verbose --no-check-all --no-check-publish validate
-    - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
     - composer --verbose install-boostrap-sass
 
 .test Php 7.1:
@@ -86,7 +90,8 @@ security report:
     - chmod +x security-checker
     - *ensure_report
   script:
-  - ./security-checker security:check > ${REPORT_DIR}/security.txt
+    - ./security-checker security:check
+    - ./security-checker security:check > ${REPORT_DIR}/security.txt
   artifacts:
     <<: *default_artifacts
     paths:

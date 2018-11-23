@@ -20,15 +20,12 @@ before_install:
 
 install:
   - composer --verbose --no-check-all --no-check-publish validate
-  - composer --verbose install
+  - composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
   - composer --verbose install-boostrap-sass
 
 script:
   - cd $TRAVIS_BUILD_DIR/web
-  #- cp sites/default/default.settings.php sites/default/settings.php 
-  #- echo '$config_directories["sync"] = "../config/sync";' >> sites/default/settings.php
-  #- $TRAVIS_BUILD_DIR/vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
-  - $TRAVIS_BUILD_DIR/vendor/bin/drush site-install config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
+  - $TRAVIS_BUILD_DIR/vendor/bin/drush site-install config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=$SIMPLETEST_DB
   - $TRAVIS_BUILD_DIR/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
   - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
