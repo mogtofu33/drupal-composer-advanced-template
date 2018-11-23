@@ -4,18 +4,13 @@ image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
 stages:
   - build
   - test
-  - security
   - metrics
 
 variables:
-  MYSQL_ROOT_PASSWORD: root
-  MYSQL_DATABASE: drupal
-  DB_HOST: mysql
   REPORT_DIR: "reports"
   PHPMETRICS: "v2.4.1"
-
-services:
-  - mysql:5.7
+  SIMPLETEST_DB: "sqlite://tmp/site.sqlite"
+  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
 
 cache:
   key: $CI_BUILD_REF_NAME
@@ -52,16 +47,13 @@ cache:
     - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - apk add --update --no-cache mysql-client
-    - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://root:root@mysql/drupal
-    - ./../vendor/phpunit/phpunit/phpunit -c core 
-      --coverage-xml ./../${REPORT_DIR}/coverage-xml
-      --coverage-html ./../${REPORT_DIR}/coverage-html
-      --coverage-text --colors=never
-      --testsuite unit
-      --exclude-group Composer,DependencyInjection,PageCache,Setup
-    - ./../vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
-    - ./../vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
+    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
+    - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
+    - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
+    - ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
+    - ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
+    - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
@@ -84,12 +76,12 @@ test Php 7.2:
   stage: test
   <<: *test_template
 
-security:
-  stage: security
+security report:
+  stage: test
   dependencies:
     - build
   before_script:
-    - if [ ! -f ./phpmetrics ];
+    - if [ ! -f ./security-checker ];
       then
         curl -fsSL https://get.sensiolabs.org/security-checker.phar -o security-checker;
       fi

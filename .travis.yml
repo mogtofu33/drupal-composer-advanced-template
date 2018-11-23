@@ -21,15 +21,19 @@ before_install:
 install:
   - composer --verbose --no-check-all --no-check-publish validate
   - composer --verbose install
+  - composer --verbose install-boostrap-sass
 
 script:
   - cd $TRAVIS_BUILD_DIR/web
-  - ./../vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
-  - ./../vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
+  #- cp sites/default/default.settings.php sites/default/settings.php 
+  #- echo '$config_directories["sync"] = "../config/sync";' >> sites/default/settings.php
+  #- $TRAVIS_BUILD_DIR/vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
+  - $TRAVIS_BUILD_DIR/vendor/bin/drush site-install config_installer --yes config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
+  - $TRAVIS_BUILD_DIR/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
   - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
   # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
   # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-  - ./../vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup
-  - ./../vendor/bin/drush status
-  - ./../vendor/bin/drupal site:status
+  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup
+  - $TRAVIS_BUILD_DIR/vendor/bin/drush status
+  - $TRAVIS_BUILD_DIR/vendor/bin/drupal site:status
