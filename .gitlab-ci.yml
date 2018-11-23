@@ -52,6 +52,7 @@ cache:
     - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
   script:
     - cd ${CI_PROJECT_DIR}/web
+    - apk add --update --no-cache mysql-client
     - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://root:root@mysql/drupal
     - ./../vendor/phpunit/phpunit/phpunit -c core 
       --coverage-xml ./../${REPORT_DIR}/coverage-xml
