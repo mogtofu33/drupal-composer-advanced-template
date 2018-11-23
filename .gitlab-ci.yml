@@ -43,7 +43,7 @@ cache:
     #- composer --verbose install-boostrap-sass
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install -vvv --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install -vvv --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
     - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
     - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
