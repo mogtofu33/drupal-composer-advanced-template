@@ -120,3 +120,7 @@ metrics:
   variables:
     TOOL_PHAR: "phpmetrics.phar"
     TOOL_URL: "https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar"
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}
