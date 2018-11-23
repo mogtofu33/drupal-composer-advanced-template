@@ -61,12 +61,12 @@ build:
       fi
   artifacts:
     <<: *default_artifacts
-  paths:
-    - vendor
-    - web
-    - load.environment.php
-    - composer.json
-    - composer.lock
+    paths:
+      - vendor
+      - web
+      - load.environment.php
+      - composer.json
+      - composer.lock
 
 test:
   stage: test
@@ -92,8 +92,7 @@ test:
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
     - ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
-    - ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
-    - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
+    - ${CI_PROJECT_DIR}/vendor/bin/drush status
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
@@ -101,8 +100,6 @@ test:
     SIMPLETEST_BASE_URL: "http://localhost"
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-  artifacts:
-    <<: *default_artifacts
 
 security report:
   stage: test
