@@ -9,8 +9,6 @@ stages:
 variables:
   REPORT_DIR: "reports"
   PHPMETRICS: "v2.4.1"
-  SIMPLETEST_DB: "sqlite://tmp/site.sqlite"
-  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
 
 cache:
   key: $CI_BUILD_REF_NAME
@@ -34,30 +32,34 @@ cache:
 
 .test_template: &test_template
   image: juampynr/drupal8ci:latest
+  services:
+    - mariadb:latest
   dependencies:
     - build
   before_script:
-    - mkdir -p ${REPORT_DIR}/coverage-xml
-    - mkdir -p ${REPORT_DIR}/coverage-html
-    - *ensure_report
     - mkdir -p /var/www/html
     - ln -s $CI_PROJECT_DIR/web /var/www/html/web
     - apache2-foreground&
+    - mkdir -p ${REPORT_DIR}/coverage-xml
+    - mkdir -p ${REPORT_DIR}/coverage-html
+    - *ensure_report
   script:
     - cd ${CI_PROJECT_DIR}/web
     - ${CI_PROJECT_DIR}/vendor/bin/drush status
-    - /usr/local/bin/php -v
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
-    #- until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-    #- ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
-    #- ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
+    - ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
+    - ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
+    - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
+  variables:
+    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+    MYSQL_DATABASE: "drupal"
+    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
+    SIMPLETEST_BASE_URL: "http://localhost"
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
-  #coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     <<: *default_artifacts
     paths:
