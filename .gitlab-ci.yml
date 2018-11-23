@@ -9,8 +9,6 @@ stages:
 
 variables:
   MYSQL_ROOT_PASSWORD: root
-  MYSQL_USER: drupal
-  MYSQL_PASSWORD: drupal
   MYSQL_DATABASE: drupal
   DB_HOST: mysql
   REPORT_DIR: "reports"
@@ -54,7 +52,7 @@ cache:
     - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://drupal:drupal@mysql/drupal
+    - ./../vendor/bin/drush site-install --verbose --yes --db-url=mysql://root:root@mysql/drupal
     - ./../vendor/phpunit/phpunit/phpunit -c core 
       --coverage-xml ./../${REPORT_DIR}/coverage-xml
       --coverage-html ./../${REPORT_DIR}/coverage-html
