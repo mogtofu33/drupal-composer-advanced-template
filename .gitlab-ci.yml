@@ -46,7 +46,7 @@ cache:
     - *ensure_report
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - cp ${CI_PROJECT_DIR}/.gitlab-ci/settings-ci.php web/sites/default/settings.php
+    - cp .gitlab-ci/settings-ci.php web/sites/default/settings.php
     - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
@@ -94,7 +94,7 @@ build:
         composer --verbose install-boostrap-sass;
       fi
 
-.test:
+test:
   stage: test
   <<: *test_template
 
