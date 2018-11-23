@@ -18,8 +18,8 @@ cache:
     - vendor
     - web
     - composer.lock
-    - security-checker
-    - phpmetrics
+    - security-checker.phar
+    - phpmetrics.phar
 
 .ensure_report:
   - &ensure_report
@@ -43,7 +43,7 @@ cache:
     #- composer --verbose install-boostrap-sass
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --vvv --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
     - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
@@ -58,6 +58,21 @@ cache:
     <<: *default_artifacts
     paths:
       - ${REPORT_DIR}/*
+
+.report_template: &report_template
+  dependencies:
+    - build
+  before_script:
+    - if [ ! -f ./${TOOL_PHAR} ];
+      then
+        curl -fsSL ${TOOL_URL} -o ${TOOL_PHAR};
+      fi
+    - chmod +x ${TOOL_PHAR}
+    - *ensure_report
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/*.txt
 
 build:
   stage: build
@@ -83,38 +98,22 @@ test Php 7.2:
 
 security report:
   stage: test
-  dependencies:
-    - build
-  before_script:
-    - if [ ! -f ./security-checker ];
-      then
-        curl -fsSL https://get.sensiolabs.org/security-checker.phar -o security-checker;
-      fi
-    - chmod +x security-checker
-    - *ensure_report
+  <<: *report_template
   script:
-    - ./security-checker security:check
-    - ./security-checker security:check > ${REPORT_DIR}/security.txt
-  artifacts:
-    <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/security.txt
+    - ./${TOOL_PHAR} security:check
+    - ./${TOOL_PHAR} security:check > ${REPORT_DIR}/security.txt
+  variables:
+    TOOL_PHAR: "security-checker.phar"
+    TOOL_URL: "https://get.sensiolabs.org/security-checker.phar"
 
 metrics:
   stage: metrics
-  dependencies:
-    - build
-  before_script:
-    - if [ ! -f ./phpmetrics ];
-      then
-        curl -fsSL https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar -o phpmetrics;
-      fi
-    - chmod +x phpmetrics
-    - *ensure_report
+  <<: *report_template
   script:
     - ./phpmetrics
         --report-html=${REPORT_DIR}
         --extensions=php,inc,module
         web
-  artifacts:
-    <<: *default_artifacts
+  variables:
+    TOOL_PHAR: "phpmetrics.phar"
+    TOOL_URL: "https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar"
