@@ -15,13 +15,8 @@ variables:
 cache:
   key: $CI_BUILD_REF_NAME
   paths:
-    - vendor/
-    - web/core/
-    - web/libraries/
-    - web/modules/contrib/
-    - web/profiles/contrib/
-    - web/themes/contrib/
-    - web/sites/*/settings.php
+    - vendor
+    - web
     - composer.lock
 
 .ensure_report:
@@ -42,8 +37,8 @@ cache:
     - mkdir -p ${REPORT_DIR}/coverage-xml
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile
-    - composer --verbose install-boostrap-sass
+    #- composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile
+    #- composer --verbose install-boostrap-sass
   script:
     - cd ${CI_PROJECT_DIR}/web
     - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --verbose --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
