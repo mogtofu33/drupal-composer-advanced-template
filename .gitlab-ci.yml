@@ -15,7 +15,6 @@ variables:
 cache:
   key: $CI_BUILD_REF_NAME
   paths:
-    # - drush/contrib/
     - vendor/
     - web/core/
     - web/libraries/
@@ -23,8 +22,6 @@ cache:
     - web/profiles/contrib/
     - web/themes/contrib/
     - web/sites/*/settings.php
-    - web/sites/*/settings.*.php
-    # - web/sites/*/files/
 
 .ensure_report:
   - &ensure_report
@@ -66,6 +63,7 @@ build:
   script:
     - composer --verbose --no-check-all --no-check-publish validate
     - composer --verbose install --prefer-dist --no-ansi --no-interaction --no-progress --quiet
+    - composer --verbose install-boostrap-sass
 
 .test Php 7.1:
   stage: test
@@ -88,7 +86,7 @@ security report:
     - chmod +x security-checker
     - *ensure_report
   script:
-    - ./security-checker security-checker > ${REPORT_DIR}/security.txt
+  - ./security-checker security:check > ${REPORT_DIR}/security.txt
   artifacts:
     <<: *default_artifacts
     paths:
