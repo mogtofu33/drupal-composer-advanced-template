@@ -95,7 +95,7 @@ build:
         composer --verbose install-boostrap-sass;
       fi
 
-test:
+.test:
   stage: test
   <<: *test_template
 
