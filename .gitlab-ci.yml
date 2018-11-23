@@ -43,13 +43,13 @@ cache:
     #- composer --verbose install-boostrap-sass
   script:
     - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install -vvv --yes minimal --db-url=sqlite://tmp/site.sqlite
-    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=sqlite://tmp/site.sqlite
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --root="${CI_PROJECT_DIR}/web" --yes minimal --db-url=${SIMPLETEST_DB} -vvv
+    #- ${CI_PROJECT_DIR}/vendor/bin/drush site-install -vvv --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     - ${CI_PROJECT_DIR}/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
     - until curl -s $SIMPLETEST_BASE_URL; do sleep 5s; done > /dev/null
-  # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
-  # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
-  # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
+    # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
+    # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
+    # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
     - ${CI_PROJECT_DIR}/vendor/bin/phpunit -c core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache,Setup --coverage-text --colors=never
     - ${CI_PROJECT_DIR}/vendor/bin/drush status > ../${REPORT_DIR}/drush.txt
     - ${CI_PROJECT_DIR}/vendor/bin/drupal site:status > ../${REPORT_DIR}/console.txt
