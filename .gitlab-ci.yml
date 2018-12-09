@@ -82,13 +82,13 @@ test:
     # Prepare tests folder.
     - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
     - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chown -R www-data:www-data ${WEB_ROOT}
+    - chown -R www-data:www-data web
     - apache2-foreground&
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
   script:
     - cp .gitlab-ci/settings-ci.php web/sites/default/settings.php
-    - mkdir -p ${WEB_ROOT}/sites/default/files
+    - mkdir -p web/sites/default/files
     - cd ${CI_PROJECT_DIR}/web
     - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
