@@ -94,11 +94,11 @@ test:
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-    - sudo -E -u www-data
-      ${CI_PROJECT_DIR}/vendor/bin/phpunit
-        -c ${CI_PROJECT_DIR}/web/core --verbose --testsuite unit
-        --exclude-group Composer,DependencyInjection,PageCache,Setup
-        --coverage-text --colors=never
+    #- sudo -E -u www-data
+    #  ${CI_PROJECT_DIR}/vendor/bin/phpunit
+    #    -c ${CI_PROJECT_DIR}/web/core --verbose --testsuite unit
+    #    --exclude-group Composer,DependencyInjection,PageCache,Setup
+    #    --coverage-text --colors=never
     - ${CI_PROJECT_DIR}/vendor/bin/drush status
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
@@ -130,7 +130,7 @@ metrics:
   script:
     - ./${TOOL_PHAR}
         --report-html=${REPORT_DIR}
-        --extensions=php,inc,module
+        --extensions=php,inc,module,theme
         web
   variables:
     TOOL_PHAR: "phpmetrics.phar"
