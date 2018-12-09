@@ -96,10 +96,8 @@ test:
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
     - sudo -E -u www-data
       ${CI_PROJECT_DIR}/vendor/bin/phpunit
-        -c ${CI_PROJECT_DIR}/web/core --verbose --testsuite unit,kernel
+        -c ${CI_PROJECT_DIR}/web/core --verbose --testsuite unit
         --exclude-group Composer,DependencyInjection,PageCache,Setup
-        --testdox-html ${REPORT_DIR}/phpunit.html
-        --coverage-html ${REPORT_DIR}/coverage-html
         --coverage-text --colors=never
     - ${CI_PROJECT_DIR}/vendor/bin/drush status
   variables:
