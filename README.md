@@ -1,7 +1,6 @@
 # Composer template for Drupal projects
 
-
-[![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/8.x-dev/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/8.x-dev)
+[![pipeline status](https://gitlab.org/mog33/drupal-composer-advanced-template/badges/8.x-dev/pipeline.svg)](https://gitlab.org/mog33/drupal-composer-advanced-template/commits/8.x-dev)
 [![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=8.x-dev)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
 Based on [Composer template for Drupal projects](https://github.com/drupal-composer/drupal-project).
