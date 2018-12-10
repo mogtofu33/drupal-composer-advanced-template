@@ -75,7 +75,7 @@ test:
     # Prepare tests folder.
     - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
     - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chown -R www-data:www-data web
+    - chown -R www-data:www-data "${BROWSERTEST_OUTPUT_DIRECTORY}"
     - apache2-foreground&
     - mkdir -p ${REPORT_DIR}/coverage-html
     - *ensure_report
