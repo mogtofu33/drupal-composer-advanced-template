@@ -91,7 +91,7 @@ test:
     - mkdir -p web/sites/default/files
     - cd ${CI_PROJECT_DIR}/web
     - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
-    - ${CI_PROJECT_DIR}/vendor/bin/drush status
+    - ${CI_PROJECT_DIR}/vendor/bin/drush status --field=bootstrap
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
@@ -106,14 +106,14 @@ test:
     SIMPLETEST_DB: "mysql://root@mariadb/drupal"
     SIMPLETEST_BASE_URL: "http://localhost"
     BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
-  artifacts:
-    <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/*.html
-      - ${REPORT_DIR}/coverage-html/*
+  #artifacts:
+  #  <<: *default_artifacts
+  #  paths:
+  #    - ${REPORT_DIR}/*.html
+  #    - ${REPORT_DIR}/coverage-html/*
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-  allow_failure: true
+  #allow_failure: true
 
 security report:
   stage: test
