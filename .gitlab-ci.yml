@@ -108,7 +108,7 @@ test:
   #    - ${REPORT_DIR}/coverage-html/*
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-  #allow_failure: true
+  allow_failure: true
 
 security report:
   stage: test
