@@ -50,7 +50,7 @@ build:
   stage: build
   script:
     - composer --verbose --no-check-all --no-check-publish validate
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --profile
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
     - composer --verbose install-boostrap-sass
   artifacts:
     <<: *default_artifacts
@@ -88,8 +88,8 @@ test:
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-    - sudo -E -u www-data
-      ${CI_PROJECT_DIR}/vendor/bin/phpunit
+    # - sudo -E -u www-data
+    - ${CI_PROJECT_DIR}/vendor/bin/phpunit
         -c ${CI_PROJECT_DIR}/web/core
         --verbose
         --exclude-group Composer,DependencyInjection,PageCache,Setup
