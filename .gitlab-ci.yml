@@ -11,7 +11,7 @@ variables:
   PHPMETRICS: "v2.4.1"
 
 cache:
-  key: $CI_BUILD_REF_NAME
+  key: drupal-project-$CI_BUILD_REF_NAME
   paths:
     - vendor
     - web
@@ -51,14 +51,8 @@ build:
   stage: build
   script:
     - composer --verbose --no-check-all --no-check-publish validate
-    - if [ ! -f "web/index.php" ];
-      then
-        composer install --prefer-dist --no-ansi --no-interaction --no-progress --quiet --profile;
-      fi
-    - if [ ! -f "web/themes/custom/bootstrap_sass/bootstrap_sass.theme" ];
-      then
-        composer --verbose install-boostrap-sass;
-      fi
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --profile
+    - composer --verbose install-boostrap-sass
   artifacts:
     <<: *default_artifacts
     paths:
