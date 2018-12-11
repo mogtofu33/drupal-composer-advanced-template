@@ -11,7 +11,7 @@ variables:
   PHPMETRICS: "v2.4.1"
 
 cache:
-  key: drupal-project-$CI_BUILD_REF_NAME
+  key: drupal-$CI_BUILD_REF_NAME
   paths:
     - vendor
     - web
@@ -69,45 +69,46 @@ test:
   dependencies:
     - build
   before_script:
-    - cp .gitlab-ci/phpunit.xml web/core/
+    - *ensure_report
+    #- cp .gitlab-ci/phpunit.xml web/core/
     - mkdir -p /var/www/html
     - ln -s $CI_PROJECT_DIR/web /var/www/html/web
     # Prepare tests folder.
-    - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chown -R www-data:www-data "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    #- mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    #- chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    #- chown -R www-data:www-data "${BROWSERTEST_OUTPUT_DIRECTORY}"
     - apache2-foreground&
-    - mkdir -p ${REPORT_DIR}/coverage-html
-    - *ensure_report
+    #- mkdir -p ${REPORT_DIR}/coverage-html
   script:
+    - cp .gitlab-ci/.env-ci ./.env
     - cp .gitlab-ci/settings-ci.php web/sites/default/settings.php
-    - mkdir -p web/sites/default/files
+    - ./vendor/bin/drush status
+    - ./vendor/bin/drush --root="/var/www/html/web" status
     - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
-    - ${CI_PROJECT_DIR}/vendor/bin/drush status --field=bootstrap
+    - ../vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
+    - ../vendor/bin/drush status --field=bootstrap
     # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
     # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
     # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
     # - sudo -E -u www-data
-    - ${CI_PROJECT_DIR}/vendor/bin/phpunit
-        -c ${CI_PROJECT_DIR}/web/core
-        --verbose
-        --exclude-group Composer,DependencyInjection,PageCache,Setup
-        --coverage-text --colors=never
-        --testsuite unit
+    #- ${CI_PROJECT_DIR}/vendor/bin/phpunit
+    #    -c ${CI_PROJECT_DIR}/web/core
+    #    --verbose
+    #    --exclude-group Composer,DependencyInjection,PageCache,Setup
+     #   --testsuite unit
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
     SIMPLETEST_DB: "mysql://root@mariadb/drupal"
     SIMPLETEST_BASE_URL: "http://localhost"
-    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
+    #BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
   #artifacts:
   #  <<: *default_artifacts
   #  paths:
   #    - ${REPORT_DIR}/*.html
   #    - ${REPORT_DIR}/coverage-html/*
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
-  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  #coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   allow_failure: true
 
 security report:
