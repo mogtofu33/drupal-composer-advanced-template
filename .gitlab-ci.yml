@@ -1,12 +1,24 @@
-variables:
-  WEB_ROOT: "web"
-  REPORT_DIR: "reports"
-  PHPMETRICS: "v2.4.1"
+# https://github.com/edbizarro/gitlab-ci-pipeline-php
+image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
 
 stages:
   - build
-  - tests
+  - test
   - metrics
+
+variables:
+  REPORT_DIR: "reports"
+  PHPMETRICS: "v2.4.1"
+
+cache:
+  key: drupal-project-$CI_BUILD_REF_NAME
+  paths:
+    - vendor
+    - web
+    - load.environment.php
+    - composer.json
+    - composer.lock
+    - ./*.phar
 
 .ensure_report:
   - &ensure_report
@@ -17,10 +29,11 @@ stages:
     - ${REPORT_DIR}/*.html
   name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
   expire_in: 1 day
+  when: always
 
 .report_template: &report_template
   dependencies:
-    - Build
+    - build
   before_script:
     - if [ ! -f ./${TOOL_PHAR} ];
       then
@@ -33,92 +46,71 @@ stages:
     paths:
       - ${REPORT_DIR}/*
 
-# Testing template for phpunit, this provide Apache / Php.
-.test_template: &test_template
-  image: mogtofu33/drupal8ci:8.6
-  # Build is not for master but only some other branches.
-  except:
-    - master
-  only:
-    - testing
-  services:
-    - mariadb:latest
-  before_script:
-    - *ensure_report
-    - cp .gitlab-ci/phpunit.xml ${WEB_ROOT}/core/
-    - cp .gitlab-ci/settings-ci.php ${WEB_ROOT}/sites/default/settings.php
-    - mkdir -p /var/www/html
-    - ln -s ${CI_PROJECT_DIR}/${WEB_ROOT} /var/www/html/web
-    # Prepare tests folder.
-    - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chown -R www-data:www-data ${WEB_ROOT}
-    - apache2-foreground&
-    - cd ${CI_PROJECT_DIR}/${WEB_ROOT}
-    - ../vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
-    - ../vendor/bin/drush status --field=bootstrap
-  variables:
-    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
-    MYSQL_DATABASE: "drupal"
-    SIMPLETEST_BASE_URL: "http://localhost"
-    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
-    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
-  artifacts:
-    <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/*
-
-cache:
-  key: drupal-$CI_BUILD_REF_NAME
-  paths:
-    - vendor
-    - web
-
-Build:
+build:
   stage: build
-  image: mogtofu33/drupal8ci:8.6
   script:
     - composer --verbose --no-check-all --no-check-publish validate
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
     - composer --verbose install-boostrap-sass
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - vendor
+      - web
+      - load.environment.php
+      - composer.json
+      - composer.lock
 
-Unit and kernel tests:
-  stage: tests
+test:
+  stage: test
+  image: mogtofu33/drupal8ci:8.6
+  services:
+    - mariadb:latest
   dependencies:
-    - Build
-  <<: *test_template
-  script:
-    - sudo -E -u www-data
-      ./vendor/bin/phpunit
-        -c web/core --verbose
-        --log-junit ${REPORT_DIR}/phpunit.xml
-        --testdox-html ${REPORT_DIR}/phpunit.html
-        --testsuite unit,kernel
-
-Code coverage:
-  stage: tests
-  dependencies:
-    - Build
-  <<: *test_template
-  script:
-    # Create the needed folders.
-    - mkdir -p ${REPORT_DIR}/coverage-xml
+    - build
+  before_script:
+    - cp .gitlab-ci/phpunit.xml web/core/
+    - mkdir -p /var/www/html
+    - ln -s $CI_PROJECT_DIR/web /var/www/html/web
+    # Prepare tests folder.
+    - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    - chown -R www-data:www-data "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    - apache2-foreground&
     - mkdir -p ${REPORT_DIR}/coverage-html
-    - chmod -R 777 ${REPORT_DIR}
-    - timeout 60m sudo -E -u www-data
-      ./vendor/bin/phpunit
-        -c web/core
-        --coverage-xml ${REPORT_DIR}/coverage-xml
-        --coverage-html ${REPORT_DIR}/coverage-html
-        --coverage-text --colors=never
-        --testsuite unit,kernel
+    - *ensure_report
+  script:
+    - cp .gitlab-ci/settings-ci.php web/sites/default/settings.php
+    - mkdir -p web/sites/default/files
+    - cd ${CI_PROJECT_DIR}/web
+    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
+    - ${CI_PROJECT_DIR}/vendor/bin/drush status --field=bootstrap
+    # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
+    # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
+    # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
+    # - sudo -E -u www-data
+    - ${CI_PROJECT_DIR}/vendor/bin/phpunit
+        -c ${CI_PROJECT_DIR}/web/core
+        --verbose
+        --exclude-group Composer,DependencyInjection,PageCache,Setup
+        --testsuite unit
+  variables:
+    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+    MYSQL_DATABASE: "drupal"
+    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
+    SIMPLETEST_BASE_URL: "http://localhost"
+    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
+  #artifacts:
+  #  <<: *default_artifacts
+  #  paths:
+  #    - ${REPORT_DIR}/*.html
+  #    - ${REPORT_DIR}/coverage-html/*
   # https://docs.gitlab.com/ee/ci/yaml/#coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  allow_failure: true
 
-Security report:
-  stage: tests
-  dependencies:
-    - Build
+security report:
+  stage: test
   <<: *report_template
   script:
     - ./${TOOL_PHAR} security:check
@@ -126,7 +118,7 @@ Security report:
     TOOL_PHAR: "security-checker.phar"
     TOOL_URL: "https://get.sensiolabs.org/security-checker.phar"
 
-Php metrics:
+metrics:
   stage: metrics
   <<: *report_template
   script:
@@ -140,6 +132,3 @@ Php metrics:
   artifacts:
     <<: *default_artifacts
   when: manual
-
-# Default docker image when not overriden.
-image: alpine:latest
