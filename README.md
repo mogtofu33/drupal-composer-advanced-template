@@ -39,10 +39,10 @@ Download project code, from this folder run:
 
 ```shell
 cd drupal
-composer install
+composer install --no-suggest
 ```
 
-Optional with Bootstrap Sass:
+Create sub theme Bootstrap Sass:
 
 ```shell
 composer install-boostrap-sass
@@ -65,15 +65,10 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 cp .env.example .env
 ```
 
-Set your database connection values.
+* Copy _example.settings.php to _web/sites/default/settings.php_
 
-* Edit _web/sites/default/settings.php_ and uncomment _settings.local.php_ inclusion at the end and add config variable:
-
-```php
-if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-  include $app_root . '/' . $site_path . '/settings.local.php';
-}
-$config_directories['sync'] = '../config/sync';
+```shell
+cp example.settings.php web/sites/default/settings.php
 ```
 
 * Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch:
