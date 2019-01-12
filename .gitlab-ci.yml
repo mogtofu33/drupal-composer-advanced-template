@@ -47,8 +47,8 @@ variables:
   CSS_FILES: "${WEB_ROOT}/themes/contrib/**/css/"
   SASS_CONFIG: "./.sass-lint.yml"
   # Ignore files and dir for all Phpqa tools.
-  PHPQA_IGNORE_DIRS: "--ignoredDirs vendor,bootstrap"
-  PHPQA_IGNORE_FILES: "--ignoredFiles Readme.md,style.css,print.css"
+  PHPQA_IGNORE_DIRS: "--ignoredDirs vendor,bootstrap,tests"
+  PHPQA_IGNORE_FILES: "--ignoredFiles Readme.md,style.css,print.css,*Test.php"
 
   ##############################################################################
   # All reports will be available in artifacts from this folder.
