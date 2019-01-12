@@ -326,6 +326,7 @@ Code quality:
     <<: *default_artifacts
   script:
     - phpqa ${PHPQA_REPORT} ${TOOLS} ${PHPQA_PHP_CODE}
+  allow_failure: true
 
 # Drupal coding standard best practices report.
 Best practices:
