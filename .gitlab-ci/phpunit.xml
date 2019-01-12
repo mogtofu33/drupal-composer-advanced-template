@@ -42,6 +42,19 @@
     <testsuite name="functional-javascript">
       <file>./tests/TestSuites/FunctionalJavascriptTestSuite.php</file>
     </testsuite>
+    <!-- Prefix with custom for only custom folders -->
+    <testsuite name="customunit">
+      <directory>../**/custom/**/tests/src/Unit</directory>
+    </testsuite>
+    <testsuite name="customkernel">
+      <directory>../**/custom/**/tests/src/Kernel</directory>
+    </testsuite>
+    <testsuite name="customfunctional">
+      <directory>../**/custom/**/tests/src/Functional</directory>
+    </testsuite>
+    <testsuite name="customfunctional-javascript">
+      <directory>../**/custom/**/tests/src/FunctionalJavascript</directory>
+    </testsuite>
   </testsuites>
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">
@@ -53,11 +66,11 @@
   <!-- Filter for coverage reports. -->
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
-      <directory>./includes</directory>
-      <directory>./lib</directory>
-      <directory>./modules</directory>
+      <!-- <directory>./includes</directory> -->
+      <!-- <directory>./lib</directory> -->
+      <!-- <directory>./modules</directory> -->
       <directory>../modules</directory>
-      <directory>../sites</directory>
+      <!-- <directory>../sites</directory> -->
       <!-- By definition test classes have no tests. -->
       <exclude>
         <directory suffix="Test.php">./</directory>

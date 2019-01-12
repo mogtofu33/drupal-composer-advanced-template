@@ -1,25 +1,86 @@
-# https://github.com/edbizarro/gitlab-ci-pipeline-php
-image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
+################################################################################
+# Gitlab CI samples for Drupal 8  project, code quality and deploy.
+#
+# Project: https://gitlab.com/mog33/gitlab-ci-drupal
+# Documentation: https://gitlab.com/mog33/gitlab-ci-drupal
+# Author: Jean Valverde contact@dev-drupal.com
+# License: GPL-3
+#
+# This file is way too huge for a normal CI process, this is just a commented
+# example of working jobs for Drupal 8, feel free to cherry pick what you need.
+#
+# For Gilab CI help on this file see:
+#   https://docs.gitlab.com/ee/ci/yaml
+#
+################################################################################
+
+variables:
+  ##############################################################################
+  # Common variables for all jobs, edit this part to your needs.
+  #
+  # Make CI more verbose in case of problem.
+  # CI_DEBUG_TRACE: "1"
+  #
+  # Path is relative to project root, web/ is for Drupal Composer template,
+  # change it if you are using docroot/ or any other web root.
+  WEB_ROOT: "web"
+
+  # See Phpqa available tools:
+  #   https://github.com/EdgedesignCZ/phpqa#available-tools
+  # Allow some errors, this will stop the pipeline if a limit is reached.
+  TOOLS: "--tools phpcs:0,phpmd,phpcpd,parallel-lint"
+
+  # Phpunit tests to run, only custom code or empty for all code.
+  # see .gitlab-ci/phpunit.xml for settings.
+  TESTS: "custom"
+
+  ##############################################################################
+  # Next part do not need to be edited for a first quick run.
+  ##############################################################################
+  # Drupal custom code / theme / all code. We are checking our code quality,
+  # and optionally Drupal core.
+  #
+  # Comma separated for phpqa and phpmetrics.
+  PHP_CODE: "${WEB_ROOT}/modules/contrib,${WEB_ROOT}/themes/contrib"
+  # Space separated for eslint and sass lint.
+  JS_CODE: "${WEB_ROOT}/modules/contrib/**/*.js ${WEB_ROOT}/themes/contrib/**/*.js"
+  CSS_FILES: "${WEB_ROOT}/themes/contrib/**/css/"
+  SASS_CONFIG: "./.sass-lint.yml"
+  # Ignore files and dir for all Phpqa tools.
+  PHPQA_IGNORE_DIRS: "--ignoredDirs vendor,bootstrap"
+  PHPQA_IGNORE_FILES: "--ignoredFiles Readme.md,style.css,print.css"
+
+  ##############################################################################
+  # All reports will be available in artifacts from this folder.
+  REPORT_DIR: "reports"
+
+  # Options for Phpqa to build a report to download, need artifacts set on the
+  # job, see '.report' below.
+  PHPQA_REPORT: "--report --buildDir ${REPORT_DIR}"
+  PHPQA_PHP_CODE: "--analyzedDirs ${PHP_CODE} ${PHPQA_IGNORE_DIRS} ${PHPQA_IGNORE_FILES}"
+  PHPQA_ALL_CODE: "--analyzedDirs ${WEB_ROOT} ${PHPQA_IGNORE_DIRS} ${PHPQA_IGNORE_FILES}"
+
+################################################################################
+# Define your stages, this will be "pipelines" in gitlab.
+#   https://docs.gitlab.com/ee/ci/pipelines.html
+################################################################################
 
 stages:
   - build
-  - test
-  - metrics
+  # Only on branch testing.
+  - tests
+  # On each push.
+  - code quality
+  - code lint
+  # Only on tag, when released.
+  - php code metrics
 
-variables:
-  REPORT_DIR: "reports"
-  PHPMETRICS: "v2.4.1"
+################################################################################
+# Gitlab ci templates for common jobs to avoid repeat, see
+#   https://docs.gitlab.com/ee/ci/yaml/#anchors
+################################################################################
 
-cache:
-  key: drupal-project-$CI_BUILD_REF_NAME
-  paths:
-    - vendor
-    - web
-    - load.environment.php
-    - composer.json
-    - composer.lock
-    - ./*.phar
-
+# Small repetitive tasks.
 .ensure_report:
   - &ensure_report
     mkdir -p ${REPORT_DIR} && chmod -R 777 ${REPORT_DIR}
@@ -27,108 +88,415 @@ cache:
 .default_artifacts: &default_artifacts
   paths:
     - ${REPORT_DIR}/*.html
+    - ${REPORT_DIR}/*.svg
+  # Name will be based on job and branch.
   name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+  # How long do we keep reports files?
   expire_in: 1 day
+  # Force artifacts even if the job fail.
   when: always
 
-.report_template: &report_template
-  dependencies:
-    - build
+# Common for all jobs.
+before_script:
+  - *ensure_report
+
+# Testing template for phpunit, this provide Apache / Php.
+.test_template: &test_template
+  # Build is not for master but only branch testing or tags for release.
+  # Limit to branch push, for more options see
+  # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
+  except:
+    - master
+  only:
+    - testing
+    - tags
+  tags:
+    - docker
+  services:
+    - mariadb:latest
   before_script:
-    - if [ ! -f ./${TOOL_PHAR} ];
-      then
-        curl -fsSL ${TOOL_URL} -o ${TOOL_PHAR};
-      fi
-    - chmod +x ${TOOL_PHAR}
     - *ensure_report
+    # Copy CI settings.
+    - cp .gitlab-ci/phpunit.xml ${WEB_ROOT}/core/ || true
+    # Prepare Drupal installation.
+    - cp .gitlab-ci/settings-ci.php ${WEB_ROOT}/sites/default/settings.php || true
+    - mkdir -p /var/www/html
+    - ln -s "${CI_PROJECT_DIR}/${WEB_ROOT}" /var/www/html/web
+    # Prepare tests folder and ensure permissions.
+    - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
+    - chown -R www-data:www-data ${WEB_ROOT}
+    - apache2-foreground&
+    # Import dump from cache if available, or Setup Drupal.
+    - mkdir -p dump && chmod -R 777 dump
+    - if [ -f "${DB_DUMP}" ];
+      then
+        mysql -hmariadb -uroot drupal < ${CI_PROJECT_DIR}/${DB_DUMP};
+      else
+        robo setup:drupal;
+      fi
+    - robo check:drupal
+  variables:
+    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+    MYSQL_DATABASE: "drupal"
+    DB_DUMP: "dump/dump.sql"
+    SIMPLETEST_BASE_URL: "http://localhost"
+    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
+    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
+    # Install Drupal from config in ./config/sync with config_installer.
+    SETUP_FROM_CONFIG: "1"
   artifacts:
     <<: *default_artifacts
     paths:
       - ${REPORT_DIR}/*
+  cache:
+    key: dump-$CI_BUILD_REF_NAME
+    paths:
+      - dump
 
-build:
+################################################################################
+# Jobs definition.
+#   https://docs.gitlab.com/ee/ci/pipelines.html#jobs
+#
+# All jobs are set in a stage.
+################################################################################
+
+################################################################################
+# Build and tests jobs, not for master.
+################################################################################
+
+# Sample of a build, considering a Drupal 8 with composer.
+# For more samples see
+#   https://docs.gitlab.com/ee/ci/examples/deployment/composer-npm-deploy.html
+# Two scenarios here:
+# - Your repo include only custom code for a composer based project
+# - Your repo include at least a composer.json file to install Drupal
+Build:
   stage: build
+  tags:
+    - docker
+  except:
+    - master
+  only:
+    - testing
+    - tags
   script:
+    # Check composer first, then install.
     - composer --verbose --no-check-all --no-check-publish validate
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
-    - composer --verbose install-boostrap-sass
-  artifacts:
-    <<: *default_artifacts
+    - robo install:drupal
+  # On build we cache the composer, web folders.
+  cache:
+    key: drupal-$CI_BUILD_REF_NAME
     paths:
       - vendor
       - web
-      - load.environment.php
+  artifacts:
+    paths:
+      # Build files for deploy/release.
+      - vendor
+      - web
+      - drush
+      - scripts
       - composer.json
       - composer.lock
+      # Specific to drupal-composer/drupal-project.
+      - .env.example
+      - load.environment.php
+    expire_in: 1 day
 
-test:
-  stage: test
-  image: mogtofu33/drupal8ci:8.6
+Security report:
+  stage: tests
+  tags:
+    - docker
+  except:
+    - master
+  only:
+    - testing
+    - tags
+  script:
+    - if [ -f "composer.lock" ];
+      then
+        security-checker security:check;
+      fi
+  dependencies:
+    - Build
+
+# Job to run Unit and Kernel tests.
+Unit and kernel tests:
+  stage: tests
+  <<: *test_template
+  script:
+    - robo test:suite "${TESTS}unit,${TESTS}kernel" "${REPORT_DIR}"
+  dependencies:
+    - Build
+
+# Job to check test coverage.
+Code coverage:
+  stage: tests
+  <<: *test_template
+  script:
+    # Create the needed folders.
+    - mkdir -p ${REPORT_DIR}/coverage-xml
+    - mkdir -p ${REPORT_DIR}/coverage-html
+    - chmod -R 777 ${REPORT_DIR}
+    - robo test:coverage "${TESTS}unit,${TESTS}kernel" "${REPORT_DIR}"
+  dependencies:
+    - Build
+  # https://docs.gitlab.com/ee/ci/yaml/#coverage
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+
+# Job to run Functional tests, require an install.
+Functional:
+  stage: tests
+  <<: *test_template
+  script:
+    - robo test:suite "${TESTS}functional" "${REPORT_DIR}"
+  dependencies:
+    - Build
+
+# https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
+Functional Js:
+  stage: tests
+  <<: *test_template
   services:
     - mariadb:latest
-  dependencies:
-    - build
-  before_script:
-    - cp .gitlab-ci/phpunit.xml web/core/
-    - mkdir -p /var/www/html
-    - ln -s $CI_PROJECT_DIR/web /var/www/html/web
-    # Prepare tests folder.
-    - mkdir -p "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chmod -R g+s "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - chown -R www-data:www-data "${BROWSERTEST_OUTPUT_DIRECTORY}"
-    - apache2-foreground&
-    - mkdir -p ${REPORT_DIR}/coverage-html
-    - *ensure_report
+    - name: selenium/standalone-chrome:latest
+      alias: chromedriver
   script:
-    - cp .gitlab-ci/settings-ci.php web/sites/default/settings.php
-    - mkdir -p web/sites/default/files
-    - cd ${CI_PROJECT_DIR}/web
-    - ${CI_PROJECT_DIR}/vendor/bin/drush site-install --yes config_installer config_installer_sync_configure_form.sync_directory="../config/sync" --db-url=${SIMPLETEST_DB}
-    - ${CI_PROJECT_DIR}/vendor/bin/drush status --field=bootstrap
-    # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
-    # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
-    # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-    # - sudo -E -u www-data
-    - ${CI_PROJECT_DIR}/vendor/bin/phpunit
-        -c ${CI_PROJECT_DIR}/web/core
-        --verbose
-        --exclude-group Composer,DependencyInjection,PageCache,Setup
-        --testsuite unit
+    - test=$(curl -s http://chromedriver:4444/wd/hub/status | jq '.status'); if ! [ $__test=0 ]; then exit 1; fi
+    - curl -s http://chromedriver:4444/wd/hub/status | jq '.'
+    - robo test:suite "${TESTS}functional-javascript" "${REPORT_DIR}"
+  dependencies:
+    - Build
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
-    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
+    DB_DUMP: "dump/dump.sql"
     SIMPLETEST_BASE_URL: "http://localhost"
+    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
     BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
-  #artifacts:
-  #  <<: *default_artifacts
-  #  paths:
-  #    - ${REPORT_DIR}/*.html
-  #    - ${REPORT_DIR}/coverage-html/*
-  # https://docs.gitlab.com/ee/ci/yaml/#coverage
-  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+    MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox"]}}, "http://chromedriver:4444/wd/hub"]'
+    APACHE_RUN_USER: "www-data"
+    APACHE_RUN_GROUP: "www-data"
+  # Because current core tests failed.
   allow_failure: true
 
-security report:
-  stage: test
-  <<: *report_template
+# Job to run Functional Javascript tests with Nightwatch.
+# https://www.drupal.org/docs/8/testing/javascript-testing-using-nightwatch
+# https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
+Nightwatch Js:
+  stage: tests
+  <<: *test_template
+  dependencies:
+    - Build
+  services:
+    - mariadb:latest
+    - name: selenium/standalone-chrome:latest
+      alias: chromedriver
   script:
-    - ./${TOOL_PHAR} security:check
+    - test=$(curl -s http://chromedriver:4444/wd/hub/status | jq '.status'); if ! [ $__test=0 ]; then exit 1; fi
+    - curl -s http://chromedriver:4444/wd/hub/status | jq '.'
+    - cp .gitlab-ci/.env.chrome ${WEB_ROOT}/core/.env || true
+    - cd ${WEB_ROOT}/core
+    - yarn install
+    - yarn test:nightwatch --tag custom
   variables:
-    TOOL_PHAR: "security-checker.phar"
-    TOOL_URL: "https://get.sensiolabs.org/security-checker.phar"
+    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+    MYSQL_DATABASE: "drupal"
+    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+  # Because current core tests failed.
+  allow_failure: true
 
-metrics:
-  stage: metrics
-  <<: *report_template
-  script:
-    - ./${TOOL_PHAR}
-        --report-html=${REPORT_DIR}
-        --extensions=php,inc,module,theme
-        web
-  variables:
-    TOOL_PHAR: "phpmetrics.phar"
-    TOOL_URL: "https://github.com/phpmetrics/PhpMetrics/releases/download/${PHPMETRICS}/phpmetrics.phar"
+################################################################################
+# Code quality jobs for Drupal 8+
+################################################################################
+
+# Automated quality check job when something is pushed/merged on master.
+# We have a limit on errors we accept on the tools, if failed we run a
+# report and stop.
+Code quality:
+  stage: code quality
+  tags:
+    - docker
+  only:
+    - branches
   artifacts:
     <<: *default_artifacts
+  script:
+    - phpqa ${PHPQA_REPORT} ${TOOLS} ${PHPQA_PHP_CODE}
+
+# Drupal coding standard best practices report.
+Best practices:
+  stage: code quality
+  tags:
+    - docker
+  only:
+    - branches
+  artifacts:
+    <<: *default_artifacts
+  script:
+    - sed -i 's/Drupal/DrupalPractice/g' ${CI_PROJECT_DIR}/.phpqa.yml
+    # Coding best practices limit, ~20 could be reasonable, to adapt for your project.
+    - phpqa ${PHPQA_REPORT}
+      --tools phpcs:0
+      ${PHPQA_PHP_CODE}
+  # Allow failure to produce report and warning.
+  allow_failure: true
+
+################################################################################
+# Code  lint jobs for Drupal 8+
+################################################################################
+
+# Common definition for all lint jobs.
+.lint_template: &lint_template
+  stage: code lint
+  tags:
+    - docker
+  only:
+    - branches
+  # Allow failure to produce report and warning, not a critical job.
+  allow_failure: true
+
+# This is a eslint report based on Drupal 8.6+ standards.
+Js lint:
+  <<: *lint_template
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/js-lint-report.html
+  before_script:
+    # We grab the latest eslint rules for Drupal 8.
+    - mkdir -p ${WEB_ROOT}/core
+    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.eslintrc.json
+      -o ${WEB_ROOT}/core/.eslintrc.json
+    # Drupal 8.6.x specfic rules override for passing.
+    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.eslintrc.passing.json
+      -o ${WEB_ROOT}/core/.eslintrc.passing.json
+  script:
+    # Run the eslint command to generate a report.
+    # Terminal result.
+    - eslint
+        --config ./${WEB_ROOT}/core/.eslintrc.passing.json
+        --debug
+        ${JS_CODE}
+    # Html report.
+    - eslint
+        --config ./${WEB_ROOT}/core/.eslintrc.passing.json
+        --format html
+        --output-file ${REPORT_DIR}/js-lint-report.html
+        ${JS_CODE}
+
+# Drupal 8.6+ rules used here for css stylelint.
+Css lint:
+  <<: *lint_template
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/css-lint-report.txt
+  before_script:
+    # We grab the Drupal standards, not needed if after a build.
+    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.stylelintrc.json
+      -o ${WEB_ROOT}/.stylelintrc.json
+  script:
+    # Terminal result.
+    - stylelint "./${CSS_FILES}"
+    # Txt report.
+    - stylelint "./${CSS_FILES}" > ${REPORT_DIR}/css-lint-report.txt
+
+# This is a sass lint report, default rules used here.
+Sass lint:
+  <<: *lint_template
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/sass-lint-report.html
+  script:
+    # Terminal result.
+    - sass-lint --config ${SASS_CONFIG} --verbose --no-exit
+    # Html report.
+    - sass-lint --config ${SASS_CONFIG}
+        --verbose
+        --no-exit
+        --format html
+        --output ${REPORT_DIR}/sass-lint-report.html
+
+################################################################################
+# Code metrics, would probably make sense only for a tag release.
+################################################################################
+
+# Common definition for all metrics jobs.
+.metrics_template: &metrics_template
+  stage: php code metrics
+  # only:
+  #   - tags
+  tags:
+    - docker
+  artifacts:
+    <<: *default_artifacts
+
+# Phpmetrics report, no pass or failure as it's just informative.
+Php metrics:
+  <<: *metrics_template
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/
+  script:
+    - phpqa ${PHPQA_REPORT}
+        --tools phpmetrics
+        ${PHPQA_PHP_CODE}
+
+# Phploc, Pdepend report, no pass or failure as it's just informative.
+Php stats:
+  <<: *metrics_template
+  script:
+    - phpqa ${PHPQA_REPORT}
+        --tools phploc,pdepend
+        ${PHPQA_PHP_CODE}
+
+# Same reports for all Drupal code including our custom.
+# Those commands require enough resources from the runner.
+Php metrics All:
+  # Need same constaint as Build job.
+  except:
+    - master
+  only:
+    - testing
+    - tags
+  <<: *metrics_template
+  script:
+    - phpqa ${PHPQA_REPORT}
+        --tools phpmetrics
+        ${PHPQA_ALL_CODE}
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/
+  cache:
+    key: drupal-$CI_BUILD_REF_NAME
+  dependencies:
+    - Build
   when: manual
+
+Php stats All:
+  # Need same constaint as Build job.
+  except:
+    - master
+  only:
+    - testing
+    - tags
+  <<: *metrics_template
+  script:
+    - phpqa ${PHPQA_REPORT}
+        --tools phploc,pdepend
+        ${PHPQA_ALL_CODE}
+  cache:
+    key: drupal-$CI_BUILD_REF_NAME
+  dependencies:
+    - Build
+  when: manual
+
+# Base image for all ci, see https://gitlab.com/mog33/drupal8ci
+image: mogtofu33/drupal8ci:8.6
