@@ -103,6 +103,7 @@ before_script:
 
 # Testing template for phpunit, this provide Apache / Php.
 .test_template: &test_template
+  allow_failure: true
   # Build is not for master but only branch testing or tags for release.
   # Limit to branch push, for more options see
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
@@ -221,6 +222,7 @@ Security report:
       fi
   dependencies:
     - Build
+  allow_failure: true
 
 # Job to run Unit and Kernel tests.
 Unit and kernel tests:
