@@ -106,11 +106,11 @@ before_script:
   # Build is not for master but only branch testing or tags for release.
   # Limit to branch push, for more options see
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
-#  except:
-#    - master
+  #except:
+  #  - master
   only:
-    - testing
-#    - tags
+    - master
+  #  - tags
   tags:
     - docker
   services:
@@ -179,7 +179,7 @@ Build:
   # except:
   #   - master
   only:
-    - testing
+    - master
   #   - tags
   script:
     # Check composer first, then install.
