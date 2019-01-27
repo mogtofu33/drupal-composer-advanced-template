@@ -1,6 +1,6 @@
 purge_on_cache_clear: true
 storage: profiler.database_storage
-exclude: "/contextual/*\r\n/toolbar/*\r\n/edit/*\r\n*.js\r\n*.css"
+exclude: "/contextual/*\r\n/toolbar/*\r\n/edit/*\r\n*.js\r\n*.css\r\n/admin/*"
 ide_link: 'txmt://open?url=file://@file&line=@line'
 ide_link_remote: ''
 ide_link_local: ''
@@ -11,8 +11,11 @@ active_toolbar_items:
   database: database
   devel: devel
   forms: forms
+  mail: mail
+  performance_timing: performance_timing
   php_config: php_config
   request: request
+  routing: routing
   theme: theme
   user: user
   views: views
@@ -20,9 +23,6 @@ active_toolbar_items:
   events: '0'
   drupal_extension: '0'
   http: '0'
-  mail: '0'
-  performance_timing: '0'
-  routing: '0'
   services: '0'
   state: '0'
   time: '0'
