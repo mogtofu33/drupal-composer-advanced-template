@@ -16,15 +16,6 @@ $settings['simple_environment_anonymous'] = TRUE;
 // Trusted host patterns settings.
 // $settings['trusted_host_patterns'][] = '^MY_ENV_IP_OR_DOMAIN$';
 
-// Proxy settings.
-// $settings['http_client_config']['proxy']['http'] = 'http://My_WEB_PROXY:8080';
-// $settings['http_client_config']['proxy']['https'] = 'http://My_WEB_PROXY:8080';
-// $settings['http_client_config']['proxy']['no'] = [
-//   '127.0.0.1',
-//   'localhost',
-//   'SPECIFIC_IP',
-// ];
-
 // Drupal default dev settings from example.settings.local.php.
 
 // Assertions
@@ -37,7 +28,6 @@ $settings['cache']['bins']['render'] = 'cache.backend.null';
 $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
 $settings['cache']['bins']['page'] = 'cache.backend.null';
 $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
-$settings['extension_discovery_scan_tests'] = TRUE;
 $settings['rebuild_access'] = TRUE;
 $settings['skip_permissions_hardening'] = TRUE;
 

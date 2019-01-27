@@ -63,6 +63,7 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 ```shell
 cp .env.example .env
+vi .env
 ```
 
 * Copy _example.settings.php to _web/sites/default/settings.php_
@@ -91,6 +92,12 @@ cd web
     config_installer_sync_configure_form.sync_directory="../config/sync" \
     --account-name=admin \
     --account-pass=password
+```
+
+Set dev config
+
+```shell
+../vendor/bin/drush csim config_split.config_split.config_dev
 ```
 
 Login to your new website with user admin / password or using drush:
