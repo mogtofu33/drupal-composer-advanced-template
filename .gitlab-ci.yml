@@ -108,8 +108,8 @@ before_script:
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
   #except:
   #  - master
-  only:
-    - master
+  #only:
+  #  - master
   #  - tags
   tags:
     - docker
@@ -176,11 +176,11 @@ Build:
   stage: build
   tags:
     - docker
-  # except:
-  #   - master
-  only:
-    - master
-  #   - tags
+  #except:
+  #  - master
+  #only:
+  #  - testing
+  #  - tags
   script:
     # Check composer first, then install.
     - composer --verbose --no-check-all --no-check-publish validate
