@@ -32,19 +32,20 @@ variables:
 
   # Phpunit tests to run, only custom code or empty for all code.
   # see .gitlab-ci/phpunit.xml for settings.
-  TESTS: "custom"
+  TESTS: "contrib"
 
   ##############################################################################
   # Next part do not need to be edited for a first quick run.
   ##############################################################################
-  # Drupal custom code / theme / all code. We are checking our code quality,
+  # Drupal contrib code / theme / all code. We are checking our code quality,
   # and optionally Drupal core.
   #
   # Comma separated for phpqa and phpmetrics.
   PHP_CODE: "${WEB_ROOT}/modules/contrib,${WEB_ROOT}/themes/contrib"
   # Space separated for eslint and sass lint.
   JS_CODE: "${WEB_ROOT}/modules/contrib/**/*.js ${WEB_ROOT}/themes/contrib/**/*.js"
-  CSS_FILES: "${WEB_ROOT}/themes/contrib/**/css/"
+  CSS_FILES: "${WEB_ROOT}/themes/contrib/**/css/*.css"
+  SCSS_FILES: "${WEB_ROOT}/themes/contrib/**/scss/*.scss"
   SASS_CONFIG: "./.sass-lint.yml"
   # Ignore files and dir for all Phpqa tools.
   PHPQA_IGNORE_DIRS: "--ignoredDirs vendor,bootstrap,tests"
@@ -105,11 +106,11 @@ before_script:
   # Build is not for master but only branch testing or tags for release.
   # Limit to branch push, for more options see
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
-  #except:
-  #  - master
+#  except:
+#    - master
   only:
     - testing
-  #  - tags
+#    - tags
   tags:
     - docker
   services:
@@ -175,11 +176,11 @@ Build:
   stage: build
   tags:
     - docker
-  #except:
-  #  - master
-  #only:
-  #  - testing
-  #  - tags
+  # except:
+  #   - master
+  only:
+    - testing
+  #   - tags
   script:
     # Check composer first, then install.
     - composer --verbose --no-check-all --no-check-publish validate
@@ -254,33 +255,6 @@ Functional:
   dependencies:
     - Build
 
-# https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
-Functional Js:
-  stage: tests
-  <<: *test_template
-  services:
-    - mariadb:latest
-    - name: selenium/standalone-chrome:latest
-      alias: chromedriver
-  script:
-    - test=$(curl -s http://chromedriver:4444/wd/hub/status | jq '.status'); if ! [ $__test=0 ]; then exit 1; fi
-    - curl -s http://chromedriver:4444/wd/hub/status | jq '.'
-    - robo test:suite "${TESTS}functional-javascript" "${REPORT_DIR}"
-  dependencies:
-    - Build
-  variables:
-    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
-    MYSQL_DATABASE: "drupal"
-    DB_DUMP: "dump/dump.sql"
-    SIMPLETEST_BASE_URL: "http://localhost"
-    SIMPLETEST_DB: "mysql://root@mariadb/drupal"
-    BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
-    MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox"]}}, "http://chromedriver:4444/wd/hub"]'
-    APACHE_RUN_USER: "www-data"
-    APACHE_RUN_GROUP: "www-data"
-  # Because current core tests failed.
-  allow_failure: true
-
 # Job to run Functional Javascript tests with Nightwatch.
 # https://www.drupal.org/docs/8/testing/javascript-testing-using-nightwatch
 # https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
@@ -294,8 +268,9 @@ Nightwatch Js:
     - name: selenium/standalone-chrome:latest
       alias: chromedriver
   script:
-    - test=$(curl -s http://chromedriver:4444/wd/hub/status | jq '.status'); if ! [ $__test=0 ]; then exit 1; fi
-    - curl -s http://chromedriver:4444/wd/hub/status | jq '.'
+    # Test selenium is sup.
+    #- test=$(curl -s http://chromedriver:4444/wd/hub/status | jq '.status'); if ! [ $__test=0 ]; then exit 1; fi
+    #- curl -s http://chromedriver:4444/wd/hub/status | jq '.'
     - cp .gitlab-ci/.env.chrome ${WEB_ROOT}/core/.env || true
     - cd ${WEB_ROOT}/core
     - yarn install
@@ -389,22 +364,22 @@ Js lint:
         --output-file ${REPORT_DIR}/js-lint-report.html
         ${JS_CODE}
 
-# Drupal 8.6+ rules used here for css stylelint.
+# Drupal 8.6+ rules used here for stylelint to check css or scss.
 Css lint:
   <<: *lint_template
   artifacts:
     <<: *default_artifacts
     paths:
-      - ${REPORT_DIR}/css-lint-report.txt
-  before_script:
-    # We grab the Drupal standards, not needed if after a build.
-    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.stylelintrc.json
-      -o ${WEB_ROOT}/.stylelintrc.json
+      - ${REPORT_DIR}/*.txt
   script:
     # Terminal result.
-    - stylelint "./${CSS_FILES}"
+    - stylelint --config-basedir /root/node_modules/ --config .stylelintrc.json "./${CSS_FILES}"
     # Txt report.
-    - stylelint "./${CSS_FILES}" > ${REPORT_DIR}/css-lint-report.txt
+    - stylelint --config-basedir /root/node_modules/ --config .stylelintrc.json "./${CSS_FILES}" > ${REPORT_DIR}/css-lint-report.txt
+    # Scss version, Terminal result.
+    - stylelint -s scss --config-basedir /root/node_modules/ --config .stylelintrc.json "./${SCSS_FILES}"
+    # Txt report.
+    - stylelint -s scss --config-basedir /root/node_modules/ --config .stylelintrc.json "./${SCSS_FILES}" > ${REPORT_DIR}/scss-lint-report.txt
 
 # This is a sass lint report, default rules used here.
 Sass lint:
@@ -448,6 +423,7 @@ Php metrics:
     - phpqa ${PHPQA_REPORT}
         --tools phpmetrics
         ${PHPQA_PHP_CODE}
+  when: manual
 
 # Phploc, Pdepend report, no pass or failure as it's just informative.
 Php stats:
@@ -456,6 +432,7 @@ Php stats:
     - phpqa ${PHPQA_REPORT}
         --tools phploc,pdepend
         ${PHPQA_PHP_CODE}
+  when: manual
 
 # Same reports for all Drupal code including our custom.
 # Those commands require enough resources from the runner.
