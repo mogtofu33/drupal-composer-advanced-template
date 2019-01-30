@@ -11,35 +11,47 @@ use Composer\Script\Event;
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Leafo\ScssPhp\Compiler;
 
 class BootstrapSass {
 
   /**
    * Create Bootstrap Sass subtheme.
    *
+   * Accept a theme name as argument.
+   *
    * see https://drupal-bootstrap.org/api/bootstrap/starterkits%21sass%21README.md/group/sub_theming_sass/8
    * Assume we already have bootstrap sources from composer.
    */
   public static function create(Event $event) {
+
     $fs = new Filesystem();
     $drupalFinder = new DrupalFinder();
     $drupalFinder->locateRoot(getcwd());
     $drupalRoot = $drupalFinder->getDrupalRoot();
-    $finder = new Finder();
 
-    $themeName = "bootstrap_sass";
+    $finder = new Finder();
+    $io = $event->getIO();
+
+    $args = $event->getArguments();
+    $themeName = (count($args)) ? implode('_', $args) : NULL;
+    $themeName = self::sanitizeFilename($themeName, "bootstrap_sass");
+
     $themeTitle = "Bootstrap Sass";
-    $bootstrapVersion = "3.3.7";
-    $configRb = "https://gitlab.com/mog33/gitlab-ci-drupal/snippets/1751092/raw";
     $customFolder = $drupalRoot . '/themes/custom/' . $themeName;
     $contribFolder = $drupalRoot . '/themes/contrib/bootstrap';
 
-    // If config.rb exist mean we can stop here.
-    if ($fs->exists($customFolder . '/config.rb')) {
-      echo "[info] Bootstrap Sass theme exist, skip.\n";
-      return;
+    // If info.yml exist mean we can stop here.
+    if ($fs->exists($customFolder . '/' . $themeName . '.info.yml')) {
+      $io->writeError('Theme already exist in ' . $customFolder);
+      if($io->askConfirmation('Delete and replace? (y/n) ', false)) {
+        $fs->remove($customFolder);
+      }
+      else {
+        $io->write('[Info] Process stopped.');
+        return;
+      }
     }
-
     // Create Bootstrap subtheme from starterkit.
     $fs->mkdir($customFolder);
     $fs->mirror($contribFolder . '/starterkits/sass', $customFolder);
@@ -77,14 +89,130 @@ class BootstrapSass {
     // Copy Boostrap sass framework.
     $fs->mirror($drupalRoot . '/libraries/bootstrap-sass', $customFolder . '/bootstrap');
 
-    // We need a config file for compiling.
-    $config = file_get_contents($configRb);
-    $fs->dumpFile($customFolder . '/config.rb', $config);
+    $io->write("\n[Success] Theme created in $customFolder\n");
+    $io->write('You can enable this theme after Drupal installation.');
+  }
 
-    // Inform about next steps.
-    echo "[info] You need to run compass compile, ie:\n  compass compile " . $customFolder . "\n\n";
-    echo "And enable the new theme Boostrap Sass after Drupal installation.\n";
+  /**
+   * Compile Bootstrap Sass subtheme.
+   */
+  public static function compile(Event $event) {
+
+    $fs = new Filesystem();
+    $drupalFinder = new DrupalFinder();
+    $drupalFinder->locateRoot(getcwd());
+    $drupalRoot = $drupalFinder->getDrupalRoot();
+    $finder = new Finder();
+
+    $io = $event->getIO();
+
+    $args = $event->getArguments();
+    $themeName = (count($args)) ? implode('_', $args) : NULL;
+    $themeName = self::sanitizeFilename($themeName, "bootstrap_sass");
+
+    $customFolder = $drupalRoot . '/themes/custom/' . $themeName;
+
+    if ($fs->exists($customFolder . '/scss/style.scss')) {
+      // Process all possible files not starting with '_'.
+      $finder->files()->name('*.scss')->notName('_*.scss')->in($customFolder . '/scss/');
+      foreach ($finder as $file) {
+        $source = $file->getPathname();
+        $destination = $customFolder . '/css/' . str_replace('.scss', '', $file->getFilename()) . '.css';
+
+        // Do not compile if scss has not been recently updated.
+        if (filemtime($source) > filemtime($destination)) {
+          $io->write('[Info] Compiling ' . $file->getFilename());
+          self::compileFile($source, $destination, $event->isDevMode());
+          $io->write(' -- Done');
+        }
+        else {
+          $io->write('[Info] No change in ' . $file->getFilename());
+        }
+
+      }
+
+    }
+    else {
+      $io->writeError('File style.scss not found in ' . $customFolder);
+    }
 
   }
 
+    /**
+     * Compile .scss file
+     *
+     * @param string $in  Input file (.scss)
+     * @param string $out Output file (.css) optional
+     *
+     * @return string|bool
+     *
+     * @throws \Composer\Exception
+     */
+    public static function compileFile($in, $out = null, $isDevMode = FALSE) {
+
+        if (! is_readable($in)) {
+          throw new Exception('load error: failed to find ' . $in);
+        }
+
+        $pi = pathinfo($in);
+  
+        $scss = new Compiler();
+        if ($isDevMode) {
+          $scss->setLineNumberStyle(Compiler::LINE_COMMENTS);
+          // $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+          $scss->setFormatter('Leafo\ScssPhp\Formatter\Nested');
+        }
+        else {
+          // $scss->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
+          $scss->setFormatter('Leafo\ScssPhp\Formatter\Compact');
+        }
+
+        $scss->addImportPath($pi['dirname'] . '/');
+
+        $compiled = $scss->compile(file_get_contents($in), $in);
+
+        if ($out !== null) {
+          return file_put_contents($out, $compiled);
+        }
+
+        return $compiled;
+    }
+  /**
+   * Make a filename safe to use in any function. (Accents, spaces, special chars...)
+   * The iconv function must be activated.
+   *
+   * @param string  $fileName       The filename to sanitize (with or without extension)
+   * @param string  $defaultIfEmpty The default string returned for a non valid filename (only special chars or separators)
+   * @param string  $separator      The default separator
+   * @param boolean $lowerCase      Tells if the string must converted to lower case
+   *
+   * @author COil <https://github.com/COil>
+   * @see    http://stackoverflow.com/questions/2668854/sanitizing-strings-to-make-them-url-and-filename-safe
+   *
+   * @return string
+   */
+  private static function sanitizeFilename($fileName, $defaultIfEmpty = 'default', $separator = '_', $lowerCase = true) {
+    // Gather file informations and store its extension
+    $fileInfos = pathinfo($fileName);
+    $fileExt   = array_key_exists('extension', $fileInfos) ? '.'. strtolower($fileInfos['extension']) : '';
+
+    // Removes accents
+    $fileName = @iconv('UTF-8', 'us-ascii//TRANSLIT', $fileInfos['filename']);
+
+    // Removes all characters that are not separators, letters, numbers, dots or whitespaces
+    $fileName = preg_replace("/[^ a-zA-Z". preg_quote($separator). "\d\.\s]/", '', $lowerCase ? strtolower($fileName) : $fileName);
+
+    // Replaces all successive separators into a single one
+    $fileName = preg_replace('!['. preg_quote($separator).'\s]+!u', $separator, $fileName);
+
+    // Trim beginning and ending seperators
+    $fileName = trim($fileName, $separator);
+
+    // If empty use the default string
+    if (empty($fileName)) {
+        $fileName = $defaultIfEmpty;
+    }
+
+    return $fileName. $fileExt;
+  }
 }

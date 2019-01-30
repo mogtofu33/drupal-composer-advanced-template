@@ -22,11 +22,11 @@
           "type": "package",
           "package": {
               "name": "ckeditor/templates",
-              "version": "4.8",
+              "version": "4.10.1",
               "type": "drupal-library",
               "dist": {
                   "type": "zip",
-                  "url": "https://download.ckeditor.com/templates/releases/templates_4.8.0.zip"
+                  "url": "https://download.ckeditor.com/templates/releases/templates_4.10.1.zip"
               }
           }
       }
@@ -38,7 +38,7 @@
     "bower-asset/dropzone": "^5.1",
     "bower-asset/exif-js": "^2.3.0",
     "bower-asset/slick-carousel": "^1.8",
-    "ckeditor/templates": "4.8",
+    "ckeditor/templates": "4.10.1",
     "composer/installers": "^1.2",
     "cweagans/composer-patches": "^1.6.5",
     "drupal-composer/drupal-scaffold": "^2.5",
@@ -145,6 +145,7 @@
     "drupal/vmi": "^2.0",
     "drupal/webform": "^5.1",
     "drush/drush": "^9.5.0",
+    "leafo/scssphp": "^0.7",
     "oomphinc/composer-installers-extender": "^1.1.2",
     "vlucas/phpdotenv": "^3.1",
     "webflo/drupal-finder": "^1.1.0",
@@ -202,8 +203,12 @@
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
-    "install-boostrap-sass": [
-        "DrupalProject\\composer\\BootstrapSass::create"
+    "install-bootstrap-sass": [
+      "DrupalProject\\composer\\BootstrapSass::create",
+      "@sass-compile"
+    ],
+    "sass-compile": [
+      "DrupalProject\\composer\\BootstrapSass::compile"
     ],
     "nuke": "rm -r -f composer.lock web/core web/libraries web/modules/contrib web/themes/contrib web/profiles/contrib vendor"
   },
