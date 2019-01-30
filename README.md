@@ -127,6 +127,8 @@ Login to your new website with user admin / password or using drush:
 
 If you don't want to install Sass and the provided Php script in this project do not please you, an other solution is to use a Docker image with [node-sass](https://github.com/sass/node-sass).
 
+Create the _Dockerfile_
+
 ```dockerfile
 FROM node:dubnium-alpine
 RUN apk update && apk add --no-cache git shadow
@@ -136,15 +138,21 @@ RUN chown -R node:node /app
 CMD [ "sass", "node-sass", "compile", "watch", "npm" ]
 ```
 
+One time image build
+
 ```bash
 docker build -t sass .
 ```
 
+Run from your theme folder
+
 ```bash
 cd web/themes/custom/bootstrap_sass
-docker run -t --rm -v $(pwd):/app sass node-sass scss/style.scss > css/style.css
+docker run --rm -v $(pwd):/app sass node-sass scss/style.scss > css/style.css
 # Set format compressed.
-docker run -t --rm -v $(pwd):/app sass node-sass --output-style compressed scss/style.scss > css/style.css
+docker run --rm -v $(pwd):/app sass node-sass --output-style compressed scss/style.scss > css/style.css
 # Add comments for dev.
-docker run -t --rm -v $(pwd):/app sass node-sass --source-comments scss/style.scss > css/style.css
+docker run --rm -v $(pwd):/app sass node-sass --source-comments scss/style.scss > css/style.css
+# Add comments for dev.
+docker run --rm sass node-sass --help
 ```
