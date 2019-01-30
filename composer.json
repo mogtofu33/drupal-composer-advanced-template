@@ -1,6 +1,6 @@
 {
-  "name": "Mogtofu33/drupal-composer-advanced-template",
-  "description": "Drupal 8 projects with composer",
+  "name": "mog33/drupal-composer-advanced-template",
+  "description": "Drupal 8 projects with composer, boosted!",
   "type": "project",
   "license": "GPL-2.0-or-later",
   "authors": [
@@ -148,7 +148,8 @@
     "oomphinc/composer-installers-extender": "^1.1.2",
     "vlucas/phpdotenv": "^3.1",
     "webflo/drupal-finder": "^1.1.0",
-    "webmozart/path-util": "^2.3"
+    "webmozart/path-util": "^2.3",
+    "zaporylie/composer-drupal-optimizations": "^1.0"
   },
   "replace": {
       "bower-asset/jquery": "*",
