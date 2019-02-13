@@ -56,6 +56,10 @@ class BootstrapSass {
     $fs->mkdir($customFolder);
     $fs->mirror($contribFolder . '/starterkits/sass', $customFolder);
 
+    // Empty style.css
+    $fs->remove($customFolder . '/css/style.css');
+    $fs->dumpFile($customFolder . '/css/style.css', '');
+
     // Copy and adapt config to get a default block position.
     $fs->mkdir($customFolder . '/config/optional');
     $fs->mirror($contribFolder . '/config/optional', $customFolder . '/config/optional');
@@ -111,7 +115,6 @@ class BootstrapSass {
     $themeName = self::sanitizeFilename($themeName, "bootstrap_sass");
 
     $customFolder = $drupalRoot . '/themes/custom/' . $themeName;
-
     if ($fs->exists($customFolder . '/scss/style.scss')) {
       // Process all possible files not starting with '_'.
       $finder->files()->name('*.scss')->notName('_*.scss')->in($customFolder . '/scss/');
@@ -122,6 +125,10 @@ class BootstrapSass {
         // Do not compile if scss has not been recently updated.
         if (filemtime($source) > filemtime($destination)) {
           $io->write('[Info] Compiling ' . $file->getFilename());
+          if ($fs->exists($customFolder . '/css/' . $file->getFilename())) {
+            $fs->remove($customFolder . '/css/' . $file->getFilename());
+          }
+          $fs->dumpFile($customFolder . '/css/' . $file->getFilename(), '');
           self::compileFile($source, $destination, $event->isDevMode());
           $io->write(' -- Done');
         }
@@ -150,7 +157,7 @@ class BootstrapSass {
      */
     public static function compileFile($in, $out = null, $isDevMode = FALSE) {
 
-        if (! is_readable($in)) {
+        if (!is_readable($in)) {
           throw new Exception('load error: failed to find ' . $in);
         }
 
