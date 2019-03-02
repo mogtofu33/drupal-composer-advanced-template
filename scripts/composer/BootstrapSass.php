@@ -122,13 +122,18 @@ class BootstrapSass {
         $source = $file->getPathname();
         $destination = $customFolder . '/css/' . str_replace('.scss', '', $file->getFilename()) . '.css';
 
+        // Create empty file if didn't exist.
+        if (!$fs->exists($destination)) {
+          $fs->dumpFile($destination, '');
+        }
+
         // Do not compile if scss has not been recently updated.
-        if (filemtime($source) > filemtime($destination)) {
+        if ((filemtime($source) > filemtime($destination)) || (filesize($destination) == 0)) {
           $io->write('[Info] Compiling ' . $file->getFilename());
           if ($fs->exists($customFolder . '/css/' . $file->getFilename())) {
             $fs->remove($customFolder . '/css/' . $file->getFilename());
           }
-          $fs->dumpFile($customFolder . '/css/' . $file->getFilename(), '');
+
           self::compileFile($source, $destination, $event->isDevMode());
           $io->write(' -- Done');
         }
