@@ -55,10 +55,10 @@ composer install --no-suggest --prefer-dist
 Create sub theme Bootstrap Sass:
 
 ```bash
-composer install-boostrap-sass
+composer install-bootstrap-sass
 ```
 
-_Note_: When developping a theme and editing the scss file you can compile with command:
+_Note_: When developing a theme and editing the scss file you can compile with command:
 
 ```bash
 composer sass-compile
@@ -112,7 +112,7 @@ cd web
 Set dev config
 
 ```bash
-../vendor/bin/drush csim config_split.config_split.config_dev
+../vendor/bin/drush --yes csim config_split.config_split.config_dev
 ```
 
 Login to your new website with user admin / password or using drush:
