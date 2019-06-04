@@ -33,7 +33,7 @@
   ],
   "require": {
     "bower-asset/blazy": "^1.8",
-    "bower-asset/bootstrap-sass": "3.4.0",
+    "bower-asset/bootstrap-sass": "^3.4.0",
     "bower-asset/cropper": "^2.3",
     "bower-asset/dropzone": "^5.1",
     "bower-asset/exif-js": "^2.3.0",
@@ -70,7 +70,7 @@
     "drupal/console": "^1.0.2",
     "drupal/contact_formatter": "^1.0",
     "drupal/contact_storage": "^1.0",
-    "drupal/core": "^8.6.7",
+    "drupal/core": "^8.7.0",
     "drupal/crop": "^2.0",
     "drupal/ctools": "^3.0",
     "drupal/dropzonejs": "^2.0",
@@ -138,7 +138,7 @@
     "drupal/video_embed_field": "^2.0",
     "drupal/views_bootstrap": "^3.1",
     "drupal/views_bulk_edit": "^2.0",
-    "drupal/views_bulk_operations": "^2.2",
+    "drupal/views_bulk_operations": "^3.2",
     "drupal/views_field_formatter": "^1.7",
     "drupal/views_infinite_scroll": "^1.1",
     "drupal/viewsreference": "^2.0",
@@ -165,8 +165,8 @@
   "require-dev": {
     "bower-asset/d3": "^5.1",
     "bower-asset/highlightjs": "^9.12",
-    "webflo/drupal-core-require-dev": "^8.6.7",
-    "drupal/devel": "^1.2",
+    "webflo/drupal-core-require-dev": "^8.7.0",
+    "drupal/devel": "^2.1",
     "drupal/examples": "1.x-dev"
   },
   "conflict": {
@@ -258,11 +258,7 @@
         "Issue #1170362: Install profile is disabled for lots of different reasons and core doesn't allow for that":
         "https://www.drupal.org/files/issues/1170362-243.patch",
         "Issue #1356276: Allow profiles to provide a base_parent profile and load them in the correct order":
-        "https://www.drupal.org/files/issues/2018-10-23/1356276-549-8.6.x.patch",
-        "Issue #2720101 Label (Title) not set for Views block (exposed filters in Block)":
-        "https://www.drupal.org/files/issues/2018-09-12/2720101-72.patch",
-        "Issue #2599228: Programmatically created translatable content type returns SQL error on content creation":
-        "https://www.drupal.org/files/issues/2018-10-06/2599228-74.patch",
+        "https://www.drupal.org/files/issues/2018-12-10/1356276-572.patch",
         "Issue #2893892: Fixed Warning Invalid argument supplied for foreach() in Drupal":
         "https://www.drupal.org/files/issues/patch_empty_fix.patch",
         "Issue #2955877: Unsupported operand types inFieldPluginBase":
@@ -271,10 +267,6 @@
       "drupal/ckeditor_media_embed": {
         "Issue #2900313: Add ability to embed tweets and other rich content in WYSIWYG":
         "https://www.drupal.org/files/issues/embed_rich_content_in_WYSIWYG-2900313-2.patch"
-      },
-      "drupal/ctools": {
-        "Issue #2820783: Fix Block.php notices and warnings.":
-        "https://www.drupal.org/files/issues/2018-08-08/fixblockpager-2820783-41.patch"
       },
       "drupal/display_field_copy": {
           "Issue #2822398: Copied field does not have widget field settings.":
@@ -294,7 +286,7 @@
       },
       "drupal/focal_point": {
         "Issue #2916562: Broken image preview":
-        "https://www.drupal.org/files/issues/2916562-16.patch"
+        "https://www.drupal.org/files/issues/2019-03-30/2916562-39.patch"
       },
       "drupal/group": {
           "Issue #2716051: Add operations for group content tabs to groups in the groups listing":
@@ -313,10 +305,6 @@
         "https://www.drupal.org/files/issues/2877927_29.patch",
         "Issue #2924774: Let Editors add/delete/clone paragraphs When [Editing a translation]":
         "https://www.drupal.org/files/issues/2018-06-03/2924774-29.patch"
-      },
-      "drupal/paragraphs_previewer": {
-        "Issue #2904917: Make paragraph previewer work with new UI/UX improvement patch":
-        "https://www.drupal.org/files/issues/2904917-2.patch"
       },
       "drupal/search_api": {
           "Issue #2931562: Fixed the Notice: Undefined index: total When we enable the module in the installation step.":
