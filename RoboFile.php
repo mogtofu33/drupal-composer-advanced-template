@@ -179,13 +179,23 @@ class RoboFile extends Tasks {
    * Check Drupal.
    *
    * @return string
-   *   Drupal boostrap result.
+   *   Drupal bootstrap result.
    */
   public function checkDrupal() {
     return $this->drush()
       ->args('status')
       ->option('field', 'bootstrap', '=')
       ->run();
+  }
+
+  /**
+   * Status of Drupal.
+   *
+   * @return string
+   *   Drupal bootstrap result.
+   */
+  public function checkDrush() {
+    $this->ensureDrush();
   }
 
   /**
@@ -205,10 +215,24 @@ class RoboFile extends Tasks {
    *   A drush exec command.
    */
   protected function drush() {
+    // Need some testing.
+    $this->ensureDrush();
     // Drush needs an absolute path to the docroot.
     $docroot = $this->getDocroot() . '/' . $this->webRoot;
     return $this->taskExec('vendor/bin/drush')
       ->option('root', $docroot, '=');
+  }
+
+  /**
+   * Return drush with default arguments.
+   *
+   * @return \Robo\Task\Base\Exec
+   *   A drush exec command.
+   */
+  protected function ensureDrush() {
+    if (!file_exists('vendor/bin/drush')) {
+      $this->taskComposerRequire()->dependency('drush/drush', '^9')->run();
+    }
   }
 
   /**
@@ -255,7 +279,7 @@ class RoboFile extends Tasks {
    * @param string $report
    *   (optional) Report dir, relative to root, without trailing slash.
    *
-   * @param nbool $xml
+   * @param bool $xml
    *   (optional) Add coverage xml report (--log-junit).
    *
    * @param bool $html
@@ -284,7 +308,7 @@ class RoboFile extends Tasks {
    * @param string $report
    *   (optional) Report dir, relative to root, without trailing slash.
    *
-   * @param nbool $xml
+   * @param bool $xml
    *   (optional) Add coverage xml report (--coverage-xml).
    *
    * @param bool $html
@@ -316,7 +340,7 @@ class RoboFile extends Tasks {
    * Return a configured phpunit task.
    *
    * This will check for PHPUnit configuration first in the module directory.
-   * If no configuration is found, it will fall back to Drupal's core
+   * If no configuration is found, it will fall back to Drupal core
    * directory.
    *
    * @param string $module
@@ -329,7 +353,7 @@ class RoboFile extends Tasks {
    */
   private function phpUnit($module = null, $testsuite = null) {
     $task = $this->taskPhpUnit('vendor/bin/phpunit')
-      ->option('verbose')
+      // ->option('verbose')
       // ->option('debug')
       ->configFile($this->webRoot . '/core');
 

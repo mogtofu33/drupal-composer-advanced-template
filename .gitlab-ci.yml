@@ -18,31 +18,38 @@ variables:
   # Make CI more verbose in case of problem.
   # CI_DEBUG_TRACE: "1"
   #
-  # Path is relative to project root, web/ is for Drupal Composer template,
-  # change it if you are using docroot/ or any other web root.
+  # Minor Drupal version to work with.
+  DRUPAL_VERSION: "8.7"
+  #
+  # [COMPOSER.JSON] Path is relative to project root, 'web' is for Drupal
+  # Composer template, change it if you are using 'docroot'.
   WEB_ROOT: "web"
-
-  # See Phpqa available tools:
-  #   https://github.com/EdgedesignCZ/phpqa#available-tools
-  # Allow some errors, this will stop the pipeline if a limit is reached.
-  TOOLS: "--tools phpcs:0,phpmd,phpcpd,parallel-lint"
 
   # Phpunit tests to run, only custom code or empty for all code.
   # see .gitlab-ci/phpunit.xml for settings.
   TESTS: "contrib"
 
+  # See Phpqa available tools:
+  #   https://github.com/EdgedesignCZ/phpqa#available-tools
+  # Allow some errors, this will stop the pipeline if a limit is reached.
+  TOOLS: "--tools phpcs:0,phpmd,phpcpd,parallel-lint"
+  # Coding best practices limit, ~10 could be reasonable, to adapt for your
+  # project. Current is strict and do not allow errors.
+  BEST_PRACTICES: "phpcs:0"
+
+
   ##############################################################################
   # Next part do not need to be edited for a first quick run.
   ##############################################################################
-  # Drupal contrib code / theme / all code. We are checking our code quality,
+  # Drupal custom code / theme / all code. We are checking our code quality,
   # and optionally Drupal core.
   #
   # Comma separated for phpqa and phpmetrics.
   PHP_CODE: "${WEB_ROOT}/modules/contrib,${WEB_ROOT}/themes/contrib"
   # Space separated for eslint and sass lint.
-  JS_CODE: "${WEB_ROOT}/modules/contrib/**/*.js ${WEB_ROOT}/themes/contrib/**/*.js"
-  CSS_FILES: "${WEB_ROOT}/themes/contrib/**/css/*.css ${WEB_ROOT}/themes/custom/**/css/**/*.css"
-  SCSS_FILES: "${WEB_ROOT}/themes/contrib/**/scss/*.scss ${WEB_ROOT}/themes/custom/**/scss/**/*.scss"
+  JS_CODE: "${WEB_ROOT}/**/contrib/**/*.js"
+  CSS_FILES: "${WEB_ROOT}/(themes|modules|profiles)/contrib/**/css/*.css"
+  SCSS_FILES: "${WEB_ROOT}/(themes|modules|profiles)/contrib/**/scss/*.scss"
   SASS_CONFIG: "./.sass-lint.yml"
   # Ignore files and dir for all Phpqa tools.
   PHPQA_IGNORE_DIRS: "--ignoredDirs vendor,bootstrap,tests"
@@ -74,6 +81,12 @@ stages:
   - php code metrics
 
 ################################################################################
+# Base image for all ci actions, see https://gitlab.com/mog33/drupal8ci
+################################################################################
+
+image: mogtofu33/drupal8ci:${DRUPAL_VERSION}-no-drupal
+
+################################################################################
 # Gitlab ci templates for common jobs to avoid repeat, see
 #   https://docs.gitlab.com/ee/ci/yaml/#anchors
 ################################################################################
@@ -90,7 +103,7 @@ stages:
   # Name will be based on job and branch.
   name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
   # How long do we keep reports files?
-  expire_in: 1 day
+  expire_in: 2 day
   # Force artifacts even if the job fail.
   when: always
 
@@ -100,16 +113,14 @@ before_script:
 
 # Testing template for phpunit, this provide Apache / Php.
 .test_template: &test_template
-  # Because some contrib tests failed, keep it informative.
-  allow_failure: true
   # Build is not for master but only branch testing or tags for release.
   # Limit to branch push, for more options see
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
-  #except:
-  #  - master
-  #only:
-  #  - master
-  #  - tags
+  except:
+    - master
+  only:
+    - testing
+    - tags
   tags:
     - docker
   services:
@@ -143,16 +154,16 @@ before_script:
         robo check:drupal;
       fi
   variables:
+    # Install Drupal flag, some jobs do not need an install.
+    INSTALL_DRUPAL: "1"
+    # Install Drupal from config in ./config/sync with config_installer profile.
+    SETUP_FROM_CONFIG: "1"
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
     DB_DUMP: "dump/dump.sql"
     SIMPLETEST_BASE_URL: "http://localhost"
     SIMPLETEST_DB: "mysql://root@mariadb/drupal"
     BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
-    # Install Drupal flag
-    INSTALL_DRUPAL: "1"
-    # Install Drupal from config in ./config/sync with config_installer.
-    SETUP_FROM_CONFIG: "1"
   artifacts:
     <<: *default_artifacts
     paths:
@@ -183,12 +194,11 @@ Build:
   stage: build
   tags:
     - docker
-  #except:
-  #  - master
-  #only:
-  #  - testing
-  #  - tags
-  script:
+  # except:
+  #   - master
+  # only:
+  #   - testing
+  #   - tags
   script:
     # [COMPOSER.JSON]
     # Download Drupal project when no composer.json.
@@ -196,13 +206,15 @@ Build:
     # Because create-project need an empty folder we copy the downloaded drupal.
     # - cp -rf drupal/* ${CI_PROJECT_DIR} && cp -f drupal/.e* ${CI_PROJECT_DIR} && cp -f drupal/.g* ${CI_PROJECT_DIR} || true
     #
-    # Check composer.json file first, then install.
+    # If a composer.json is present, validate file and install.
     - composer --verbose --no-check-all --no-check-publish validate
     - robo install:drupal
   # On build we cache the composer, web folders.
   cache:
     key: drupal-$CI_BUILD_REF_NAME
     paths:
+      # [COMPOSER.JSON] Remove drupal if you are using your composer.json
+      # - drupal
       - vendor
       - web
   artifacts:
@@ -214,7 +226,7 @@ Build:
       - scripts
       - composer.json
       - composer.lock
-      # [COMPOSER.JSON]  Specific to drupal-composer/drupal-project.
+      # [COMPOSER.JSON] Specific to drupal-composer/drupal-project.
       - .env.example
       - load.environment.php
     expire_in: 1 day
@@ -271,9 +283,11 @@ Functional:
   dependencies:
     - Build
 
-# https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
+# Job to run Functional Javascript tests.
+# https://git.drupalcode.org/project/drupal/blob/HEAD/core/tests/README.md
+# We need a specific image here including selenium.
 Functional Js:
-  image: mogtofu33/drupal8ci:8.6-selenium-no-drupal
+  image: mogtofu33/drupal8ci:${DRUPAL_VERSION}-selenium-no-drupal
   stage: tests
   <<: *test_template
   services:
@@ -297,12 +311,14 @@ Functional Js:
     MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox","--window-size=1920,1080"]}}, "http://localhost:4444/wd/hub"]'
     APACHE_RUN_USER: "www-data"
     APACHE_RUN_GROUP: "www-data"
+    SE_OPTS: ""
 
 # Job to run Functional Javascript tests with Nightwatch.
+# We need a specific image here including selenium.
 # https://www.drupal.org/docs/8/testing/javascript-testing-using-nightwatch
-# https://cgit.drupalcode.org/drupal/tree/core/tests/README.md
+# https://git.drupalcode.org/project/drupal/blob/HEAD/core/tests/README.md
 Nightwatch Js:
-  image: mogtofu33/drupal8ci:8.6-selenium-no-drupal
+  image: mogtofu33/drupal8ci:${DRUPAL_VERSION}-selenium-no-drupal
   stage: tests
   <<: *test_template
   dependencies:
@@ -317,14 +333,15 @@ Nightwatch Js:
     - patch -p1 < 3017176-7.patch || true
     - cd core
     - yarn install
-    # - yarn test:nightwatch --tag ${TESTS} --verbose
     - yarn test:nightwatch --tag ${TESTS}
+    # - yarn test:nightwatch --skiptags core
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
     BROWSERTEST_OUTPUT_DIRECTORY: "/var/www/html/web/sites/simpletest"
     # No need to pre-install Drupal.
     INSTALL_DRUPAL: "0"
+    SE_OPTS: ""
 
 ################################################################################
 # Code quality jobs for Drupal 8+
@@ -357,9 +374,8 @@ Best practices:
     <<: *default_artifacts
   script:
     - sed -i 's/Drupal/DrupalPractice/g' ${CI_PROJECT_DIR}/.phpqa.yml
-    # Coding best practices limit, ~20 could be reasonable, to adapt for your project.
     - phpqa ${PHPQA_REPORT}
-      --tools phpcs:0
+      --tools ${BEST_PRACTICES}
       ${PHPQA_PHP_CODE}
   # Allow failure to produce report and warning.
   allow_failure: true
@@ -378,7 +394,7 @@ Best practices:
   # Allow failure to produce report and warning, not a critical job.
   allow_failure: true
 
-# This is a eslint report based on Drupal 8.6+ standards.
+# This is a eslint report based on Drupal 8.x standards.
 Js lint:
   <<: *lint_template
   artifacts:
@@ -388,43 +404,44 @@ Js lint:
   before_script:
     # We grab the latest eslint rules for Drupal 8.
     - mkdir -p ${WEB_ROOT}/core
-    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.eslintrc.json
+    - curl -fsSL https://git.drupalcode.org/project/drupal/raw/${DRUPAL_VERSION}.x/core/.eslintrc.json
       -o ${WEB_ROOT}/core/.eslintrc.json
-    # Drupal 8.6.x specfic rules override for passing.
-    - curl -fsSL https://cgit.drupalcode.org/drupal/plain/core/.eslintrc.passing.json
+    # Drupal 8.x specfic rules override for passing.
+    - curl -fsSL https://git.drupalcode.org/project/drupal/raw/${DRUPAL_VERSION}.x/core/.eslintrc.passing.json
       -o ${WEB_ROOT}/core/.eslintrc.passing.json
   script:
     # Run the eslint command to generate a report.
     # Terminal result.
     - eslint
-        --config ./${WEB_ROOT}/core/.eslintrc.passing.json
-        --debug
+        --config ${WEB_ROOT}/core/.eslintrc.passing.json
         ${JS_CODE}
     # Html report.
     - eslint
-        --config ./${WEB_ROOT}/core/.eslintrc.passing.json
+        --config ${WEB_ROOT}/core/.eslintrc.passing.json
         --format html
         --output-file ${REPORT_DIR}/js-lint-report.html
         ${JS_CODE}
 
-# Drupal 8.6+ rules used here for stylelint to check css or scss.
+# Drupal 8.x rules used here for stylelint to check css.
 Css lint:
   <<: *lint_template
   artifacts:
     <<: *default_artifacts
     paths:
       - ${REPORT_DIR}/*.txt
+  before_script:
+    # We grab the latest stylelint rules for Drupal 8.
+    - mkdir -p ${WEB_ROOT}/core
+    - curl -fsSL https://git.drupalcode.org/project/drupal/raw/${DRUPAL_VERSION}.x/core/.stylelintrc.json
+      -o ${WEB_ROOT}/core/.stylelintrc.json
   script:
-    # Terminal result.
-    - stylelint --config-basedir /root/node_modules/ --config .stylelintrc.json "./${CSS_FILES}"
-    # Txt report.
-    - stylelint --config-basedir /root/node_modules/ --config .stylelintrc.json "./${CSS_FILES}" > ${REPORT_DIR}/css-lint-report.txt
-    # Scss version, Terminal result.
-    - stylelint -s scss --config-basedir /root/node_modules/ --config .stylelintrc.json "./${SCSS_FILES}"
-    # Txt report.
-    - stylelint -s scss --config-basedir /root/node_modules/ --config .stylelintrc.json "./${SCSS_FILES}" > ${REPORT_DIR}/scss-lint-report.txt
+    # Css report.
+    - stylelint --config-basedir /root/node_modules/
+      --config ${WEB_ROOT}/core/.stylelintrc.json -f verbose "${CSS_FILES}"
+    - stylelint --config-basedir /root/node_modules/
+      --config ${WEB_ROOT}/core/.stylelintrc.json -f verbose "${CSS_FILES}" > ${REPORT_DIR}/css-lint-report.txt
 
-# This is a sass lint report, default rules used here.
+# This is a sass lint report, default rules used here for Bootstrap based sass.
 Sass lint:
   <<: *lint_template
   artifacts:
@@ -440,6 +457,7 @@ Sass lint:
         --no-exit
         --format html
         --output ${REPORT_DIR}/sass-lint-report.html
+    - echo "[Note] If sass-lint succeed without errors, no report or message will appear."
 
 ################################################################################
 # Code metrics, would probably make sense only for a tag release.
@@ -448,8 +466,10 @@ Sass lint:
 # Common definition for all metrics jobs.
 .metrics_template: &metrics_template
   stage: php code metrics
+  # Could use only on tag release.
   # only:
-  #   - tags
+    # - master
+    # - tags
   tags:
     - docker
   artifacts:
@@ -518,6 +538,3 @@ Php stats All:
   dependencies:
     - Build
   when: manual
-
-# Base image for all ci, see https://gitlab.com/mog33/drupal8ci
-image: mogtofu33/drupal8ci:8.6
