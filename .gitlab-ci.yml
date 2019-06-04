@@ -116,11 +116,11 @@ before_script:
   # Build is not for master but only branch testing or tags for release.
   # Limit to branch push, for more options see
   # https://docs.gitlab.com/ee/ci/yaml/#only-and-except-simplified
-  except:
-    - master
-  only:
-    - testing
-    - tags
+  # except:
+    # - master
+  # only:
+  #   - testing
+  #   - tags
   tags:
     - docker
   services:
@@ -235,11 +235,11 @@ Security report:
   stage: tests
   tags:
     - docker
-  except:
-    - master
-  only:
-    - testing
-    - tags
+  # except:
+  #   - master
+  # only:
+  #   - testing
+  #   - tags
   script:
     - if [ -f "composer.lock" ];
       then
@@ -501,11 +501,11 @@ Php stats:
 # Those commands require enough resources from the runner.
 Php metrics All:
   # Need same constaint as Build job.
-  except:
-    - master
-  only:
-    - testing
-    - tags
+  # except:
+  #   - master
+  # only:
+  #   - testing
+  #   - tags
   <<: *metrics_template
   script:
     - phpqa ${PHPQA_REPORT}
@@ -523,11 +523,11 @@ Php metrics All:
 
 Php stats All:
   # Need same constaint as Build job.
-  except:
-    - master
-  only:
-    - testing
-    - tags
+  # except:
+  #   - master
+  # only:
+  #   - testing
+  #   - tags
   <<: *metrics_template
   script:
     - phpqa ${PHPQA_REPORT}
