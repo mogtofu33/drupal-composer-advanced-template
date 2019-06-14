@@ -333,8 +333,8 @@ Nightwatch Js:
     - patch -p1 < 3017176-7.patch || true
     - cd core
     - yarn install
-    #- yarn test:nightwatch --tag core
-    - yarn test:nightwatch --skiptags core
+    - yarn test:nightwatch --tag core
+    #- yarn test:nightwatch --skiptags core
   variables:
     MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     MYSQL_DATABASE: "drupal"
