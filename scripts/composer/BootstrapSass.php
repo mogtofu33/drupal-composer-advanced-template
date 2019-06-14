@@ -52,9 +52,15 @@ class BootstrapSass {
         return;
       }
     }
+
     // Create Bootstrap subtheme from starterkit.
     $fs->mkdir($customFolder);
-    $fs->mirror($contribFolder . '/starterkits/sass', $customFolder);
+
+    if (!$fs->exists($contribFolder . '/starterkits/THEMENAME/THEMENAME.theme')) {
+      throw new Exception('Missing Bootstrap starterkit: ' . $contribFolder . '/starterkits/THEMENAME');
+    }
+
+    $fs->mirror($contribFolder . '/starterkits/THEMENAME', $customFolder);
 
     // Empty style.css
     $fs->remove($customFolder . '/css/style.css');
@@ -90,11 +96,27 @@ class BootstrapSass {
       $fs->remove($customFolder . $source);
     }
 
-    // Copy Boostrap sass framework.
+    # Switch starterkit libraries to use Bootstrap Sass javascript files.
+    $target = $customFolder . '/' . $themeName . '.libraries.yml';
+    $content = file_get_contents($target);
+    $content = str_replace('#', '', $content);
+    $lines = explode(PHP_EOL, $content);
+    $num = 1;
+    foreach ($lines as $line) {
+      if ($num < 6 || $num > 21) {
+        $linesArray[$num] = $line;
+      }
+      $num++;
+    }
+    $content = implode("\n", $linesArray);
+    $fs->dumpFile($target, $content);
+
+    // Copy Bootstrap sass framework.
     $fs->mirror($drupalRoot . '/libraries/bootstrap-sass', $customFolder . '/bootstrap');
 
     $io->write("\n[Success] Theme created in $customFolder\n");
     $io->write('You can enable this theme after Drupal installation.');
+
   }
 
   /**
@@ -204,7 +226,7 @@ class BootstrapSass {
    * @return string
    */
   private static function sanitizeFilename($fileName, $defaultIfEmpty = 'default', $separator = '_', $lowerCase = true) {
-    // Gather file informations and store its extension
+    // Gather file information and store its extension
     $fileInfos = pathinfo($fileName);
     $fileExt   = array_key_exists('extension', $fileInfos) ? '.'. strtolower($fileInfos['extension']) : '';
 
@@ -217,7 +239,7 @@ class BootstrapSass {
     // Replaces all successive separators into a single one
     $fileName = preg_replace('!['. preg_quote($separator).'\s]+!u', $separator, $fileName);
 
-    // Trim beginning and ending seperators
+    // Trim beginning and ending separators
     $fileName = trim($fileName, $separator);
 
     // If empty use the default string
