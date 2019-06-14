@@ -96,7 +96,7 @@ class BootstrapSass {
       $fs->remove($customFolder . $source);
     }
 
-    # Switch starterkit libraries to use Bootstrap Sass javascript files.
+    // Switch starterkit libraries to use Bootstrap Sass javascript files.
     $target = $customFolder . '/' . $themeName . '.libraries.yml';
     $content = file_get_contents($target);
     $content = str_replace('#', '', $content);
@@ -111,8 +111,9 @@ class BootstrapSass {
     $content = implode("\n", $linesArray);
     $fs->dumpFile($target, $content);
 
-    // Copy Bootstrap sass framework.
+    // Copy Bootstrap sass framework and sub styles.
     $fs->mirror($drupalRoot . '/libraries/bootstrap-sass', $customFolder . '/bootstrap');
+    $fs->mirror($drupalRoot . '/libraries/drupal-bootstrap-styles/src/3.x.x/8.x-3.x/scss', $customFolder . '/scss');
 
     $io->write("\n[Success] Theme created in $customFolder\n");
     $io->write('You can enable this theme after Drupal installation.');

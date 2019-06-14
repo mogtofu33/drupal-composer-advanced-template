@@ -14,7 +14,8 @@
       {
           "type": "composer",
           "url": "https://packages.drupal.org/8"
-      }, {
+      },
+      {
           "type": "composer",
           "url": "https://asset-packagist.org"
       },
@@ -27,6 +28,18 @@
               "dist": {
                   "type": "zip",
                   "url": "https://download.ckeditor.com/templates/releases/templates_4.10.1.zip"
+              }
+          }
+      },
+      {
+          "type": "package",
+          "package": {
+              "name": "unicorn-fail/drupal-bootstrap-styles",
+              "version": "0.0.1",
+              "type": "drupal-library",
+              "dist": {
+                  "type": "zip",
+                  "url": "https://github.com/unicorn-fail/drupal-bootstrap-styles/archive/v0.0.1.zip"
               }
           }
       }
@@ -147,6 +160,7 @@
     "drush/drush": "^9.5.0",
     "leafo/scssphp": "^0.7",
     "oomphinc/composer-installers-extender": "^1.1.2",
+    "unicorn-fail/drupal-bootstrap-styles": "^0.0.1",
     "vlucas/phpdotenv": "^3.1",
     "webflo/drupal-finder": "^1.1.0",
     "webmozart/path-util": "^2.3"
@@ -280,17 +294,11 @@
         "Issue #2858438: Provide inline entity form FieldWidgetDisplay":
         "https://www.drupal.org/files/issues/2858438_6.patch"
       },
-      "drupal/entity_embed": {
-        "Issue #2832504: Send the CKEditor instance ID to the embed.preview route":
-        "https://www.drupal.org/files/issues/2832504-2.patch"
-      },
       "drupal/focal_point": {
         "Issue #2916562: Broken image preview":
         "https://www.drupal.org/files/issues/2019-03-30/2916562-39.patch"
       },
       "drupal/group": {
-          "Issue #2716051: Add operations for group content tabs to groups in the groups listing":
-          "https://www.drupal.org/files/issues/2018-03-16/group-2716051-15.patch",
           "Issue #2949408: Allow group admins to create user account and add to group":
           "https://www.drupal.org/files/issues/2018-12-19/group-manage-users-2949408-15.patch"
       },
