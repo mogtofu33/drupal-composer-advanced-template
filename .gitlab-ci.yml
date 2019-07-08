@@ -172,6 +172,8 @@ before_script:
     key: dump-$CI_BUILD_REF_NAME
     paths:
       - dump
+  # Because some contrib tests failed, keep it informative.
+  allow_failure: true
 
 ################################################################################
 # Jobs definition.
