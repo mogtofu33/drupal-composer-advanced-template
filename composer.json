@@ -32,11 +32,11 @@
       "type": "package",
       "package": {
         "name": "unicorn-fail/drupal-bootstrap-styles",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "type": "drupal-library",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/unicorn-fail/drupal-bootstrap-styles/archive/v0.0.1.zip"
+          "url": "https://github.com/unicorn-fail/drupal-bootstrap-styles/archive/v0.0.2.zip"
         }
       }
     }
