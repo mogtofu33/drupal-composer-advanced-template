@@ -21,7 +21,7 @@ before_install:
 install:
   - composer --verbose --no-check-all --no-check-publish validate
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
-  - composer run-script install-boostrap-sass
+  - composer run-script install-bootstrap-sass
 
 script:
   - cd $TRAVIS_BUILD_DIR/web
