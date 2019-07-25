@@ -15,16 +15,17 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
 
 ## What's included / added
 
-- A bunch of usefull contrib modules, some patches (core / contrib)
+- A bunch of interesting [contrib modules](./composer.json#L47), some [patches for core / contrib](./composer.json#L271)
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
-- Bootstrap Sass sub theme + Compiler in Php
+- [Bootstrap Sass](https://www.drupal.org/project/bootstrap) sub theme with sass + Sass compiler with Php
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
+- A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal8](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install
 
 ### Requirements
 
-Package creation require [Composer 1.8+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer.
+Require [Composer 1.8+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer.
 
 Compiling the Sass file is done through [http://leafo.github.io/scssphp](http://leafo.github.io/scssphp) but you can install [Sass](https://sass-lang.com/install) if you prefer a more advanced feature (like watch) or use a [Docker image](#using-sass-with-a-docker-image).
 
@@ -38,30 +39,18 @@ composer global require "hirak/prestissimo:^0.3"
 
 ### Grab code and libraries
 
-Grab this project locally in your web root folder:
+Get and install this project
 
 ```bash
-curl -fSl https://gitlab.com/mog33/drupal-composer-advanced-template/-/archive/8.x-dev/drupal-composer-advanced-template-8.x-dev.tar.gz -o drupal.tar.gz
-tar xf drupal.tar.gz && mv drupal-composer-advanced-template-8.x-dev drupal
+composer create-project mog33/drupal-composer-advanced-template:8.x-dev drupal --stability dev --no-interaction
 ```
 
-Download project code, from this folder run:
+_Note_: A sub theme for Bootstrap Sass will be created and compiled during the
+installation. When developing a theme and editing the scss file you can compile
+with command:
 
 ```bash
-cd drupal
-composer install --no-suggest --prefer-dist
-```
-
-Create sub theme Bootstrap Sass:
-
-```bash
-composer install-bootstrap-sass
-```
-
-_Note_: When developing a theme and editing the scss file you can compile with command:
-
-```bash
-composer sass-compile
+composer run-script sass-compile
 ```
 
 Set **/web** as root of your host (Apache).
@@ -69,6 +58,13 @@ Set **/web** as root of your host (Apache).
 Other folders (eg: vendor) should be accessible by Webserver user and not from HTTP.
 
 ### Drupal installation
+
+#### Graphic installation
+
+Visit your Drupal and choose profile a `configuration installer` with config
+folder `../config/sync`.
+
+#### Drush installation
 
 - Create a database and a user access to this database.
 
@@ -81,25 +77,9 @@ cp .env.example .env
 vi .env
 ```
 
-- Copy _example.settings.php to _web/sites/default/settings.php_
+- Drush command installation to run from **web** folder
 
-```bash
-cp example.settings.php web/sites/default/settings.php
-```
-
-- Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch:
-
-```bash
-cp example.settings.local.php web/sites/default/settings.local.php
-cp example.settings.dev.php web/sites/default/settings.dev.php
-cp example.settings.prod.php web/sites/default/settings.prod.php
-```
-
-Edit _web/sites/default/settings.local.php_ to match _trusted_host_patterns_ and your env switch.
-
-- Drush command installation to run from **web** folder, change uppercase variables to match your environment:
-
-_Note_: Currently can not be installed from Drupal install.php, only Drush command.
+_Note_: Currently can not be installed from Drupal install UI (install.php), only Drush command.
 
 ```bash
 cd web
@@ -109,13 +89,23 @@ cd web
     --account-pass=password
 ```
 
+If you have a permission denied, ensure permissions on `web/sites/default` is 750.
+
+- Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch:
+
+```bash
+cp example.settings.local.php web/sites/default/settings.local.php
+cp example.settings.dev.php web/sites/default/settings.dev.php
+cp example.settings.prod.php web/sites/default/settings.prod.php
+```
+
 Set dev config
 
 ```bash
 ../vendor/bin/drush --yes csim config_split.config_split.config_dev
 ```
 
-Login to your new website with user admin / password or using drush:
+Login to your new website with user admin / password or using _drush_:
 
 ```bash
 ../vendor/bin/drush uli
