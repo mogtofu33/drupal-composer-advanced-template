@@ -159,7 +159,7 @@
     "drush/drush": "^9.5.0",
     "leafo/scssphp": "^0.8",
     "oomphinc/composer-installers-extender": "^1.1.2",
-    "unicorn-fail/drupal-bootstrap-styles": "^0.0.1",
+    "unicorn-fail/drupal-bootstrap-styles": "^0.0.2",
     "vlucas/phpdotenv": "^3.1",
     "webflo/drupal-finder": "^1.1.0",
     "webmozart/path-util": "^2.3"
