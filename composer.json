@@ -210,12 +210,14 @@
       "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
     ],
     "post-install-cmd": [
-      "DrupalProject\\composer\\BootstrapSass::create",
-      "DrupalProject\\composer\\BootstrapSass::compile",
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+      "@install-bootstrap-sass"
     ],
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "post-create-project-cmd": [
+      "@install-bootstrap-sass"
     ],
     "install-bootstrap-sass": [
       "DrupalProject\\composer\\BootstrapSass::create",
