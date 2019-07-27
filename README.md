@@ -42,7 +42,7 @@ composer global require "hirak/prestissimo:^0.3"
 Get and install this project
 
 ```bash
-composer create-project mog33/drupal-composer-advanced-template:8.x-dev drupal --stability dev --no-interaction
+composer create-project mog33/drupal-composer-advanced-template:dev-8.x-dev drupal --stability dev --no-interaction
 ```
 
 _Note_: A sub theme for Bootstrap Sass will be created and compiled during the
