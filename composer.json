@@ -284,7 +284,11 @@
         "Issue #2893892: Fixed Warning Invalid argument supplied for foreach() in Drupal":
         "https://www.drupal.org/files/issues/patch_empty_fix.patch",
         "Issue #2955877: Unsupported operand types inFieldPluginBase":
-        "https://www.drupal.org/files/issues/2019-01-24/core-2955877-Fix-unsupported-operand-types-11.patch"
+        "https://www.drupal.org/files/issues/2019-01-24/core-2955877-Fix-unsupported-operand-types-11.patch",
+        "Issue #3059356: [Security] Update yarn packages to fix 19 vulnerabilities by updating nightwatch":
+        "https://www.drupal.org/files/issues/2019-07-27/3059356-18-nightwatch-upgrade.patch",
+        "Issue #3017176: Support install profile and language code params in drupalInstall Nightwatch command":
+        "https://www.drupal.org/files/issues/2019-02-05/3017176-7.patch"
       },
       "drupal/ckeditor_media_embed": {
         "Issue #2900313: Add ability to embed tweets and other rich content in WYSIWYG":
