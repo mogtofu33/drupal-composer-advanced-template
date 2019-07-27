@@ -143,6 +143,7 @@ stages:
     - master
   only:
     - testing
+    - 8.x-dev
     - tags
 
 # Reports produced and visible in job report.
@@ -224,7 +225,7 @@ Build:
     # check Drupal codebase and composer install if needed.
     - robo perform:build
     # Custom build step for this project.
-    - composer run-script install-bootstrap-sass
+    # - composer run-script install-bootstrap-sass
   variables:
     <<: *test_variables
   # [CI_TYPE] When using included Drupal for a module or a theme, the
@@ -556,6 +557,7 @@ Css lint:
   # Could use only on tag release.
   only:
     - master
+    - 8.x-dev
     - tags
   artifacts:
     <<: *default_artifacts
