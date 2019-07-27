@@ -59,23 +59,11 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 ### Drupal installation
 
-#### Graphic installation
-
-Visit your Drupal and choose profile a `configuration installer` with config
-folder `../config/sync`.
-
-#### Drush installation
-
 - Create a database and a user access to this database.
 
 - Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
 
-- Copy _.env.example_ to _.env_ and edit database values:
-
-```bash
-cp .env.example .env
-vi .env
-```
+- Edit `.env` and set database values, copy .`env.example` if it don't exist
 
 - Drush command installation to run from **web** folder
 
@@ -89,23 +77,23 @@ cd web
     --account-pass=password
 ```
 
-If you have a permission denied, ensure permissions on `web/sites/default` is 750.
+_Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
 
-- Copy and rename _example.settings.*.php_ at the root of this project to _web/sites/default/settings.*.php_ and edit to adapt environment switch:
+- Include _settings.local.php_, at the end of _web/sites/default/settings.php_, uncomment
 
-```bash
-cp example.settings.local.php web/sites/default/settings.local.php
-cp example.settings.dev.php web/sites/default/settings.dev.php
-cp example.settings.prod.php web/sites/default/settings.prod.php
+```php
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
 ```
 
-Set dev config
+- Set dev config
 
 ```bash
 ../vendor/bin/drush --yes csim config_split.config_split.config_dev
 ```
 
-Login to your new website with user admin / password or using _drush_:
+- Login to your new website with user admin / password or using _drush_:
 
 ```bash
 ../vendor/bin/drush uli

@@ -196,7 +196,8 @@
   "autoload": {
     "classmap": [
       "scripts/composer/ScriptHandler.php",
-      "scripts/composer/BootstrapSass.php"
+      "scripts/composer/BootstrapSass.php",
+      "scripts/composer/ScriptHelper.php"
     ],
     "files": [
       "load.environment.php"
@@ -211,13 +212,15 @@
     ],
     "post-install-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-      "@install-bootstrap-sass"
+      "@install-bootstrap-sass",
+      "@setup-project"
     ],
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
     "post-create-project-cmd": [
-      "@install-bootstrap-sass"
+      "@install-bootstrap-sass",
+      "@setup-project"
     ],
     "install-bootstrap-sass": [
       "DrupalProject\\composer\\BootstrapSass::create",
@@ -225,6 +228,9 @@
     ],
     "sass-compile": [
       "DrupalProject\\composer\\BootstrapSass::compile"
+    ],
+    "setup-project": [
+      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles"
     ],
     "nuke": "rm -r -f composer.lock web/core web/libraries web/modules/contrib web/themes/contrib web/profiles/contrib vendor"
   },
