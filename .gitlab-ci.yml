@@ -51,7 +51,7 @@ stages:
       - $SKIP_TESTS == "1"
   only:
     refs:
-      - testing
+      - $TESTS_BRANCH
       - tags
 
 # Reports produced and visible in job report.

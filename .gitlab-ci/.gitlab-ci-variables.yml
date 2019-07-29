@@ -53,6 +53,9 @@ variables:
   # Do not need editing when using ci image.
   DOC_ROOT: "/var/www/html"
 
+  # Branch triggering build and test.
+  TESTS_BRANCH: "testing"
+
   # Nightwatch.js tests to run, only tag, core, all except core.
   # see https://www.drupal.org/docs/8/testing/javascript-testing-using-nightwatch
   # Add --verbose for a full log from Nightwatch if it fail.
