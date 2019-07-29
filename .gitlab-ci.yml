@@ -51,8 +51,10 @@ stages:
       - $SKIP_TESTS == "1"
   only:
     refs:
-      - $TESTS_BRANCH
+      - testing
       - tags
+    variables:
+      - $FORCE_TESTS == "1"
 
 # Reports produced and visible in job report.
 .default_artifacts: &default_artifacts
