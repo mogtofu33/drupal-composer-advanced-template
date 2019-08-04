@@ -58,16 +58,16 @@
     </testsuite>
     <!-- Prefix with test for only for CI testing and single core test -->
     <testsuite name="testunit">
-      <directory>./core/modules/action/tests/src/Unit</directory>
+      <directory>./modules/action/tests/src/Unit</directory>
     </testsuite>
     <testsuite name="testkernel">
-      <directory>./core/modules/action/tests/src/Kernel</directory>
+      <directory>./modules/action/tests/src/Kernel</directory>
     </testsuite>
     <testsuite name="testfunctional">
-      <directory>./core/modules/action/tests/src/Functional</directory>
+      <directory>./modules/action/tests/src/Functional</directory>
     </testsuite>
     <testsuite name="testfunctional-javascript">
-      <directory>./core/modules/action/tests/src/FunctionalJavascript</directory>
+      <directory>./modules/action/tests/src/FunctionalJavascript</directory>
     </testsuite>
   </testsuites>
   <listeners>
