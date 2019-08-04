@@ -523,7 +523,7 @@ Sass lint:
 .metrics_template:
   only:
     refs:
-      - master
+      - 8.x-dev
       - tags
   except:
     variables:
