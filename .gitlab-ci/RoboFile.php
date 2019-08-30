@@ -883,17 +883,25 @@ class RoboFile extends \Robo\Tasks {
    *   (optional) Working dir, can be drupal, ie:/var/www/html
    *   or user, ie: /var/www/.composer
    *
+   * @param string\null $dir
+   *   (optional) Dir to run the command in.
+   *
    * @param bool $dev
    *   (optional) Install as require-dev. Default true.
    *
    * @return \Robo\Task\Base\Exec
    */
-  private function installWithComposer(array $bins_dependencies, $target = 'drupal', $dev = true) {
+  private function installWithComposer(array $bins_dependencies, $target = 'drupal', $dir = null, $dev = true) {
     $this->checkPrestissimo();
     $this->checkCoder();
 
     if ($target == 'drupal') {
-      $workingDir = $this->docRoot;
+      if ($dir) {
+        $workingDir = $dir;
+      }
+      else {
+        $workingDir = $this->docRoot;
+      }
     }
     else {
       $workingDir = $this->composerHome;
@@ -1272,18 +1280,25 @@ class RoboFile extends \Robo\Tasks {
 
   /**
    * Install all things needed for CI.
+   *
+   * @param string\null $cwd
+   *   (optional) Dir to run the command in.
    */
-  public function installCi() {
+  public function installCi($dir = null) {
+    if (!$dir) {
+      $dir = $this->docRoot;
+    }
+
     $list = [];
     $list += $this->installPhpunit(true);
     $list += $this->installBehat(true);
-    $this->installWithComposer($list, 'drupal');
+    $this->installWithComposer($list, 'drupal', $dir);
 
     $list = [];
     # Composer install.
     $list += $this->installDrush(true);
     $list += $this->installPhpqa(true);
-    $this->installWithComposer($list, 'user');
+    $this->installWithComposer($list, 'user', $dir);
   }
 
 }
