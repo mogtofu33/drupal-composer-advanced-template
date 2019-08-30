@@ -1281,7 +1281,7 @@ class RoboFile extends \Robo\Tasks {
   /**
    * Install all things needed for CI.
    *
-   * @param string\null $cwd
+   * @param string\null $dir
    *   (optional) Dir to run the command in.
    */
   public function installCi($dir = null) {
