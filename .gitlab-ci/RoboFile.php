@@ -896,20 +896,17 @@ class RoboFile extends \Robo\Tasks {
     $this->checkCoder();
 
     if ($target == 'drupal') {
-      if ($dir) {
-        $workingDir = $dir;
-      }
-      else {
-        $workingDir = $this->docRoot;
+      if (!$dir) {
+        $dir = $this->docRoot;
       }
     }
     else {
-      $workingDir = $this->composerHome;
+      $dir = $this->composerHome;
     }
 
     // Base task.
     $task = $this->taskComposerRequire()
-      ->workingDir($workingDir)
+      ->workingDir($dir)
       ->noInteraction();
     if ($dev) {
       $task->dev();
@@ -917,7 +914,7 @@ class RoboFile extends \Robo\Tasks {
 
     $hasDependency = false;
     foreach ($bins_dependencies as $bin => $dependencies) {
-      $bin = $workingDir . '/vendor/bin/' . $bin;
+      $bin = $dir . '/vendor/bin/' . $bin;
 
       if (!file_exists($bin)) {
         foreach ($dependencies as $dependency => $version) {
