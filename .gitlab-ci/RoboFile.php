@@ -1099,7 +1099,7 @@ class RoboFile extends \Robo\Tasks {
     switch($this->ciType) {
       case "project":
         $task = $this->taskComposerValidate()
-          ->workingDir($this->docRoot)
+          ->workingDir($dir)
           ->noInteraction()
           ->noCheckAll()
           ->noCheckPublish();
@@ -1111,9 +1111,9 @@ class RoboFile extends \Robo\Tasks {
         }
         $task->run();
 
-        $this->composerInstall($this->ciProjectDir);
+        $this->composerInstall($dir);
 
-        if (!file_exists($this->ciProjectDir . '/web/index.php')) {
+        if (!file_exists($dir . '/web/index.php')) {
           $this->io()->error("Missing Drupal, did composer install failed?");
         }
         if ($forceInstall) {
