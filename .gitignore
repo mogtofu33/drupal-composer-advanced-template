@@ -30,3 +30,7 @@
 .sass-cache
 Gemfile.lock
 .console
+/console/
+/local/
+/reports/
+/web/reports/
