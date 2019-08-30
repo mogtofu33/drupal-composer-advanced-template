@@ -17,10 +17,12 @@ variables:
 
   # Minor Drupal version to work with, limited to tags on
   # https://cloud.docker.com/u/mogtofu33/repository/docker/mogtofu33/drupal8ci
+  # Current stable is 8.7.x, dev is 8.8.x-dev, you can choose "8.7" or "8.8".
   DRUPAL_VERSION: "8.7"
 
   # [CI_TYPE] Select the base image for all tests and actions.
   # For a module or theme, this image include Drupal from the official Docker
+  #
   # image with tools for CI and selenium.
   # CI_IMAGE_TYPE: selenium
   #
@@ -34,10 +36,6 @@ variables:
   #     A single Drupal module.
   #   theme
   #     A single Drupal theme.
-  #   custom
-  #     A Codebase modules/themes/profile for a Drupal project without a
-  #     composer.json file based on Drupal project. The main use case is for
-  #     this module.
   CI_TYPE: "project"
 
   # Path is relative to project root, for included Drupal in the
@@ -47,7 +45,7 @@ variables:
   # If using the image with Drupal for a module or a theme.
   # WEB_ROOT: "/var/www/html"
   #
-  # [CI_TYPE] If using a Drupal project with a composer.json or custom.
+  # [CI_TYPE] If using a Drupal project with a composer.json file.
   WEB_ROOT: "/var/www/html/web"
 
   # Do not need editing when using ci image.
@@ -137,17 +135,8 @@ variables:
   #
   # Space separated for eslint and sass lint.
   JS_CODE: "${WEB_ROOT}/**/custom/**/*.js"
-  CSS_FILES: "${WEB_ROOT}/(themes|modules)/custom/**/css/*.css"
-  SCSS_FILES: "${WEB_ROOT}/(themes|modules)/custom/**/scss/*.scss"
-  SASS_CONFIG: "${CI_PROJECT_DIR}/.gitlab-ci/.sass-lint.yml"
-
-  # PhpQA specific variables not set in gitlab-ci/.phpqa.yml.
-  # Options for Phpqa to build a report to download, need artifacts set on the
-  # job, see '.report' below.
-  PHPQA_REPORT: "--buildDir ${REPORT_DIR}"
-  PHPQA_PHP_CODE: "--analyzedDirs ${PHP_CODE}"
-  # Include all code from the project and not only contrib or custom.
-  # PHPQA_PHP_CODE: "--analyzedDirs ${WEB_ROOT}"
+  CSS_FILES: "${WEB_ROOT}/**/custom/**/css/*.css"
+  SCSS_FILES: "${WEB_ROOT}/**/custom/**/scss/*.scss"
 
   ##############################################################################
   # [DEPLOY] Global settings for all env used for deploy.

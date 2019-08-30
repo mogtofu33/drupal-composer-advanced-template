@@ -10,6 +10,7 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
   - [Requirements](#requirements)
   - [Grab code and libraries](#grab-code-and-libraries)
   - [Drupal installation](#drupal-installation)
+- [Project metrics](#project-metrics)
 - [Bonus](#bonus)
   - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
 
@@ -98,6 +99,12 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 ```bash
 ../vendor/bin/drush uli
 ```
+
+## Project metrics
+
+You want an idea of what's in this project ?
+
+Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drupal-composer-advanced-template/-/jobs/265433512/artifacts/reports/phpmetrics/index.html)
 
 ## Bonus
 
