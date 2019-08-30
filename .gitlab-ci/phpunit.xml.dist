@@ -40,7 +40,7 @@
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
       <!-- Coverage only from core module action. -->
-      <directory>../modules/action</directory>
+      <directory>./modules/action</directory>
       <!-- By definition test classes have no tests. -->
       <exclude>
         <directory suffix="Test.php">./</directory>
