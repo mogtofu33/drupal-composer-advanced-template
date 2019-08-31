@@ -27,7 +27,7 @@ variables:
   # CI_IMAGE_TYPE: selenium
   #
   # For a project including a composer.json file.
-  CI_IMAGE_TYPE: selenium-no-drupal
+  CI_IMAGE_TYPE: no-drupal
 
   # [CI_TYPE] Select if you are using CI to test, options are:
   #   project
@@ -60,7 +60,7 @@ variables:
   # Phpunit tests to run, only custom code or empty for all (included Drupal)
   # see .gitlab-ci/phpunit.xml for settings.
   # 'custom' matches dir **/modules/custom/** and **/themes/custom/**
-  PHPUNIT_TESTS: "custom"
+  PHPUNIT_TESTS: "demo_"
 
   ##############################################################################
   # [TESTING] Skip some stages or single jobs.
