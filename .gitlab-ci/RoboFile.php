@@ -880,7 +880,7 @@ class RoboFile extends \Robo\Tasks {
 
     if ($target == 'drupal') {
       if (!$dir) {
-        $dir = $this->docRoot;
+        $dir = $this->ciProjectDir;
       }
     }
     else {
@@ -1081,7 +1081,7 @@ class RoboFile extends \Robo\Tasks {
     $this->say("Build for type: $this->ciType");
 
     if (!$dir) {
-      $dir = $this->docRoot;
+      $dir = $this->ciProjectDir;
     }
 
     switch($this->ciType) {
