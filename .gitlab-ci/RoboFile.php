@@ -630,6 +630,11 @@ class RoboFile extends \Robo\Tasks {
     else {
       $this->installWithComposer($install, 'drupal');
     }
+
+    // Add bin globally.
+    if (!file_exists('/usr/local/bin/phpunit')) {
+      $this->symlink($this->docRoot . '/vendor/bin/' . $bin, '/usr/local/bin/phpunit');
+    }
   }
 
   /**
@@ -696,7 +701,7 @@ class RoboFile extends \Robo\Tasks {
       $this->installWithComposer($install, 'drupal');
     }
 
-    // Add to bin to use taskBehat().
+    // Add bin to use taskBehat().
     if (!file_exists('/usr/local/bin/behat')) {
       $this->symlink($this->docRoot . '/vendor/bin/' . $bin, '/usr/local/bin/behat');
     }
@@ -841,28 +846,6 @@ class RoboFile extends \Robo\Tasks {
     $install = [
       'drush' => [
         'drush/drush' => '^9',
-      ],
-    ];
-    if ($list) {
-      return $install;
-    }
-    else {
-      $this->installWithComposer($install, 'user');
-    }
-  }
-
-  /**
-   * Install or locate security-checker.
-   *
-   * @param bool $list
-   *   (Optional) Return the bin and dependencies instead of run.
-   *
-   * @return array
-   */
-  public function installSecurityChecker($list = false) {
-    $install = [
-      'security-checker' => [
-        'sensiolabs/security-checker' => '^5.0',
       ],
     ];
     if ($list) {
@@ -1277,25 +1260,18 @@ class RoboFile extends \Robo\Tasks {
 
   /**
    * Install all things needed for CI.
-   *
-   * @param string\null $dir
-   *   (optional) Dir to run the command in.
    */
-  public function installCi($dir = null) {
-    if (!$dir) {
-      $dir = $this->docRoot;
-    }
-
+  public function installCi() {
     $list = [];
     $list += $this->installPhpunit(true);
     $list += $this->installBehat(true);
-    $this->installWithComposer($list, 'drupal', $dir);
+    $this->installWithComposer($list, 'drupal');
 
     $list = [];
     # Composer install.
     $list += $this->installDrush(true);
     $list += $this->installPhpqa(true);
-    $this->installWithComposer($list, 'user', $dir);
+    $this->installWithComposer($list, 'user');
   }
 
 }
