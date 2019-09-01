@@ -469,8 +469,8 @@ Css lint:
     variables:
       - $SKIP_LINT == "1"
       - $SKIP_LINT_CSS == "1"
-  artifacts:
-    <<: *default_artifacts
+  # artifacts:
+    # <<: *default_artifacts
     # paths:
       # - ${REPORT_DIR}/*.txt
   before_script:

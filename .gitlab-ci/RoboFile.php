@@ -709,10 +709,10 @@ class RoboFile extends \Robo\Tasks {
   /**
    * Runs Nightwatch.js tests from a tests folder.
    *
-   * @param string|null $reportRootDir
-   *   (optional) Report root dir for this task.
+   * @param string|null $reportDir
+   *   (Optional) Report dir.
    */
-  public function testNightwatch($reportRootDir = null) {
+  public function testNightwatch($reportDir = null) {
 
     $this->prepareNightwatch();
 
@@ -729,7 +729,10 @@ class RoboFile extends \Robo\Tasks {
       ->run();
 
     if ($task->wasSuccessful()) {
-      $this->artifactsNightwatch();
+      if (!$reportDir) {
+        $reportDir = $this->ciProjectDir . '/' . $this->reportDir;
+      }
+      $this->artifactsNightwatch($reportDir);
     }
   }
 
@@ -755,16 +758,19 @@ class RoboFile extends \Robo\Tasks {
 
   /**
    * Prepare Nightwatch.js tests folders.
+   *
+   * @param string $reportDir
+   *   Report dir.
    */
-  private function artifactsNightwatch() {
+  private function artifactsNightwatch($reportDir) {
     $this->say("Create artifact for Nightwatch");
-    $target = $this->ciProjectDir . '/' . $this->reportDir . '/nightwatch';
+
     $task = $this->taskFilesystemStack()
-      ->mkdir($target)
-      ->mirror($this->webRoot . '/core/reports/', $target);
+      ->mkdir($reportDir)
+      ->mirror($this->webRoot . '/core/reports/', $reportDir);
 
     if (file_exists($this->webRoot . '/core/chromedriver.log')) {
-      $task->copy($this->webRoot . '/core/chromedriver.log', $target . '/chromedriver.log', true);
+      $task->copy($this->webRoot . '/core/chromedriver.log', $reportDir . '/chromedriver.log', true);
     }
 
     $task->run();
