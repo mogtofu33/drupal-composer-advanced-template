@@ -91,7 +91,7 @@ class RoboFile extends \Robo\Tasks {
    *   The CI dir, look at env values for This can be  overridden by specifying
    *   a $CI_PROJECT_DIR environment variable.
    */
-  protected $ciProjectDir = '';
+  protected $ciProjectDir = "";
 
   /**
    * CI_PROJECT_NAME context.
@@ -118,7 +118,7 @@ class RoboFile extends \Robo\Tasks {
    *   The Drupal browser test output look at env values for This can be 
    *   overridden by specifying a $BROWSERTEST_OUTPUT_DIRECTORY environment variable.
    */
-  protected $browsertestOutput = "/var/www/html/sites/simpletest";
+  protected $browsertestOutput = "/var/www/html/web/sites/simpletest";
 
   /**
    * APACHE_RUN_USER context.
@@ -512,7 +512,7 @@ class RoboFile extends \Robo\Tasks {
       $reportDir = $reportDir . '/' . str_replace(',', '_', str_replace('custom', '', $testsuite));
     }
     else {
-      $reportDir = $this->reportDir . '/' . str_replace(',', '_', str_replace('custom', '', $testsuite));
+      $reportDir = $this->reportDir;
     }
 
     if (!is_dir($reportDir)) {
@@ -647,7 +647,6 @@ class RoboFile extends \Robo\Tasks {
     if (!$reportRootDir) {
       $reportRootDir = $this->reportDir;
     }
-    // $this->say("[NOTICE] Behat tests on $reportRootDir");
 
     $this->taskFilesystemStack()
       ->mkdir($reportRootDir . '/behat')
@@ -1017,7 +1016,7 @@ class RoboFile extends \Robo\Tasks {
    */
   public function yarnInstall($cwd = null) {
     if (!$cwd) {
-      $cwd = $this->webRoot . '/core';
+      $cwd = $this->ciProjectDir . '/web/core';
     }
     // Simply check one of the program.
     if (!file_exists($cwd . '/node_modules/.bin/stylelint')) {

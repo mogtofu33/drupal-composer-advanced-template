@@ -150,13 +150,11 @@ Build:
     paths:
       - vendor
       - web
-      - core/node_modules
   artifacts:
     paths:
       # Build files for next steps and deploy/release.
       - vendor
       - web
-      - core/node_modules
       - drush
       - scripts
       - composer.json
