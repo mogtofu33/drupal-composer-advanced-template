@@ -649,7 +649,7 @@ class RoboFile extends \Robo\Tasks {
     }
 
     $this->taskFilesystemStack()
-      ->mkdir($reportRootDir . '/behat')
+      ->mkdir($reportRootDir )
       ->mkdir($this->docRoot . '/tests')
       ->mirror($this->ciProjectDir . '/tests', $this->docRoot . '/tests')
       ->run();
@@ -663,7 +663,7 @@ class RoboFile extends \Robo\Tasks {
       ->config('tests/behat.yml')
       ->noInteraction()
       ->option('format', 'html', '=')
-      ->option('out', $reportRootDir . '/behat', '=');
+      ->option('out', $reportRootDir, '=');
     if ($this->verbose) {
       $task->verbose('v');
     }
@@ -790,13 +790,13 @@ class RoboFile extends \Robo\Tasks {
   }
 
   /**
-   * Print Nightwatch, Chromedriver and Chromium versions.
+   * Print Nightwatch, Chromedriver and Chrome versions.
    */
   private function checkNightwatch() {
     $bins = [
       $this->webRoot . '/core/node_modules/.bin/nightwatch',
       $this->webRoot . '/core/node_modules/.bin/chromedriver',
-      '/usr/bin/chromium',
+      '/usr/bin/google-chrome',
     ];
     foreach ($bins as $bin) {
       if (file_exists($bin)) {
