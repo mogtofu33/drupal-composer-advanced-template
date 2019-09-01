@@ -81,12 +81,11 @@ stages:
   SIMPLETEST_DB: "mysql://root@mariadb/drupal"
   BROWSERTEST_OUTPUT_DIRECTORY: "${WEB_ROOT}/sites/simpletest"
   # No spaces.
-  MINK_DRIVER_ARGS_WEBDRIVER: '["chrome",{"browserName":"chrome","chromeOptions":{"w3c":false,"args":["--whitelisted-ips","--disable-gpu","--headless","--no-sandbox","--window-size=1920,1080"]}},"http://localhost:9515"]'
+  MINK_DRIVER_ARGS_WEBDRIVER: '["chrome",{"browserName":"chrome","chromeOptions":{"w3c":false,"args":["--whitelisted-ips","--disable-gpu","--headless","--no-sandbox"]}},"http://localhost:9515"]'
+  CHROMEDRIVER_OPTS: ''
   APACHE_RUN_USER: "www-data"
   APACHE_RUN_GROUP: "www-data"
-  # Selenium extra options, see
-  # https://github.com/SeleniumHQ/docker-selenium#se_opts-selenium-configuration-options
-  SE_OPTS: ""
+
 
 # Testing template for phpunit, this provide Apache / Php.
 .test_template:
@@ -134,7 +133,7 @@ Build:
     # Check Drupal codebase and run 'composer install' for a project.
     - robo project:build
     # After Drupal install we install core/package.json.
-    - robo yarn:install ${CI_PROJECT_DIR}
+    - robo yarn:install
     # Install specific CI tools.
     - robo install:ci
     # Add here any custom build step, composer run-script, grunt, webpack, yarn...
@@ -219,7 +218,7 @@ Functional Js:
       - $SKIP_TESTS == "1"
       - $SKIP_TEST_FUNCTIONALJS == "1"
   script:
-    # Ensure selenium is up.
+    # Launch Chromedriver.
     - /scripts/start-chromedriver.sh&
     # - sleep 5s && curl -s http://localhost:4444/status | jq '.'
     - sleep 5s
@@ -248,6 +247,7 @@ Nightwatch Js:
       fi
     # [TEMPORARY] Patch to allow install profile, see https://drupal.org/node/3017176
     - robo patch:nightwatch https://www.drupal.org/files/issues/2019-02-05/3017176-7.patch
+    # Install from core/package.json
     - robo yarn:install
     # This is the main script, 'yarn install' and 'test:nightwatch' from core folder.
     - robo test:nightwatch
@@ -298,7 +298,7 @@ Behat tests:
     - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${WEB_ROOT} || true
     - robo prepare:folders
     - robo install:drupal
-    # Starting Chrome, we are not using Selenium.
+    # Starting Chrome, we are not using Chromedriver.
     - /scripts/start-chrome.sh&
     - sleep 5s && curl -s http://localhost:9222/json/version | jq '.'
     - robo install:behat
@@ -306,7 +306,7 @@ Behat tests:
   variables:
     <<: *test_variables
     DRUPAL_INSTALL_PROFILE: "standard"
-    CHROMIUM_OPTS: "--disable-gpu --headless --no-sandbox --window-size=1920,1080 --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222"
+    CHROME_OPTS: "--disable-gpu --headless --no-sandbox --window-size=1920,1080 --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222"
     BEHAT_PARAMS: >
       {
         "extensions" : {
@@ -504,8 +504,7 @@ Sass lint:
   before_script:
     - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${CI_PROJECT_DIR} || true
     - robo prepare:folders
-    # Install stylelint from core/package.json
-    - robo yarn:install
+    # Install sass-lint dev.
     - robo yarn add git://github.com/sasstools/sass-lint.git#develop
   script:
     # Html report.
@@ -663,4 +662,4 @@ include:
 # Base image for all ci actions, see https://gitlab.com/mog33/drupal8ci
 ################################################################################
 
-image: mogtofu33/drupal8ci:${DRUPAL_VERSION}-${CI_IMAGE_TYPE}
+image: mogtofu33/drupal8ci:${DRUPAL_VERSION}${CI_IMAGE_TYPE}
