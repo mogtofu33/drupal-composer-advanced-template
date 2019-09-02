@@ -1131,7 +1131,7 @@ class RoboFile extends \Robo\Tasks {
 
     // Handle CI values.
     switch($this->ciType) {
-      case "custom":
+      case "demo":
       case "project":
         // Root is the Drupal with a web/ folder.
         $targetFolder = $this->docRoot;
@@ -1268,7 +1268,7 @@ class RoboFile extends \Robo\Tasks {
     $list = [];
     $list += $this->installPhpunit(true);
     $list += $this->installBehat(true);
-    $this->installWithComposer($list, 'drupal', $this->docRoot);
+    $this->installWithComposer($list, 'drupal');
 
     $list = [];
     # Composer install.

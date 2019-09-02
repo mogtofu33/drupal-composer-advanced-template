@@ -385,7 +385,7 @@ Code quality:
     - phpqa
         --buildDir ${REPORT_DIR}
         --tools ${TOOLS}
-        --analyzedDirs ${PHP_CODE}
+        --analyzedDirs ${PHP_CODE_QA}
 
 # Drupal coding standard best practices report.
 Best practices:
@@ -406,7 +406,7 @@ Best practices:
     - phpqa
         --buildDir ${REPORT_DIR}
         --tools ${BEST_PRACTICES}
-        --analyzedDirs ${PHP_CODE}
+        --analyzedDirs ${PHP_CODE_QA}
   # Allow failure to produce report and warning.
   allow_failure: true
 
@@ -553,7 +553,7 @@ Php metrics:
     - phpqa
         --buildDir ${REPORT_DIR}
         --tools phpmetrics
-        --analyzedDirs ${PHP_CODE}
+        --analyzedDirs ${PHP_CODE_METRICS}
 
 # Phploc, Pdepend report, no pass or failure as it's just informative.
 Php stats:
@@ -567,7 +567,7 @@ Php stats:
     - phpqa
         --buildDir ${REPORT_DIR}
         --tools phploc,pdepend
-        --analyzedDirs ${PHP_CODE}
+        --analyzedDirs ${PHP_CODE_METRICS}
 
 ################################################################################
 # [DEPLOY] Deploy jobs definition.

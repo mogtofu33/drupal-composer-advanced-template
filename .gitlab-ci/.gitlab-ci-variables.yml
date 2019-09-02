@@ -49,11 +49,17 @@ variables:
   # 'custom' matches dir **/modules/custom/** and **/themes/custom/**
   PHPUNIT_TESTS: "custom"
 
-  # Comma separated for phpqa (code quality jobs) and metrics jobs.
-  # Will fail if a folder is empty.
-  # PHP_CODE: "${WEB_ROOT}/modules/custom"
-  # PHP_CODE: "${WEB_ROOT}/themes/custom"
-  PHP_CODE: "${WEB_ROOT}/modules/custom,${WEB_ROOT}/themes/custom"
+  # Comma separated for code quality jobs.
+  # Will fail if a folder is empty, default to your custom code only.
+  # PHP_CODE_QA: "${WEB_ROOT}/modules/custom"
+  # PHP_CODE_QA: "${WEB_ROOT}/themes/custom"
+  PHP_CODE_QA: "${WEB_ROOT}/modules/custom,${WEB_ROOT}/themes/custom"
+
+  # Comma separated for metrics jobs.
+  # Will fail if a folder is empty, default to your custom code only.
+  # PHP_CODE_METRICS: "${WEB_ROOT}/modules/custom"
+  # PHP_CODE_METRICS: "${WEB_ROOT}/themes/custom"
+  PHP_CODE_METRICS: "${WEB_ROOT}/modules/custom,${WEB_ROOT}/themes/custom"
 
   # Nightwatch.js tests to run, only tag, core, all except core.
   # see https://www.drupal.org/docs/8/testing/javascript-testing-using-nightwatch
