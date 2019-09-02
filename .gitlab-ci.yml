@@ -220,8 +220,7 @@ Functional Js:
   script:
     # Launch Chromedriver.
     - /scripts/start-chromedriver.sh&
-    # - sleep 5s && curl -s http://localhost:4444/status | jq '.'
-    - sleep 5s
+    - sleep 5s && curl -s http://localhost:4444/status | jq '.'
     - sudo -E -u ${APACHE_RUN_USER} robo test:suite "${PHPUNIT_TESTS}functional-javascript"
   after_script:
     - cp ${WEB_ROOT}/sites/simpletest/browser_output/*.html ${REPORT_DIR}/functional-javascript/ || true
@@ -662,4 +661,4 @@ include:
 # Base image for all ci actions, see https://gitlab.com/mog33/drupal8ci
 ################################################################################
 
-image: mogtofu33/drupal8ci:${DRUPAL_VERSION}${CI_IMAGE_TYPE}
+image: mogtofu33/drupal8ci:${DRUPAL_VERSION}${CI_IMAGE_VARIANT}

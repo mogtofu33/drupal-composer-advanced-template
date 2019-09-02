@@ -867,11 +867,11 @@ class RoboFile extends \Robo\Tasks {
    * @param array $bins_dependencies
    *   Keys are bins to look for, values array of dependencies.
    *
-   * @param string\null $target
+   * @param string|null $target
    *   (optional) Working dir, can be drupal, ie:/var/www/html
    *   or user, ie: /var/www/.composer
    *
-   * @param string\null $dir
+   * @param string|null $dir
    *   (optional) Dir to run the command in.
    *
    * @param bool $dev
@@ -993,13 +993,13 @@ class RoboFile extends \Robo\Tasks {
    * @param string $arg1
    *   First argument for yarn command.
    *
-   * @param string\null $arg2
+   * @param string|null $arg2
    *   (optional) Second argument for yarn command.
    *
-   * @param string\null $cwd
+   * @param string|null $dir
    *   (optional) Dir to run the command in.
    */
-  public function yarn($arg1, $arg2 = null, $cwd = null) {
+  public function yarn($arg1, $arg2 = null, $dir = null) {
     $args = [];
     if ($arg2) {
       $args = [$arg1, $arg2];
@@ -1007,26 +1007,26 @@ class RoboFile extends \Robo\Tasks {
     else {
       $args = [$arg1];
     }
-    if (!$cwd) {
-      $cwd = $this->webRoot . '/core';
+    if (!$dir) {
+      $dir = $this->webRoot . '/core';
     }
-    $this->say("yarn " . implode(' ', $args) . " cwd: " . $cwd);
-    $this->yarnCmd($args, $cwd)->run();
+    $this->say("yarn " . implode(' ', $args) . " dir: " . $dir);
+    $this->yarnCmd($args, $dir)->run();
   }
 
   /**
    * Run a yarn install from Drupal core.
    *
-   * @param string\null $cwd
+   * @param string|null $dir
    *   (optional) Dir to run the command in.
    */
-  public function yarnInstall($cwd = null) {
-    if (!$cwd) {
-      $cwd = $this->ciProjectDir . '/web/core';
+  public function yarnInstall($dir = null) {
+    if (!$dir) {
+      $dir = $this->ciProjectDir . '/web/core';
     }
     // Simply check one of the program.
-    if (!file_exists($cwd . '/node_modules/.bin/stylelint')) {
-      $this->yarn('install', null, $cwd);
+    if (!file_exists($dir . '/node_modules/.bin/stylelint')) {
+      $this->yarn('install', null, $dir);
     }
   }
 
@@ -1036,18 +1036,18 @@ class RoboFile extends \Robo\Tasks {
    * @param string|array $args
    *   (optional) Arguments for yarn command.
    *
-   * @param string|null $cwd
+   * @param string|null $dir
    *   (optional) Working directory to use.
    *
    * @return \Robo\Task\Base\Exec
    */
-  private function yarnCmd($args = null, $cwd = null) {
-    if (!$cwd) {
-      $cwd = $this->webRoot . '/core';
+  private function yarnCmd($args = null, $dir = null) {
+    if (!$dir) {
+      $dir = $this->webRoot . '/core';
     }
 
     $task = $this->taskExec('yarn')
-      ->option('cwd', $cwd)
+      ->option('cwd', $dir)
       ->arg('--no-progress');
 
     if ($args) {
@@ -1114,7 +1114,6 @@ class RoboFile extends \Robo\Tasks {
         }
         break;
       case "module":
-      case "theme":
         if ($this->verbose) {
           $this->say("[SKIP] No needed build.");
         }
@@ -1153,7 +1152,6 @@ class RoboFile extends \Robo\Tasks {
         $this->mirror($folder, $targetFolder, true);
         break;
       case "module":
-      case "theme":
         // Root contain the theme / module, we symlink with project name.
         $folder = $this->ciProjectDir;
         $target = $this->webRoot . '/' . $this->ciType . 's/custom/' . $this->ciProjectName;
@@ -1270,7 +1268,7 @@ class RoboFile extends \Robo\Tasks {
     $list = [];
     $list += $this->installPhpunit(true);
     $list += $this->installBehat(true);
-    $this->installWithComposer($list, 'drupal');
+    $this->installWithComposer($list, 'drupal', $this->docRoot);
 
     $list = [];
     # Composer install.
