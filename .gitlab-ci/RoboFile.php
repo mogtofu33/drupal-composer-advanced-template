@@ -885,7 +885,13 @@ class RoboFile extends \Robo\Tasks {
 
     if ($target == 'drupal') {
       if (!$dir) {
-        $dir = $this->ciProjectDir;
+        if ($this->ciType == "project") {
+          $dir = $this->ciProjectDir;
+        }
+        # For a module, use included Drupal.
+        else {
+          $dir = $this->docRoot;
+        }
       }
     }
     else {
@@ -1022,11 +1028,22 @@ class RoboFile extends \Robo\Tasks {
    */
   public function yarnInstall($dir = null) {
     if (!$dir) {
-      $dir = $this->ciProjectDir . '/web/core';
+      if ($this->ciType == "project") {
+        $dir = $this->ciProjectDir . '/web/core';
+      }
+      else {
+        $dir = $this->webRoot . '/core';
+      }
     }
-    // Simply check one of the program.
-    if (!file_exists($dir . '/node_modules/.bin/stylelint')) {
-      $this->yarn('install', null, $dir);
+
+    if (!file_exists($dir . '/package.json')) {
+      $this->io()->warning("Missing $dir/package.json file.");
+    }
+    else {
+      // Simply check one of the program.
+      if (!file_exists($dir . '/node_modules/.bin/stylelint')) {
+        $this->yarn('install', null, $dir);
+      }
     }
   }
 

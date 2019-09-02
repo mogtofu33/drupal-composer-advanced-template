@@ -51,6 +51,7 @@ stages:
       - $SKIP_TESTS == "1"
   only:
     refs:
+      - 8.x-1.x
       - 8.x-dev
       - testing
       - tags
@@ -526,6 +527,7 @@ Sass lint:
 .metrics_template:
   only:
     refs:
+      - 8.x-1.x
       - 8.x-dev
       - master
       - tags
