@@ -212,6 +212,11 @@ class RoboFile extends \Robo\Tasks {
       $this->browsertestOutput = getenv('BROWSERTEST_OUTPUT_DIRECTORY');
     }
 
+    // Pull a NIGHTWATCH_TESTS from the environment, if it exists.
+    if (getenv('NIGHTWATCH_TESTS')) {
+      $this->nightwatchTests = getenv('NIGHTWATCH_TESTS');
+    }
+
     // Pull a APACHE_RUN_USER from the environment, if it exists.
     if (getenv('APACHE_RUN_USER')) {
       $this->apacheUser = getenv('APACHE_RUN_USER');
