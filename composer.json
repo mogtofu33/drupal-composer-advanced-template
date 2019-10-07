@@ -282,15 +282,13 @@
         "Issue #1170362: Install profile is disabled for lots of different reasons and core doesn't allow for that":
         "https://www.drupal.org/files/issues/1170362-243.patch",
         "Issue #1356276: Allow profiles to provide a base_parent profile and load them in the correct order":
-        "https://www.drupal.org/files/issues/2018-12-10/1356276-572.patch",
+        "https://www.drupal.org/files/issues/2019-07-25/drupal-n1356276-588-87x.patch",
         "Issue #2893892: Fixed Warning Invalid argument supplied for foreach() in Drupal":
-        "https://www.drupal.org/files/issues/patch_empty_fix.patch",
+        "https://www.drupal.org/files/issues/2018-12-10/core--getDerivatives-Invalid-argument-foreach--2893892-11-d8.patch",
         "Issue #2955877: Unsupported operand types inFieldPluginBase":
         "https://www.drupal.org/files/issues/2019-01-24/core-2955877-Fix-unsupported-operand-types-11.patch",
-        "Issue #3059356: [Security] Update yarn packages to fix 19 vulnerabilities by updating nightwatch":
-        "https://www.drupal.org/files/issues/2019-07-27/3059356-18-nightwatch-upgrade.patch",
         "Issue #3017176: Support install profile and language code params in drupalInstall Nightwatch command":
-        "https://www.drupal.org/files/issues/2019-02-05/3017176-7.patch"
+        "https://www.drupal.org/files/issues/2019-09-06/3017176-12.patch"
       },
       "drupal/ckeditor_media_embed": {
         "Issue #2900313: Add ability to embed tweets and other rich content in WYSIWYG":
@@ -298,15 +296,15 @@
       },
       "drupal/display_field_copy": {
         "Issue #2822398: Copied field does not have widget field settings.":
-        "https://www.drupal.org/files/issues/display_field_copy-no-widget-field-settings-2822398-10.patch"
+        "https://www.drupal.org/files/issues/2019-01-05/copied-field-does-not-have-widget-field-settings-2822398-22.patch"
       },
       "drupal/ds": {
         "Issue #2904575: Warning: Invalid argument supplied for foreach() in /ds/ds.module on line 504":
-        "https://www.drupal.org/files/issues/invalid_argument_in_ds_module-2904575-2.patch"
+        "https://www.drupal.org/files/issues/2018-09-15/invalid_argument_in_ds_module-2904575-16.patch"
       },
       "drupal/entity_browser": {
         "Issue #2858438: Provide inline entity form FieldWidgetDisplay":
-        "https://www.drupal.org/files/issues/2019-07-04/2858438_19.patch"
+        "https://www.drupal.org/files/issues/2019-09-03/2858438-30.patch"
       },
       "drupal/focal_point": {
         "Issue #2916562: Broken image preview":
@@ -314,19 +312,17 @@
       },
       "drupal/group": {
         "Issue #2949408: Allow group admins to create user account and add to group":
-        "https://www.drupal.org/files/issues/2018-12-19/group-manage-users-2949408-15.patch"
+        "https://www.drupal.org/files/issues/2019-07-30/group-manage-users-2949408-27.patch"
       },
       "drupal/page_manager": {
         "Issue #2665328: Variants take entity label not the variant title":
-        "https://www.drupal.org/files/issues/page_manager-fix_contexts_on_get_title-2665328-66.patch"
+        "https://www.drupal.org/files/issues/2018-12-12/2665328-variants-take-entity-label-87.patch"
       },
       "drupal/paragraphs": {
-        "Issue #2868155: Add new hooks to allow easier editing of paragraph forms":
-        "https://www.drupal.org/files/issues/2868155-16.patch",
         "Issue #2877927: Show add widget between paragraphs on hover":
-        "https://www.drupal.org/files/issues/2877927_29.patch",
+        "https://www.drupal.org/files/issues/show_add_widget-2877927-37.patch",
         "Issue #2924774: Let Editors add/delete/clone paragraphs When [Editing a translation]":
-        "https://www.drupal.org/files/issues/2018-06-03/2924774-29.patch"
+        "https://www.drupal.org/files/issues/2018-11-09/2924774-46.patch"
       },
       "drupal/search_api": {
         "Issue #2931562: Fixed the Notice: Undefined index: total When we enable the module in the installation step.":
@@ -334,7 +330,7 @@
       },
       "drupal/username_enumeration_prevention": {
         "Issue #2871931: hook_requirements error on install phase":
-        "https://www.drupal.org/files/issues/username_enumeration_prevention-check_phase_runtime-2871931-5.patch"
+        "https://www.drupal.org/files/issues/2018-07-30/username_enumeration_prevention-check_phase_runtime-2871931-8.patch"
       }
     }
   }
