@@ -12,13 +12,6 @@
     }
   ],
   "require": {
-    "bower-asset/blazy": "^1.8",
-    "bower-asset/bootstrap-sass": "^3.4.0",
-    "bower-asset/cropper": "^2.3",
-    "bower-asset/dropzone": "^5.1",
-    "bower-asset/exif-js": "^2.3.0",
-    "bower-asset/select2": "^4.0.7",
-    "bower-asset/slick-carousel": "^1.8",
     "ckeditor/templates": "^4",
     "composer/installers": "^1.2",
     "cweagans/composer-patches": "^1.6.5",

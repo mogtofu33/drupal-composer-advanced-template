@@ -42,7 +42,6 @@ module:
   text: 0
   toolbar: 0
   tour: 0
-  update: 0
   user: 0
   views_ui: 0
   menu_link_content: 1
@@ -51,6 +50,7 @@ module:
 theme:
   stable: 0
   classy: 0
+  claro: 0
   bartik: 0
   seven: 0
   bootstrap: 0
