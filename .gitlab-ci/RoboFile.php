@@ -336,7 +336,7 @@ class RoboFile extends \Robo\Tasks {
       $tmp_destination . '/LICENSE',
       $tmp_destination . '/.gitignore',
       $tmp_destination . '/.travis.yml',
-      $tmp_destination . '/phpunit.xml.dist',
+      $tmp_destination . '/phpunit.xml.demo',
     ];
     $this->taskFilesystemStack()
       ->remove($files)
@@ -508,7 +508,7 @@ class RoboFile extends \Robo\Tasks {
   public function checkDrupal() {
     return $this->drush()
       ->args('status')
-      ->option('field', 'bootstrap', '=')
+      ->option('fields', 'bootstrap', '=')
       ->run();
   }
 
