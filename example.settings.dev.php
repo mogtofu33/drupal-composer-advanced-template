@@ -5,6 +5,9 @@
  * Local development override configuration feature for DEV.
  */
 
+// Enforce config sync that can be overriden by ddev in settings.php
+$config_directories['sync'] = '../config/sync';
+
 // Config split compatibility, set FALSE for Prod.
 $config['config_split.config_split.config_dev']['status'] = TRUE;
 

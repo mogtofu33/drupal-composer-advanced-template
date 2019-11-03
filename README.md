@@ -68,7 +68,8 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 - Drush command installation to run from **web** folder
 
-_Note_: Currently can not be installed from Drupal install UI (install.php), only Drush command.
+_Note_: Can be installed from Drupal UI (install.php), but consume more
+resources than drush.
 
 ```bash
 cd web
@@ -80,13 +81,7 @@ cd web
 
 _Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
 
-- Include _settings.local.php_, at the end of _web/sites/default/settings.php_, uncomment
-
-```php
-if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-  include $app_root . '/' . $site_path . '/settings.local.php';
-}
-```
+Composer install script already Include `settings.local.php`, at the end of `web/sites/default/settings.php`, `settings.dev.php` and `settings.prod.php`, adapt if you need.
 
 - Set dev config
 
@@ -107,6 +102,16 @@ You want an idea of what's in this project ?
 Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drupal-composer-advanced-template/-/jobs/265433512/artifacts/reports/phpmetrics/index.html)
 
 ## Bonus
+
+### Local development with Ddev
+
+Include a simple docker stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
+
+Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation) en run:
+
+```bash
+ddev start
+```
 
 ### Using Sass with a Docker image
 
