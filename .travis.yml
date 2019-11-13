@@ -20,10 +20,9 @@ before_install:
   - composer --verbose self-update --stable
   - composer --version
   - cp $TRAVIS_BUILD_DIR/.gitlab-ci/RoboFile.php $TRAVIS_BUILD_DIR
+  - composer global require consolidation/robo
 
 install:
-  - composer --verbose --no-check-all --no-check-publish validate
-  - travis_retry composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
   - robo project:build
   - robo yarn:install
   - robo install:phpunit
