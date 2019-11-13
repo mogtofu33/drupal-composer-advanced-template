@@ -21,6 +21,7 @@ before_install:
   - composer --version
   - cp $TRAVIS_BUILD_DIR/.gitlab-ci/RoboFile.php $TRAVIS_BUILD_DIR
   - composer global require consolidation/robo
+  - ln -sf $HOME/.composer/vendor/bin/* /usr/local/bin/
 
 install:
   - robo project:build
