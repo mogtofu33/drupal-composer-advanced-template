@@ -10,6 +10,8 @@ env:
   global:
     - SIMPLETEST_DB=sqlite://tmp/site.sqlite
     - SIMPLETEST_BASE_URL="http://127.0.0.1:8080"
+    - COMPOSER_MEMORY_LIMIT=-1
+    - PHPUNIT_TESTS=custom
 
 before_install:
   - echo 'sendmail_path = /bin/true' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -17,24 +19,20 @@ before_install:
   - phpenv config-rm xdebug.ini
   - composer --verbose self-update --stable
   - composer --version
+  - cp $TRAVIS_BUILD_DIR/.gitlab-ci/RoboFile.php $TRAVIS_BUILD_DIR
 
 install:
   - composer --verbose --no-check-all --no-check-publish validate
-  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
-  - composer run-script install-bootstrap-sass
+  - travis_retry composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-suggest --profile
+  - robo project:build
+  - robo yarn:install
+  - robo install:phpunit
 
 script:
   - cd $TRAVIS_BUILD_DIR/web
   - $TRAVIS_BUILD_DIR/vendor/bin/drush -y si --existing-config --account-name=admin --account-pass=password --db-url=$SIMPLETEST_DB
   - $TRAVIS_BUILD_DIR/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
   - until curl -s $SIMPLETEST_BASE_URL; do sleep 2s; done > /dev/null
-  - $TRAVIS_BUILD_DIR/vendor/bin/drush status --field=bootstrap
   - $TRAVIS_BUILD_DIR/vendor/bin/drupal site:status
-  # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because web/ has no composer.json
-  # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
-  # Ignore Setup group temporarily, @see https://www.drupal.org/node/2962157
-  #- $TRAVIS_BUILD_DIR/vendor/bin/phpunit
-  #  -c core --verbose
-  #  --exclude-group Composer,DependencyInjection,PageCache,Setup
-  #  --coverage-text --colors=never
-  #  --testsuite unit
+  - cd $TRAVIS_BUILD_DIR
+  - robo test:suite "${PHPUNIT_TESTS}unit,${PHPUNIT_TESTS}kernel"
