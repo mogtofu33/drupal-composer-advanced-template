@@ -12,6 +12,7 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
   - [Drupal installation](#drupal-installation)
 - [Project metrics](#project-metrics)
 - [Bonus](#bonus)
+  - [Local development with Ddev](#local-development-with-ddev)
   - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
 
 ## What's included / added
@@ -64,32 +65,22 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 - Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
 
-- Edit `.env` and set database values, copy .`env.example` if it don't exist
+- Edit `.env` and select `SETTINGS_ENVIRONMENT` value, _dev_ will enable development modules and settings
 
-- Drush command installation to run from **web** folder
+- Install Drupal and choose profile **Use existing configuration**
 
-_Note_: Can be installed from Drupal UI (install.php), but consume more
-resources than drush.
+- **OR** use Drush command installation to run from **web** folder
 
 ```bash
 cd web
-../vendor/bin/drush si config_installer --yes \
-    config_installer_sync_configure_form.sync_directory="../config/sync" \
-    --account-name=admin \
-    --account-pass=password
+../vendor/bin/drush -y si --existing-config --account-name=admin --account-pass=password
 ```
 
 _Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
 
 Composer install script already Include `settings.local.php`, at the end of `web/sites/default/settings.php`, `settings.dev.php` and `settings.prod.php`, adapt if you need.
 
-- Set dev config
-
-```bash
-../vendor/bin/drush --yes csim config_split.config_split.config_dev
-```
-
-- Login to your new website with user admin / password or using _drush_:
+- Login to your new website with user admin / password OR using _drush_:
 
 ```bash
 ../vendor/bin/drush uli
@@ -105,13 +96,16 @@ Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drup
 
 ### Local development with Ddev
 
-Include a simple docker stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
+This project include a simple docker stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
 
-Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation) en run:
+Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation) and run:
 
 ```bash
 ddev start
+ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
 ```
+
+Follow [Drupal installation](#drupal-installation) steps.
 
 ### Using Sass with a Docker image
 

@@ -58,7 +58,7 @@ display:
           id: node
           table: comment_field_data
           required: true
-          plugin_id: standard
+          plugin_id: minimal
       fields:
         subject:
           id: subject

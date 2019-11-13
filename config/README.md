@@ -2,6 +2,8 @@
 
 This is a sample to manage all config settings and override by environment in config folders.
 
+More information on the offical documentation [Creating a simple split configuration: Dev modules only in dev environments](https://www.drupal.org/docs/8/modules/configuration-split/creating-a-simple-split-configuration-dev-modules-only-in-dev)
+
 ## Summary
 
 * /dev

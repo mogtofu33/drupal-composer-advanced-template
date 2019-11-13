@@ -1,5 +1,5 @@
 APIVersion: v1.11.2
-name: drupal-advanced
+name: da-dev
 type: drupal8
 docroot: web
 php_version: "7.2"
@@ -14,10 +14,6 @@ nfs_mount_enabled: false
 provider: default
 use_dns_when_possible: true
 timezone: "Europe/Paris"
-hooks:
-  pre-start:
-    # Copy our .env file for ddev.
-    - exec-host: "cp -u .ddev/.env.ddev ./.env"
 
 # This config.yaml was created with ddev version v1.11.2 
 # webimage: drud/ddev-webserver:v1.11.0

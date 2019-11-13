@@ -551,7 +551,7 @@ display:
           field: uid
           admin_label: author
           required: true
-          plugin_id: standard
+          plugin_id: minimal
       show_admin_links: false
       filter_groups:
         operator: AND

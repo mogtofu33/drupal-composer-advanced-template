@@ -284,7 +284,7 @@ display:
           required: true
           entity_type: node
           entity_field: uid
-          plugin_id: standard
+          plugin_id: minimal
       arguments: {  }
       display_extenders: {  }
       use_more: false

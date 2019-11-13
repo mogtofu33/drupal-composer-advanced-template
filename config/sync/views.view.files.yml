@@ -907,7 +907,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          plugin_id: standard
+          plugin_id: minimal
         module:
           id: module
           table: file_usage
@@ -956,7 +956,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          plugin_id: standard
+          plugin_id: minimal
         count:
           id: count
           table: file_usage

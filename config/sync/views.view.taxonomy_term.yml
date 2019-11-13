@@ -74,7 +74,7 @@ display:
           table: taxonomy_index
           field: sticky
           order: DESC
-          plugin_id: standard
+          plugin_id: minimal
           relationship: none
           group_type: group
           admin_label: ''
