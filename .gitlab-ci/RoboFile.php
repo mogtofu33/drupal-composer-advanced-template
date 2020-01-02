@@ -1086,12 +1086,7 @@ class RoboFile extends \Robo\Tasks {
    */
   public function yarnInstall($dir = null) {
     if (!$dir) {
-      // if ($this->ciType == "project") {
-      //   $dir = $this->ciProjectDir . '/web/core';
-      // }
-      // else {
-        $dir = $this->webRoot . '/core';
-      // }
+      $dir = $this->webRoot . '/core';
     }
 
     if (!file_exists($dir . '/package.json')) {
