@@ -56,7 +56,7 @@ class RoboFile extends \Robo\Tasks {
    *   The webroot folder of Drupal. This can be overridden by specifying a
    *   $WEB_ROOT environment variable.
    */
-  protected $webRoot = '/var/www/html';
+  protected $webRoot = '/var/www/html/web';
 
   /**
    * Drupal setup profile.
@@ -154,7 +154,7 @@ class RoboFile extends \Robo\Tasks {
    *   The drupal version used, look at env values for This can be
    *   overridden by specifying a $CI_DRUPAL_VERSION environment variable.
    */
-  protected $ciDrupalVersion = "8.7";
+  protected $ciDrupalVersion = "8.8";
 
   /**
    * CI_DRUPAL_SETTINGS context.
@@ -434,15 +434,24 @@ class RoboFile extends \Robo\Tasks {
    *   (optional) The profile to install, default to minimal.
    */
   public function installDrupal($profile = null) {
+    // Ensure permissions.
+    $dir = $this->webRoot . '/sites/default/files';
+    $this->taskFilesystemStack()
+      ->mkdir($dir)
+      ->chown($dir, $this->apacheUser, true)
+      ->chgrp($dir, $this->apacheGroup, true)
+      ->chmod($dir, 0777, 0000, true)
+      ->run();
 
     if (!$profile) {
       $profile = $this->setupProfile;
     }
     $this->say("Installing Drupal with $profile...");
 
-    if (file_exists($this->dbDump . '/dump-' . $profile . '.sql')) {
-      $this->say("Import dump $this->dbDump/dump-$profile.sql");
-      $this->_exec('mysql -hmariadb -uroot drupal < ' . $this->dbDump . '/dump-' . $profile . '.sql;');
+    $filename = $this->dbDump . '/dump-' . $this->ciDrupalVersion . '_' . $profile . '.sql';
+    if (file_exists($filename)) {
+      $this->say("Import dump $filename");
+      $this->_exec('mysql -hmariadb -uroot drupal < ' . $filename . ';');
 
       // When install from dump we need to be sure settings.php is correct.
       $settings = file_get_contents($this->ciDrupalSettings);
@@ -462,6 +471,7 @@ class RoboFile extends \Robo\Tasks {
       $this->setupDrupal($profile);
       $this->dumpDrupal($profile);
     }
+
     $this->checkDrupal();
   }
 
@@ -524,7 +534,7 @@ class RoboFile extends \Robo\Tasks {
     }
     $this->drush()
       ->args('sql:dump')
-      ->option('result-file', $this->dbDump . '/dump-' . $profile . '.sql', '=')
+      ->option('result-file', $this->dbDump . '/dump-' . $this->ciDrupalVersion . '_' . $profile . '.sql', '=')
       ->run();
   }
 
@@ -617,6 +627,10 @@ class RoboFile extends \Robo\Tasks {
    */
   private function phpUnit($module = null, $testsuite = null) {
 
+    if (!file_exists($this->docRoot . '/vendor/bin/phpunit')) {
+      $this->installDrupalDev();
+    }
+
     $task = $this->taskPhpUnit($this->docRoot . '/vendor/bin/phpunit')
       ->configFile($this->webRoot . '/core');
 
@@ -642,24 +656,51 @@ class RoboFile extends \Robo\Tasks {
    * @return array
    */
   public function installPhpunit() {
+
     if (!file_exists($this->docRoot . '/vendor/bin/phpunit')) {
       $install = [
         'phpunit' => [
-          "phpunit/phpunit" => "^6.5",
+          "behat/mink" => "1.7.x-dev",
+          "behat/mink-goutte-driver" => "^1.2",
+          "behat/mink-selenium2-driver" => "1.3.x-dev",
+          "mikey179/vfsstream" => "^1.6.8",
+          "phpunit/phpunit" => "^6.5 || ^7",
           "symfony/phpunit-bridge" => "^3.4.3",
           "phpspec/prophecy" => "^1.7",
           "symfony/css-selector" => "^3.4.0",
           "symfony/debug" => "^3.4.0",
           "justinrainbow/json-schema" => "^5.2",
+          "symfony/filesystem" => "~3.4.0",
+          "symfony/finder" => "~3.4.0",
+          "symfony/lock" => "~3.4.0",
+          "symfony/browser-kit" => "^3.4.0"
         ],
       ];
       $this->installWithComposer($install, 'drupal');
     }
+  }
 
-    // Add bin globally.
-    if (!file_exists('/usr/local/bin/phpunit') && file_exists($this->docRoot . '/vendor/bin/phpunit')) {
-      $this->symlink($this->docRoot . '/vendor/bin/phpunit', '/usr/local/bin/phpunit');
+  /**
+   * Install Drupal Dev, shortcut for installPhpunit().
+   *
+   * @return array
+   */
+  public function installDrupalDev() {
+    $task = $this->taskComposerRequire()
+      ->workingDir($this->docRoot)
+      ->noInteraction()
+      ->dev()
+      ->dependency("drupal/core-dev", "^$this->ciDrupalVersion");
+    if ($this->verbose) {
+      $task->arg('--verbose');
     }
+    else {
+      $task->arg('--quiet');
+    }
+    if ($this->noAnsi) {
+      $task->noAnsi();
+    }
+    $task->run();
   }
 
   /**
@@ -669,10 +710,7 @@ class RoboFile extends \Robo\Tasks {
    *   (optional) Report root dir for this task.
    */
   public function testBehat($reportRootDir = null) {
-    if ($this->ciDrupalVersion != "8.7") {
-      $this->io()->warning("Drupal > 8.7 not yet supported for Behat tests, skipping");
-      exit();
-    }
+
     if (!$reportRootDir) {
       $reportRootDir = $this->reportDir;
     }
@@ -704,21 +742,18 @@ class RoboFile extends \Robo\Tasks {
    * @return array
    */
   public function installBehat() {
-    $bin = 'behat';
 
-    if ($this->ciDrupalVersion == "8.7") {
-      $install = [
-        $bin => [
-          'behat/mink' => '1.7.x-dev',
-          'behat/mink-goutte-driver' => '^1.2',
-          'dmore/behat-chrome-extension' => '^1.3.0',
-          'bex/behat-screenshot' => '^1.2',
-          'emuse/behat-html-formatter' => '0.1.*',
-          'drupal/drupal-extension' => '^4.0',
-        ],
-      ];
-      $this->installWithComposer($install, 'drupal');
-    }
+    $install = [
+      'behat' => [
+        'behat/mink' => '1.7.x-dev',
+        'behat/mink-goutte-driver' => '^1.2',
+        'dmore/behat-chrome-extension' => '^1.3.0',
+        'bex/behat-screenshot' => '^1.2',
+        'emuse/behat-html-formatter' => '0.1.*',
+        'drupal/drupal-extension' => '^4.0',
+      ],
+    ];
+    $this->installWithComposer($install, 'drupal');
 
     // Add bin to use taskBehat().
     if (!file_exists('/usr/local/bin/behat')) {
@@ -948,12 +983,19 @@ class RoboFile extends \Robo\Tasks {
   public function installPrestissimo() {
     // First check if we have prestissimo.
     if (!file_exists($this->composerHome . '/vendor/hirak/prestissimo/composer.json')) {
-      $this->taskComposerRequire()
+      $task = $this->taskComposerRequire()
         ->noInteraction()
-        ->dependency('hirak/prestissimo', '^0.3.8')
-        ->arg('--quiet')
-        ->noAnsi()
-        ->run();
+        ->dependency('hirak/prestissimo', '^0.3.8');
+      if ($this->verbose) {
+        $task->arg('--verbose');
+      }
+      else {
+        $task->arg('--quiet');
+      }
+      if ($this->noAnsi) {
+        $task->noAnsi();
+      }
+      $task->run();
     }
     elseif ($this->verbose) {
       $this->say("Prestissimo already installed!");
@@ -966,9 +1008,18 @@ class RoboFile extends \Robo\Tasks {
   public function installCoder() {
     $hasDependency = false;
     $task = $this->taskComposerRequire()
-      ->noInteraction()
-      ->arg('--quiet')
-      ->noAnsi();
+      ->workingDir($this->composerHome)
+      ->noInteraction();
+    if ($this->verbose) {
+      $task->arg('--verbose');
+    }
+    else {
+      $task->arg('--quiet');
+    }
+    if ($this->noAnsi) {
+      $task->noAnsi();
+    }
+
     // First check if we have coder.
     if (!file_exists($this->composerHome . '/vendor/drupal/coder/composer.json')) {
       $hasDependency = true;
@@ -1141,6 +1192,7 @@ class RoboFile extends \Robo\Tasks {
    *   (optional) Flag to force the drupal setup.
    */
   public function projectBuild($dir = null, $forceInstall = false) {
+    $this->say("Drupal: $this->ciDrupalVersion");
     $this->say("Build for type: $this->ciType");
 
     if (!$dir) {
@@ -1224,6 +1276,9 @@ class RoboFile extends \Robo\Tasks {
   public function ensureTestsFolders() {
     $dirs = [
       $this->webRoot . '/sites',
+      $this->webRoot . '/modules',
+      $this->webRoot . '/themes',
+      $this->webRoot . '/profiles',
       $this->browsertestOutput,
       $this->browsertestOutput . '/browser_output',
       $this->reportDir,
