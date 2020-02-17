@@ -643,37 +643,7 @@ class RoboFile extends \Robo\Tasks {
   }
 
   /**
-   * Install or locate Phpunit.
-   *
-   * @return array
-   */
-  public function installPhpunit() {
-
-    if (!file_exists($this->docRoot . '/vendor/bin/phpunit')) {
-      $install = [
-        'phpunit' => [
-          "behat/mink" => "1.7.x-dev",
-          "behat/mink-goutte-driver" => "^1.2",
-          "behat/mink-selenium2-driver" => "1.3.x-dev",
-          "mikey179/vfsstream" => "^1.6.8",
-          "phpunit/phpunit" => "^6.5 || ^7",
-          "symfony/phpunit-bridge" => "^3.4.3",
-          "phpspec/prophecy" => "^1.7",
-          "symfony/css-selector" => "^3.4.0",
-          "symfony/debug" => "^3.4.0",
-          "justinrainbow/json-schema" => "^5.2",
-          "symfony/filesystem" => "~3.4.0",
-          "symfony/finder" => "~3.4.0",
-          "symfony/lock" => "~3.4.0",
-          "symfony/browser-kit" => "^3.4.0"
-        ],
-      ];
-      $this->installWithComposer($install, 'drupal');
-    }
-  }
-
-  /**
-   * Install Drupal Dev, shortcut for installPhpunit().
+   * Install Drupal Core Dev.
    *
    * @return array
    */
@@ -724,12 +694,10 @@ class RoboFile extends \Robo\Tasks {
 
     $install = [
       'behat' => [
-        'behat/mink' => '1.7.x-dev',
-        'behat/mink-goutte-driver' => '^1.2',
+        'drupal/drupal-extension' => '~4.0',
         'dmore/behat-chrome-extension' => '^1.3.0',
         'bex/behat-screenshot' => '^1.2',
         'emuse/behat-html-formatter' => '0.1.*',
-        'drupal/drupal-extension' => '^4.0',
       ],
     ];
     $this->installWithComposer($install, 'drupal');

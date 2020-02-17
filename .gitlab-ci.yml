@@ -324,7 +324,7 @@ Behat tests:
     - /scripts/start-chrome.sh&
     - sleep 3s
     - curl -s http://localhost:9222/json/version | jq '.' || true
-    - robo install:behat
+    - COMPOSER_MEMORY_LIMIT=4G robo install:behat
     - robo test:behat "${CI_PROJECT_DIR}/${REPORT_DIR}"
   variables:
     <<: *test_variables
