@@ -1233,6 +1233,29 @@ class RoboFile extends \Robo\Tasks {
   }
 
   /**
+   * Ensure composer and Drupal is fine.
+   *
+   * @return array
+   */
+  public function ensureComposer() {
+    $task = $this->taskComposerDumpAutoload()
+      ->workingDir($this->ciProjectDir)
+      ->optimize()
+      ->dev()
+      ->optimizeAutoloader()
+      ->noInteraction()
+      ->noAnsi()
+      ->ignorePlatformRequirements();
+    if ($this->verbose) {
+      $task->arg('--verbose');
+    }
+    else {
+      $task->arg('--quiet');
+    }
+    $task->run();
+  }
+
+  /**
    * Helper to symlink.
    *
    * @param string $src
