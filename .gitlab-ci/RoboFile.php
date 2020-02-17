@@ -694,18 +694,29 @@ class RoboFile extends \Robo\Tasks {
 
     $install = [
       'behat' => [
+        'bex/behat-screenshot' => '^1.2',
         'drupal/drupal-extension' => '~4.0',
         'dmore/behat-chrome-extension' => '^1.3.0',
-        'bex/behat-screenshot' => '^1.2',
         'emuse/behat-html-formatter' => '0.1.*',
       ],
     ];
     $this->installWithComposer($install, 'drupal');
 
     // Add bin to use taskBehat().
-    if (!file_exists('/usr/local/bin/behat')) {
-      $this->symlink($this->docRoot . '/vendor/bin/behat', '/usr/local/bin/behat');
+    if (!file_exists($this->docRoot . '/vendor/bin/behat')) {
+      $install = [
+        'behat' => [
+          'behat/behat' => '~3.2'
+        ],
+      ];
+      $this->installWithComposer($install, 'drupal');
     }
+    if (file_exists('/usr/local/bin/behat')) {
+      $this->taskFilesystemStack()
+        ->remove('/usr/local/bin/behat')
+        ->run();
+    }
+    $this->symlink($this->docRoot . '/vendor/bin/behat', '/usr/local/bin/behat');
   }
 
   /**
