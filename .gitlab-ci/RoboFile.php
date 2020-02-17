@@ -672,6 +672,10 @@ class RoboFile extends \Robo\Tasks {
       ->mirror($this->ciProjectDir . '/tests', $this->docRoot . '/tests')
       ->run();
 
+    if (!file_exists('/usr/local/bin/behat')) {
+      $this->installBehat();
+    }
+
     $task = $this->taskBehat()
       ->dir($this->webRoot)
       ->config($this->docRoot . '/tests/behat.yml')
@@ -703,20 +707,15 @@ class RoboFile extends \Robo\Tasks {
     $this->installWithComposer($install, 'drupal');
 
     // Add bin to use taskBehat().
-    if (!file_exists($this->docRoot . '/vendor/bin/behat')) {
-      $install = [
-        'behat' => [
-          'behat/behat' => '~3.2'
-        ],
-      ];
-      $this->installWithComposer($install, 'drupal');
-    }
     if (file_exists('/usr/local/bin/behat')) {
       $this->taskFilesystemStack()
         ->remove('/usr/local/bin/behat')
         ->run();
     }
-    $this->symlink($this->docRoot . '/vendor/bin/behat', '/usr/local/bin/behat');
+    // $this->symlink($this->docRoot . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat');
+    $this->taskFilesystemStack()
+      ->symlink($this->docRoot . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat')
+      ->run();
   }
 
   /**
