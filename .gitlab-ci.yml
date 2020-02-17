@@ -311,14 +311,30 @@ Security report:
 # Behat tests from tests/ folder.
 Behat tests:
   stage: tests
-  extends: .test_template
+  # extends: .test_template
   except:
     variables:
       - $SKIP_TESTS == "1"
       - $SKIP_TEST_BEHAT == "1"
+  dependencies:
+    - Build
+  services:
+    - mariadb:latest
+  extends: .test_except_only
+  variables:
+    <<: *test_variables
+  before_script:
+    # Copy RoboFile.
+    - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${CI_PROJECT_DIR}
+    # Start Apache.
+    - apache2-foreground&
+    - robo ensure:tests-folders
+  artifacts:
+    <<: *default_artifacts
+    paths:
+      - ${REPORT_DIR}/*
   script:
-    # - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${WEB_ROOT} || true
-    # - robo prepare:folders
+    - robo prepare:folders
     - robo install:drupal
     # Starting Chrome, we are not using Chromedriver.
     - /scripts/start-chrome.sh&

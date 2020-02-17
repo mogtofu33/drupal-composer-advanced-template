@@ -668,14 +668,13 @@ class RoboFile extends \Robo\Tasks {
 
     $this->taskFilesystemStack()
       ->mkdir($reportRootDir )
-      // ->mkdir($this->docRoot . '/tests')
-      // ->mirror($this->ciProjectDir . '/tests', $this->docRoot . '/tests')
+      ->mkdir($this->docRoot . '/tests')
+      ->mirror($this->ciProjectDir . '/tests', $this->docRoot . '/tests')
       ->run();
 
     $task = $this->taskBehat()
-      ->dir($this->ciProjectDir)
-      // ->config($this->docRoot . '/tests/behat.yml')
-      ->config($this->ciProjectDir . '/tests/behat.yml')
+      ->dir($this->webRoot)
+      ->config($this->docRoot . '/tests/behat.yml')
       ->noInteraction()
       ->noColors()
       ->option('format', 'html', '=')
