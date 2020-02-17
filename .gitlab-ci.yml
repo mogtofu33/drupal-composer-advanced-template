@@ -317,15 +317,14 @@ Behat tests:
       - $SKIP_TESTS == "1"
       - $SKIP_TEST_BEHAT == "1"
   script:
-    - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${WEB_ROOT} || true
-    - robo prepare:folders
+    # - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${WEB_ROOT} || true
+    # - robo prepare:folders
     - robo install:drupal
     # Starting Chrome, we are not using Chromedriver.
     - /scripts/start-chrome.sh&
     - sleep 3s
     - curl -s http://localhost:9222/json/version | jq '.' || true
     - COMPOSER_MEMORY_LIMIT=4G robo install:behat
-    - robo ensure:composer
     - robo test:behat "${CI_PROJECT_DIR}/${REPORT_DIR}"
   variables:
     <<: *test_variables
