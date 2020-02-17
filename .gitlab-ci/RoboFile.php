@@ -1243,8 +1243,7 @@ class RoboFile extends \Robo\Tasks {
       ->optimize()
       ->dev()
       ->noInteraction()
-      ->noAnsi()
-      ->ignorePlatformRequirements();
+      ->noAnsi();
     if ($this->verbose) {
       $task->arg('--verbose');
     }
