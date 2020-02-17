@@ -672,10 +672,6 @@ class RoboFile extends \Robo\Tasks {
       ->mirror($this->ciProjectDir . '/tests', $this->docRoot . '/tests')
       ->run();
 
-    if (!file_exists('/usr/local/bin/behat')) {
-      $this->installBehat();
-    }
-
     $task = $this->taskBehat()
       ->dir($this->webRoot)
       ->config($this->docRoot . '/tests/behat.yml')
@@ -707,14 +703,8 @@ class RoboFile extends \Robo\Tasks {
     $this->installWithComposer($install, 'drupal');
 
     // Add bin to use taskBehat().
-    if (file_exists('/usr/local/bin/behat')) {
-      $this->taskFilesystemStack()
-        ->remove('/usr/local/bin/behat')
-        ->run();
-    }
-    // $this->symlink($this->docRoot . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat');
     $this->taskFilesystemStack()
-      ->symlink($this->docRoot . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat')
+      ->symlink($this->ciProjectDir . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat')
       ->run();
   }
 
@@ -1049,6 +1039,9 @@ class RoboFile extends \Robo\Tasks {
       // Check one of the program to decide if an install is needed.
       if (!file_exists($dir . '/node_modules/.bin/stylelint')) {
         $this->yarn('install', null, $dir);
+      }
+      elseif ($this->verbose) {
+        $this->say("[SKIP] yarn install not needed.");
       }
 
       $this->checkChromedriver($dir);
