@@ -1241,7 +1241,6 @@ class RoboFile extends \Robo\Tasks {
     $task = $this->taskComposerDumpAutoload()
       ->workingDir($this->ciProjectDir)
       ->optimize()
-      ->dev()
       ->noInteraction()
       ->noAnsi();
     if ($this->verbose) {
