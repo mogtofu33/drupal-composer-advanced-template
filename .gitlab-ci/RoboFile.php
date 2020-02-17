@@ -1242,7 +1242,6 @@ class RoboFile extends \Robo\Tasks {
       ->workingDir($this->ciProjectDir)
       ->optimize()
       ->dev()
-      ->optimizeAutoloader()
       ->noInteraction()
       ->noAnsi()
       ->ignorePlatformRequirements();
