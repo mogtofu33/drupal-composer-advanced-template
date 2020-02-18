@@ -284,72 +284,6 @@ class RoboFile extends \Robo\Tasks {
   }
 
   /**
-   * Download Drupal 8 project with Composer and install.
-   *
-   * This is basically the same as create-project. But because this command
-   * need a new folder we use this one to install Drupal in an existing folder.
-   *
-   * @param string|null $destination
-   *   (optional) Where is copied the downloaded Drupal.
-   */
-  public function downloadDrupalProject($destination = null) {
-
-    $tempnam = tempnam(sys_get_temp_dir(), 'drupal.');
-    $archive = $tempnam . '.zip';
-
-    if (!$destination) {
-      $destination = $this->ciProjectDir;
-    }
-    $tmp_destination = 'tmp_drupal';
-
-    $remote = 'https://github.com/drupal-composer/drupal-project/archive/8.x.zip';
-
-    // Get and save file
-    $this->say('Downloading Drupal 8 project...');
-    file_put_contents($archive, file_get_contents($remote));
-
-    if (!file_exists($archive)) {
-      $this->io()->warning('Failed to download Drupal project!');
-      exit();
-    }
-
-    if (file_exists($tmp_destination)) {
-      $this->taskFilesystemStack()
-        ->remove($tmp_destination)
-        ->run();
-    }
-
-    $this->taskExtract($archive)
-      ->to($tmp_destination)
-      ->run();
-
-    // Remove unused files.
-    $files = [
-      $tmp_destination . '/README.md',
-      $tmp_destination . '/LICENSE',
-      $tmp_destination . '/.gitignore',
-      $tmp_destination . '/.travis.yml',
-      $tmp_destination . '/phpunit.xml.demo',
-    ];
-    $this->taskFilesystemStack()
-      ->remove($files)
-      ->run();
-
-    $this->mirror($tmp_destination, $destination);
-    $this->taskFilesystemStack()
-      ->remove($tmp_destination)
-      ->run();
-
-    if (!file_exists($destination . '/web/index.php')) {
-      $this->composerInstall($destination);
-    }
-    else {
-      $this->say("Drupal already installed!");
-      $this->updateDependencies($destination);
-    }
-  }
-
-  /**
    * Install Vanilla Drupal 8 project with Composer.
    *
    * @param string|null $destination
@@ -370,7 +304,7 @@ class RoboFile extends \Robo\Tasks {
     $this->installPrestissimo();
 
     $task = $this->taskComposerCreateProject()
-      ->source('drupal-composer/drupal-project:8.x-dev')
+      ->source('drupal/core-recommended:^' . $this->CI_DRUPAL_VERSION)
       ->target($tmp_destination)
       ->preferDist()
       ->noInteraction()
@@ -620,7 +554,7 @@ class RoboFile extends \Robo\Tasks {
   private function phpUnit($module = null, $testsuite = null) {
 
     if (!file_exists($this->docRoot . '/vendor/bin/phpunit')) {
-      $this->installDrupalDev();
+      $this->requireDrupalDev();
     }
 
     $task = $this->taskPhpUnit($this->docRoot . '/vendor/bin/phpunit')
@@ -647,7 +581,7 @@ class RoboFile extends \Robo\Tasks {
    *
    * @return array
    */
-  public function installDrupalDev() {
+  public function requireDrupalDev() {
     $task = $this->composerRequire($this->docRoot)
       ->dev()
       ->dependency("drupal/core-dev", "^$this->ciDrupalVersion")
@@ -703,8 +637,14 @@ class RoboFile extends \Robo\Tasks {
     $this->installWithComposer($install, 'drupal');
 
     // Add bin to use taskBehat().
+    if (file_exists('/usr/local/bin/behat')) {
+      $this->taskFilesystemStack()
+        ->remove('/usr/local/bin/behat')
+        ->run();
+    }
+
     $this->taskFilesystemStack()
-      ->symlink($this->ciProjectDir . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat')
+      ->symlink($this->docRoot . '/vendor/behat/behat/bin/behat', '/usr/local/bin/behat')
       ->run();
   }
 
@@ -871,13 +811,7 @@ class RoboFile extends \Robo\Tasks {
     $this->installCoder();
 
     if ($target == 'drupal') {
-      if ($this->ciType == "project") {
-        $dir = $this->ciProjectDir;
-      }
-      # For a module, use included Drupal.
-      else {
-        $dir = $this->docRoot;
-      }
+      $dir = $this->docRoot;
     }
     else {
       $dir = $this->composerHome;
@@ -1023,12 +957,7 @@ class RoboFile extends \Robo\Tasks {
    */
   public function yarnInstall($dir = null) {
     if (!$dir) {
-      if ($this->ciType == "project") {
-        $dir = $this->ciProjectDir . '/web/core';
-      }
-      else {
-        $dir = $this->webRoot . '/core';
-      }
+      $dir = $this->webRoot . '/core';
     }
 
     if (!file_exists($dir . '/package.json')) {
@@ -1230,26 +1159,6 @@ class RoboFile extends \Robo\Tasks {
         ->chmod($dir, 0777, 0000, true)
         ->run();
     }
-  }
-
-  /**
-   * Ensure composer and Drupal is fine.
-   *
-   * @return array
-   */
-  public function ensureComposer() {
-    $task = $this->taskComposerDumpAutoload()
-      ->workingDir($this->ciProjectDir)
-      ->optimize()
-      ->noInteraction()
-      ->noAnsi();
-    if ($this->verbose) {
-      $task->arg('--verbose');
-    }
-    else {
-      $task->arg('--quiet');
-    }
-    $task->run();
   }
 
   /**

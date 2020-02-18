@@ -126,7 +126,7 @@ stages:
     # image.
     - robo prepare:folders
     # Ensure we have Drupal Dev third party for next tests.
-    - robo install:drupal-dev
+    - robo require:drupal-dev
     # Start Apache.
     - apache2-foreground&
     # Copy files and prepare test folder with permissions.
@@ -311,29 +311,13 @@ Security report:
 # Behat tests from tests/ folder.
 Behat tests:
   stage: tests
-  # extends: .test_template
+  extends: .test_template
   except:
     variables:
       - $SKIP_TESTS == "1"
       - $SKIP_TEST_BEHAT == "1"
-  dependencies:
-    - Build
-  services:
-    - mariadb:latest
-  extends: .test_except_only
-  variables:
-    <<: *test_variables
-  before_script:
-    # Copy RoboFile.
-    - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${CI_PROJECT_DIR}
-    # Start Apache.
-    - apache2-foreground&
-    - robo ensure:tests-folders
-  artifacts:
-    <<: *default_artifacts
-    paths:
-      - ${REPORT_DIR}/*
   script:
+    - cp ${CI_PROJECT_DIR}/.gitlab-ci/RoboFile.php ${WEB_ROOT} || true
     - robo prepare:folders
     - robo install:drupal
     # Starting Chrome, we are not using Chromedriver.
@@ -341,6 +325,7 @@ Behat tests:
     - sleep 3s
     - curl -s http://localhost:9222/json/version | jq '.' || true
     - COMPOSER_MEMORY_LIMIT=4G robo install:behat
+    # - cd ${DOC_ROOT}
     - robo test:behat "${CI_PROJECT_DIR}/${REPORT_DIR}"
   variables:
     <<: *test_variables
