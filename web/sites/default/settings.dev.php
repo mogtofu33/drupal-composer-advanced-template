@@ -26,13 +26,13 @@ $settings['simple_environment_anonymous'] = TRUE;
 // \Drupal\Component\Assertion\Handle::register();
 
 // Drupal no cache from example.settings.local.php.
-// $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
-// $settings['cache']['bins']['render'] = 'cache.backend.null';
-// $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
-// $settings['cache']['bins']['page'] = 'cache.backend.null';
-// $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
-// $settings['rebuild_access'] = TRUE;
-// $settings['skip_permissions_hardening'] = TRUE;
+$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+$settings['cache']['bins']['render'] = 'cache.backend.null';
+$settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
+$settings['cache']['bins']['page'] = 'cache.backend.null';
+$settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+$settings['rebuild_access'] = TRUE;
+$settings['skip_permissions_hardening'] = TRUE;
 
 // Webprofiler specific settings
 // $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
