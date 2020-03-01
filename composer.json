@@ -293,16 +293,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "pre-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
     "post-install-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
       "@install-bootstrap-sass",
       "@setup-project"
-    ],
-    "pre-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
     ],
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
