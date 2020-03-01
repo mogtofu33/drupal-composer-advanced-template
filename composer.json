@@ -294,20 +294,20 @@
   "prefer-stable": true,
   "scripts": {
     "post-install-cmd": [
+      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles",
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-      "@install-bootstrap-sass",
-      "@setup-project"
+      "DrupalProject\\composer\\BootstrapSass::create"
     ],
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
     "post-create-project-cmd": [
-      "@install-bootstrap-sass",
-      "@setup-project"
+      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles",
+      "DrupalProject\\composer\\BootstrapSass::create"
     ],
     "install-bootstrap-sass": [
       "DrupalProject\\composer\\BootstrapSass::create",
-      "@sass-compile"
+      "DrupalProject\\composer\\BootstrapSass::compile"
     ],
     "nuke": "rm -rf composer.lock web vendor",
     "sass-compile": [

@@ -43,3 +43,11 @@ Gemfile.lock
 /reports/
 /web/reports/
 .ddev/.gitignore
+
+# Ignore other gitignore generated
+web/.gitignore
+web/modules/.gitignore
+web/profiles/.gitignore
+web/sites/.gitignore
+web/sites/default/.gitignore
+web/themes/.gitignore
