@@ -69,7 +69,9 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 - Install Drupal and choose profile **Use existing configuration**
 
-- **OR** use Drush command installation to run from **web** folder
+- **OR**
+
+- **EXPERIMENTAL Drush 10.x, CURRENTLY FAILING** use Drush command installation to run from **web** folder
 
 ```bash
 cd web
