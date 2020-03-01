@@ -11,7 +11,7 @@ use Composer\Script\Event;
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 
 class BootstrapSass {
 
@@ -99,7 +99,8 @@ class BootstrapSass {
     // Switch starterkit libraries to use Bootstrap Sass javascript files.
     $target = $customFolder . '/' . $themeName . '.libraries.yml';
     $content = file_get_contents($target);
-    $content = str_replace('#', '', $content);
+    $content = str_replace('Uncomment', '#Uncomment', $content);
+    $content = str_replace('# ', ' ', $content);
     $lines = explode(PHP_EOL, $content);
     $num = 1;
     foreach ($lines as $line) {
@@ -195,11 +196,11 @@ class BootstrapSass {
         if ($isDevMode) {
           $scss->setLineNumberStyle(Compiler::LINE_COMMENTS);
           // $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
-          $scss->setFormatter('Leafo\ScssPhp\Formatter\Nested');
+          $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Nested');
         }
         else {
           // $scss->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
-          $scss->setFormatter('Leafo\ScssPhp\Formatter\Compact');
+          $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compact');
         }
 
         $scss->addImportPath($pi['dirname'] . '/');
