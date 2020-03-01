@@ -34,5 +34,5 @@ script:
   - $TRAVIS_BUILD_DIR/vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
   - until curl -s $SIMPLETEST_BASE_URL; do sleep 2s; done > /dev/null
   - $TRAVIS_BUILD_DIR/vendor/bin/drupal site:status
-  - cd $TRAVIS_BUILD_DIR
-  - $HOME/.composer/vendor/bin/robo test:suite "${PHPUNIT_TESTS}unit,${PHPUNIT_TESTS}kernel"
+  #- cd $TRAVIS_BUILD_DIR
+  #- $HOME/.composer/vendor/bin/robo test:suite "${PHPUNIT_TESTS}unit,${PHPUNIT_TESTS}kernel"
