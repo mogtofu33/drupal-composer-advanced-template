@@ -10,9 +10,10 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
   - [Requirements](#requirements)
   - [Grab code and libraries](#grab-code-and-libraries)
   - [Drupal installation](#drupal-installation)
+    - [Server / remote installation](#server--remote-installation)
+    - [Local setup with ddev](#local-setup-with-ddev)
 - [Project metrics](#project-metrics)
-- [Bonus](#bonus)
-  - [Local development with Ddev](#local-development-with-ddev)
+- [Tips](#tips)
   - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
 
 ## What's included / added
@@ -61,9 +62,27 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 ### Drupal installation
 
+#### Server / remote installation
+
 - Create a database and a user access to this database.
 
 - Fix files and folder permissions of **/web** folder regardless of [Securing file permissions and ownership](https://www.drupal.org/node/244924)
+
+- Edit `.env` and select `SETTINGS_ENVIRONMENT` value, _dev_ will enable development modules and settings
+
+- Install Drupal and choose profile **Use existing configuration**
+
+#### Local setup with ddev
+
+This project include a simple **Docker** stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
+
+Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation)
+
+Then launch the ddev stack:
+
+```bash
+ddev start
+```
 
 - Edit `.env` and select `SETTINGS_ENVIRONMENT` value, _dev_ will enable development modules and settings
 
@@ -74,8 +93,7 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 - **EXPERIMENTAL Drush 10.x, CURRENTLY FAILING** use Drush command installation to run from **web** folder
 
 ```bash
-cd web
-../vendor/bin/drush -y si --existing-config --account-name=admin --account-pass=password
+ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
 ```
 
 _Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
@@ -94,20 +112,7 @@ You want an idea of what's in this project ?
 
 Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drupal-composer-advanced-template/-/jobs/265433512/artifacts/reports/phpmetrics/index.html)
 
-## Bonus
-
-### Local development with Ddev
-
-This project include a simple docker stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
-
-Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation) and run:
-
-```bash
-ddev start
-ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
-```
-
-Follow [Drupal installation](#drupal-installation) steps.
+## Tips
 
 ### Using Sass with a Docker image
 
