@@ -43,6 +43,7 @@ Gemfile.lock
 /reports/
 /web/reports/
 .ddev/.gitignore
+web/sites/*/drushrc.php
 
 # Ignore other gitignore generated
 web/.gitignore
