@@ -15,7 +15,7 @@ class ScriptHelper {
    * Create and copy needed files.
    *
    * @param Composer\Script\Event $event
-   *   The composer scripts event.
+   *   The composer scripts Command Events.
    */
   public static function createRequiredFiles(Event $event) {
     $fs = new Filesystem();
@@ -31,14 +31,8 @@ class ScriptHelper {
       $fs->copy($drupalDocRoot . '/.env.example', $drupalDocRoot . '/.env');
     }
     else {
-      $event->getIO()->warning("Missing or already exist settings file .env");
+      $event->getIO()->write("Missing or already exist settings file .env");
     }
-
-    $settingFiles = [
-      '/example.settings.local.php' => '/settings.local.php',
-      '/example.settings.dev.php' => '/settings.dev.php',
-      '/example.settings.prod.php' => '/settings.prod.php',
-    ];
 
     if ($fs->exists($drupalSettings)) {
       $oldmask = umask(0);
@@ -50,13 +44,24 @@ class ScriptHelper {
       $event->getIO()->warning("Missing Drupal settings folder: $drupalSettings");
     }
 
+    $settingFiles = [
+      '/example.settings.local.php' => '/settings.local.php',
+      '/example.settings.dev.php' => '/settings.dev.php',
+      '/example.settings.prod.php' => '/settings.prod.php',
+    ];
+
     foreach ($settingFiles as $src => $dest) {
       if ($fs->exists($drupalDocRoot . $src) and !$fs->exists($drupalSettings . $dest)) {
         $event->getIO()->write("Copy $src => $dest");
         $fs->copy($drupalDocRoot . $src, $drupalSettings . $dest);
       }
       else {
-        $event->getIO()->warning("Missing file or already exist: $src => $dest");
+        if (!$fs->exists($drupalDocRoot . $src)) {
+          $event->getIO()->error("Missing source file: $src");
+        }
+        if ($fs->exists($drupalSettings . $dest)) {
+          $event->getIO()->warning("Destination file already here: $dest");
+        }
       }
     }
 
@@ -72,6 +77,8 @@ class ScriptHelper {
     else {
       $event->getIO()->warning("Missing settings file: $settings");
     }
+
+    $event->getIO()->info("Project setup Done!");
   }
 
   /**
