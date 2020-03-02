@@ -118,6 +118,8 @@ class BootstrapSass {
 
     $io->write("\n[Success] Theme created in $customFolder\n");
     $io->write('You can enable this theme after Drupal installation.');
+    $io->write('Optionnaly you can remove the Bootstrap library:');
+    $io->write('composer remove bower-asset/bootstrap-sass unicorn-fail/drupal-bootstrap-styles');
 
   }
 
