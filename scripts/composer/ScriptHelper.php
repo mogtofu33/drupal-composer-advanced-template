@@ -1,18 +1,22 @@
 <?php
 
-/**
- * @file
- * Contains \DrupalProject\composer\ScriptHelper.
- */
-
 namespace DrupalProject\composer;
 
 use Composer\Script\Event;
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Class ScriptHelper.
+ */
 class ScriptHelper {
 
+  /**
+   * Create and copy needed files.
+   *
+   * @param Composer\Script\Event $event
+   *   The composer scripts event.
+   */
   public static function createRequiredFiles(Event $event) {
     $fs = new Filesystem();
     $drupalFinder = new DrupalFinder();
@@ -73,21 +77,26 @@ class ScriptHelper {
   /**
    * Appends content to an existing file.
    *
-   * @param string $filename The file to which to append content
-   * @param string $content  The content to append
+   * @param string $filename
+   *   The file to which to append content.
+   * @param string $content
+   *   The content to append.
    *
-   * @throws IOException If the file is not writable
+   * @throws IOException
+   *   If the file is not writable.
    */
   private static function appendToFile($filename, $content) {
     $dir = \dirname($filename);
     if (!is_dir($dir)) {
-      $this->mkdir($dir);
+      $fs = new Filesystem();
+      $fs->mkdir($dir);
     }
     if (!is_writable($dir)) {
-      throw new IOException(sprintf('Unable to write to the "%s" directory.', $dir), 0, null, $dir);
+      throw new IOException(sprintf('Unable to write to the "%s" directory.', $dir), 0, NULL, $dir);
     }
-    if (false === @file_put_contents($filename, $content, FILE_APPEND)) {
-      throw new IOException(sprintf('Failed to write file "%s".', $filename), 0, null, $filename);
+    if (FALSE === @file_put_contents($filename, $content, FILE_APPEND)) {
+      throw new IOException(sprintf('Failed to write file "%s".', $filename), 0, NULL, $filename);
     }
   }
+
 }
