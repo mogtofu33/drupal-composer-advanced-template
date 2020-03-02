@@ -5,9 +5,11 @@
 /web/libraries/
 /web/modules/contrib/
 /web/profiles/contrib/
+/web/profiles/varbase/libraries
 /web/themes/contrib/
 # Project bower-asset/bootstrap-sass used for a Bootstrap sub theme.
 /web/themes/custom/*/bootstrap
+!/web/themes/custom/*/bootstrap/assets
 
 # Ignore sensitive information
 /web/sites/*/settings.php
@@ -44,6 +46,7 @@ Gemfile.lock
 /web/reports/
 .ddev/.gitignore
 web/sites/*/drushrc.php
+drush/Commands
 
 # Ignore other gitignore generated
 web/.gitignore
