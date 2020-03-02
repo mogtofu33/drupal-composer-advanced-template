@@ -7,9 +7,9 @@ use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Class ScriptHelper.
+ * Class ProjectHelper.
  */
-class ScriptHelper {
+class ProjectHelper {
 
   /**
    * Create and copy needed files.
@@ -70,7 +70,7 @@ class ScriptHelper {
     if ($fs->exists($settings)) {
       $oldmask = umask(0);
       $fs->chmod($settings, 0777);
-      ScriptHelper::appendToFile($settings, 'include $app_root . "/" . $site_path . "/settings.local.php";');
+      ProjectHelper::appendToFile($settings, 'include $app_root . "/" . $site_path . "/settings.local.php";');
       $fs->chmod($settings, 0600);
       umask($oldmask);
     }
