@@ -5,16 +5,17 @@
 
 Based on [Composer template for Drupal projects](https://github.com/drupal-composer/drupal-project).
 
-- [What's included / added](#whats-included--added)
-- [Install](#install)
-  - [Requirements](#requirements)
-  - [Grab code and libraries](#grab-code-and-libraries)
-  - [Drupal installation](#drupal-installation)
-    - [Server / remote installation](#server--remote-installation)
-    - [Local setup with ddev](#local-setup-with-ddev)
-- [Project metrics](#project-metrics)
-- [Tips](#tips)
-  - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
+- [Composer template for Drupal projects](#composer-template-for-drupal-projects)
+  - [What's included / added](#whats-included--added)
+  - [Install](#install)
+    - [Requirements](#requirements)
+    - [Grab code and libraries](#grab-code-and-libraries)
+    - [Drupal installation](#drupal-installation)
+      - [Server / remote installation](#server--remote-installation)
+      - [Local setup with ddev](#local-setup-with-ddev)
+  - [Project metrics](#project-metrics)
+  - [Tips](#tips)
+    - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
 
 ## What's included / added
 
@@ -28,9 +29,9 @@ Based on [Composer template for Drupal projects](https://github.com/drupal-compo
 
 ### Requirements
 
-Require [Composer 1.8+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer.
+Require [Composer 1.9+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer.
 
-Compiling the Sass file is done through [http://leafo.github.io/scssphp](http://leafo.github.io/scssphp) but you can install [Sass](https://sass-lang.com/install) if you prefer a more advanced feature (like watch) or use a [Docker image](#using-sass-with-a-docker-image).
+Compiling the Sass file is done through [https://scssphp.github.io/scssphp/](https://scssphp.github.io/scssphp/) but you can install [Sass](https://sass-lang.com/install) if you prefer a more advanced feature (like watch) or use a [Docker image](#using-sass-with-a-docker-image).
 
 Recommended:
 
@@ -48,8 +49,14 @@ Get and install this project
 composer create-project mog33/drupal-composer-advanced-template:dev-8.x-dev drupal --stability dev --no-interaction
 ```
 
-_Note_: A sub theme for Bootstrap Sass will be created and compiled during the
-installation. When developing a theme and editing the scss file you can compile
+_Note_: A sub theme for Bootstrap Sass should be created and compiled during the
+installation, if **FAILED** and you have no success message, you can run:
+
+```bash
+composer run-script setup-project
+```
+
+When developing a theme and editing the scss file you can compile
 with command:
 
 ```bash
