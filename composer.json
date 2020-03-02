@@ -43,6 +43,7 @@
     "drupal/ckeditor_media_embed": "^1.1",
     "drupal/ckeditor_specialchars": "^1.1",
     "drupal/ckeditor_templates": "^1.0",
+    "drupal/coffee": "^1.0@beta",
     "drupal/config_filter": "^1.2",
     "drupal/config_ignore": "^2.1",
     "drupal/config_override_warn": "^1.1",
@@ -54,6 +55,7 @@
     "drupal/contact_storage": "^1.0",
     "drupal/content_moderation_edit_notify": "^1.1",
     "drupal/core-composer-scaffold": "^8.8",
+    "drupal/core-project-message": "^8.8",
     "drupal/core-recommended": "^8.8",
     "drupal/crop": "^2.0",
     "drupal/ctools": "^3.1",
@@ -244,13 +246,29 @@
       "drupal/page_manager": {
         "https://drupal.org/node/2665328 Variants take entity label not the variant title": "https://www.drupal.org/files/issues/2018-12-12/2665328-variants-take-entity-label-87.patch"
       }
+    },
+    "drupal-core-project-message": {
+      "include-keys": ["homepage", "support"],
+      "post-create-project-cmd-message": [
+          "<bg=blue;fg=white>                                                         </>",
+          "<bg=blue;fg=white>  Congratulations, you’ve installed the project from the </>",
+          "<bg=blue;fg=white>  mog33/drupal-composer-advanced-template template!      </>",
+          "<bg=blue;fg=white>                                                         </>",
+          "",
+          "<bg=yellow;fg=black>Next steps</>:",
+
+          "  * Install the site: https://www.drupal.org/docs/8/install",
+          "  * Read the README",
+          "  * Remove the plugin that prints this message:",
+          "      composer remove drupal/core-project-message"
+      ]
     }
   },
   "autoload": {
     "classmap": [
       "scripts/composer/ScriptHandler.php",
       "scripts/composer/BootstrapSass.php",
-      "scripts/composer/ScriptHelper.php"
+      "scripts/composer/ProjectHelper.php"
     ],
     "files": [
       "load.environment.php"
@@ -294,16 +312,18 @@
   "prefer-stable": true,
   "scripts": {
     "post-install-cmd": [
-      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles",
+      "DrupalProject\\composer\\ProjectHelper::createRequiredFiles",
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-      "DrupalProject\\composer\\BootstrapSass::create"
+      "DrupalProject\\composer\\BootstrapSass::create",
+      "DrupalProject\\composer\\BootstrapSass::compile"
     ],
     "post-update-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
     "post-create-project-cmd": [
-      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles",
-      "DrupalProject\\composer\\BootstrapSass::create"
+      "DrupalProject\\composer\\ProjectHelper::createRequiredFiles",
+      "DrupalProject\\composer\\BootstrapSass::create",
+      "DrupalProject\\composer\\BootstrapSass::compile"
     ],
     "install-bootstrap-sass": [
       "DrupalProject\\composer\\BootstrapSass::create",
@@ -314,7 +334,7 @@
       "DrupalProject\\composer\\BootstrapSass::compile"
     ],
     "setup-project": [
-      "DrupalProject\\composer\\ScriptHelper::createRequiredFiles"
+      "DrupalProject\\composer\\ProjectHelper::createRequiredFiles"
     ]
   }
 }
