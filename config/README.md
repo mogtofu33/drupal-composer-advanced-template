@@ -16,36 +16,11 @@ More information on the offical documentation [Creating a simple split configura
 
 ```settings.php```
 
-Must include _settings.local.php_ as a common settings for all environments.
+Must include common settings for all environments. This is appended to `settings.php` by Composer.
+Then the environment is switched depending value in your `.env`
 
-```example.settings.local.php```
-
-Must be rename _settings.local.php_
-
-```settings.local.php```
-
-Must include dev or prod file depending environment:
-
-```php
-// Switch comment for env. Adapt to switch based on something else.
-switch ($_SERVER['HTTP_HOST']) {
-  // Dev
-  case 'localhost':
-    if (file_exists($app_root . '/' . $site_path . '/settings.dev.php')) {
-      include $app_root . '/' . $site_path . '/settings.dev.php';
-    }
-  break;
-  // Default is Prod.
-  default;
-  if (file_exists($app_root . '/' . $site_path . '/settings.prod.php')) {
-    include $app_root . '/' . $site_path . '/settings.prod.php';
-  }
-}
-```
-
-* [example.settings.local.php](../example.settings.local.php)
-* [example.settings.dev.phpp](../example.settings.dev.php)
-* [example.settings.prod.php](../example.settings.prod.phpp)
+* [assets/settings.dev.php](../assets/settings.dev.php)
+* [assets/settings.prod.php](../assets/settings.prod.php)
 
 ## Dev > Prod
 

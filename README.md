@@ -99,7 +99,7 @@ ddev exec drush -y si --existing-config --account-name=admin --account-pass=pass
 
 _Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
 
-Composer install script already Include `settings.local.php`, at the end of `web/sites/default/settings.php`, `settings.dev.php` and `settings.prod.php`, adapt if you need.
+Composer install script will create `web/sites/default/settings.php`, `settings.dev.php` and `settings.prod.php`, adapt if you need.
 
 - Login to your new website with user admin / password OR using _drush_:
 
