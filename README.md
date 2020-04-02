@@ -1,28 +1,37 @@
-# Composer template for Drupal projects
+# Composer template for Drupal 8 projects
 
 [![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/8.x-dev/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/8.x-dev)
 [![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=8.x-dev)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
-Based on [Composer template for Drupal projects](https://github.com/drupal-composer/drupal-project).
+Enhanced Drupal 8 profile to kickstart a website.
 
-- [Composer template for Drupal projects](#composer-template-for-drupal-projects)
-  - [What's included / added](#whats-included--added)
-  - [Install](#install)
-    - [Requirements](#requirements)
-    - [Grab code and libraries](#grab-code-and-libraries)
-    - [Drupal installation](#drupal-installation)
-      - [Server / remote installation](#server--remote-installation)
-      - [Local setup with ddev](#local-setup-with-ddev)
-  - [Project metrics](#project-metrics)
-  - [Tips](#tips)
-    - [Using Sass with a Docker image](#using-sass-with-a-docker-image)
+- [What's this?](#whats-this)
+- [What's included / added](#whats-included--added)
+- [Install](#install)
+  - [Requirements](#requirements)
+  - [Grab code and libraries](#grab-code-and-libraries)
+  - [Drupal installation](#drupal-installation)
+    - [Server / remote installation](#server--remote-installation)
+    - [Local setup with ddev](#local-setup-with-ddev)
+- [Project metrics](#project-metrics)
+
+## What's this?
+
+This project is meant to be a starting point for a developper, not a ready to use Drupal with functionnalities.  
+For more advanced profiles see:
+  - [Varbase](https://www.drupal.org/project/varbase)
+  - [Lightning](https://www.drupal.org/project/lightning)
+  - [Thunder](https://www.drupal.org/project/thunder)
+  - [Social](https://www.drupal.org/project/social)
+  - [Commerce](https://www.drupal.org/project/commerce)
+  - [and more...](https://www.drupal.org/project/project_distribution?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=sm_core_compatibility%3A8&f%5B3%5D=sm_field_project_type%3Afull&f%5B4%5D=&f%5B5%5D=&text=&solrsort=iss_project_release_usage+desc&op=Search)
 
 ## What's included / added
 
-- A bunch of interesting [contrib modules](./composer.json#L47), some [patches for core / contrib](./composer.json#L271)
+- A lot of interesting [contrib modules](./composer.json#L47), some [patches for core / contrib](./composer.json#L271)
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
-- [Bootstrap Sass](https://www.drupal.org/project/bootstrap) sub theme with sass + Sass compiler with Php
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
+- Dotenv support for environment variables, inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
 - A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal8](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install
@@ -48,21 +57,6 @@ Get and install this project
 ```bash
 composer create-project mog33/drupal-composer-advanced-template:dev-8.x-dev drupal --stability dev --no-interaction
 ```
-
-_Note_: A sub theme for Bootstrap Sass should be created and compiled during the
-installation, if **FAILED** and you have no success message, you can run:
-
-```bash
-composer run-script setup-project
-```
-
-When developing a theme and editing the scss file you can compile
-with command:
-
-```bash
-composer run-script sass-compile
-```
-
 Set **/web** as root of your host (Apache).
 
 Other folders (eg: vendor) should be accessible by Webserver user and not from HTTP.
@@ -97,7 +91,7 @@ ddev start
 
 - **OR**
 
-- **EXPERIMENTAL Drush 10.x, CURRENTLY FAILING** use Drush command installation to run from **web** folder
+- **EXPERIMENTAL Drush 10.x** use Drush command installation to run from **web** folder
 
 ```bash
 ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
@@ -118,39 +112,3 @@ Composer install script already Include `settings.local.php`, at the end of `web
 You want an idea of what's in this project ?
 
 Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drupal-composer-advanced-template/-/jobs/265433512/artifacts/reports/phpmetrics/index.html)
-
-## Tips
-
-### Using Sass with a Docker image
-
-If you don't want to install Sass and the provided Php script in this project do not please you, an other solution is to use a Docker image with [node-sass](https://github.com/sass/node-sass).
-
-Create the _Dockerfile_
-
-```dockerfile
-FROM node:dubnium-alpine
-RUN apk update && apk add --no-cache git shadow
-RUN npm install -g node-sass bootstrap-sass postcss-cli autoprefixer watch --unsafe-perm
-WORKDIR /app
-RUN chown -R node:node /app
-CMD [ "sass", "node-sass", "compile", "watch", "npm" ]
-```
-
-One time image build
-
-```bash
-docker build -t sass .
-```
-
-Run from your theme folder
-
-```bash
-cd web/themes/custom/bootstrap_sass
-docker run --rm -v $(pwd):/app sass node-sass scss/style.scss > css/style.css
-# Set format compressed.
-docker run --rm -v $(pwd):/app sass node-sass --output-style compressed scss/style.scss > css/style.css
-# Add comments for dev.
-docker run --rm -v $(pwd):/app sass node-sass --source-comments scss/style.scss > css/style.css
-# Add comments for dev.
-docker run --rm sass node-sass --help
-```

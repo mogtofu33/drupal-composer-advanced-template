@@ -9,119 +9,12 @@ use Symfony\Component\Finder\Finder;
 use ScssPhp\ScssPhp\Compiler;
 
 /**
- * Class BootstrapSass.
+ * Sass support with Php.
  *
- * Provide Drupal Bootstrap sub-theme helpers.
+ * @author Jean Valverde <contact@developpeur-drupal.com>
+ * @link https://developpeur-drupal.com/en
  */
-class BootstrapSass {
-
-  /**
-   * Create Bootstrap Sass subtheme.
-   *
-   * Accept a theme name as argument.
-   *
-   * see https://drupal-bootstrap.org/api/bootstrap/starterkits%21sass%21README.md/group/sub_theming_sass/8
-   * Assume we already have bootstrap sources from composer.
-   */
-  public static function create(Event $event) {
-
-    $fs = new Filesystem();
-    $drupalFinder = new DrupalFinder();
-    $drupalFinder->locateRoot(getcwd());
-    $drupalRoot = $drupalFinder->getDrupalRoot();
-
-    $finder = new Finder();
-    $io = $event->getIO();
-
-    $args = $event->getArguments();
-    $themeName = (count($args)) ? implode('_', $args) : NULL;
-    $themeName = self::sanitizeFilename($themeName, "bootstrap_sass");
-
-    $themeTitle = "Bootstrap Sass";
-    $customFolder = $drupalRoot . '/themes/custom/' . $themeName;
-    $contribFolder = $drupalRoot . '/themes/contrib/bootstrap';
-
-    // If info.yml exist mean we can stop here.
-    if ($fs->exists($customFolder . '/' . $themeName . '.info.yml')) {
-      $io->writeError('Theme already exist in ' . $customFolder);
-      if ($io->askConfirmation('Delete and replace? (y/n) ', FALSE)) {
-        $fs->remove($customFolder);
-      }
-      else {
-        $io->write('[Info] Process stopped.');
-        return;
-      }
-    }
-
-    // Create Bootstrap subtheme from starterkit.
-    $fs->mkdir($customFolder);
-
-    if (!$fs->exists($contribFolder . '/starterkits/THEMENAME/THEMENAME.theme')) {
-      throw new Exception('Missing Bootstrap starterkit: ' . $contribFolder . '/starterkits/THEMENAME');
-    }
-
-    $fs->mirror($contribFolder . '/starterkits/THEMENAME', $customFolder);
-
-    // Empty style.css.
-    $fs->remove($customFolder . '/css/style.css');
-    $fs->dumpFile($customFolder . '/css/style.css', '');
-
-    // Copy and adapt config to get a default block position.
-    $fs->mkdir($customFolder . '/config/optional');
-    $fs->mirror($contribFolder . '/config/optional', $customFolder . '/config/optional');
-    $finder->files()->in($customFolder . '/config/optional/');
-    foreach ($finder as $file) {
-      $content = $file->getContents();
-      $content = str_replace('id: bootstrap', 'id: ' . $themeName, $content);
-      $content = str_replace('theme: bootstrap', 'theme: ' . $themeName, $content);
-      $content = str_replace('- bootstrap', '- ' . $themeName, $content);
-      $fs->dumpFile($file->getPathname(), $content);
-      $new_filename = str_replace('block.bootstrap', 'block.' . $themeName, $file->getFilename());
-      $fs->rename($file->getPathname(), $file->getPath() . '/' . $new_filename);
-    }
-
-    // Adapt files names and content for the starterkit.
-    $files = [
-      '/THEMENAME.starterkit.yml' => '/' . $themeName . '.info.yml',
-      '/THEMENAME.libraries.yml' => '/' . $themeName . '.libraries.yml',
-      '/THEMENAME.theme' => '/' . $themeName . '.theme',
-      '/config/install/THEMENAME.settings.yml' => '/config/install/' . $themeName . '.settings.yml',
-      '/config/schema/THEMENAME.schema.yml' => '/config/schema/' . $themeName . '.schema.yml',
-    ];
-    foreach ($files as $source => $target) {
-      $content = file_get_contents($customFolder . $source);
-      $content = str_replace('THEMETITLE', $themeTitle, $content);
-      $content = str_replace('THEMENAME', $themeName, $content);
-      $fs->dumpFile($customFolder . $target, $content);
-      $fs->remove($customFolder . $source);
-    }
-
-    // Switch starterkit libraries to use Bootstrap Sass javascript files.
-    $target = $customFolder . '/' . $themeName . '.libraries.yml';
-    $content = file_get_contents($target);
-    $content = str_replace('Uncomment', '#Uncomment', $content);
-    $content = str_replace('# ', ' ', $content);
-    $lines = explode(PHP_EOL, $content);
-    $num = 1;
-    foreach ($lines as $line) {
-      if ($num < 6 || $num > 21) {
-        $linesArray[$num] = $line;
-      }
-      $num++;
-    }
-    $content = implode("\n", $linesArray);
-    $fs->dumpFile($target, $content);
-
-    // Copy Bootstrap sass framework and sub styles.
-    $fs->mirror($drupalRoot . '/libraries/bootstrap-sass', $customFolder . '/bootstrap');
-    $fs->mirror($drupalRoot . '/libraries/drupal-bootstrap-styles/src/3.x.x/8.x-3.x/scss', $customFolder . '/scss');
-
-    $io->write("\n[Success] Theme created in $customFolder\n");
-    $io->write('You can enable this theme after Drupal installation.');
-    $io->write('Optionnaly you can remove the Bootstrap library:');
-    $io->write('composer remove bower-asset/bootstrap-sass unicorn-fail/drupal-bootstrap-styles');
-
-  }
+class Sass {
 
   /**
    * Compile Bootstrap Sass subtheme.

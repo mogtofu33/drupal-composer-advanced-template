@@ -1,0 +1,18 @@
+/**
+ * Drupal Composer advanced template configuration common for all environments.
+ */
+
+// This specifies the default configuration sync directory.
+$settings['config_sync_directory'] = '../config/sync';
+
+// Switch comment for env. Adapt to switch based on something else.
+// Default environment is prod.
+$settings['environment'] = "prod";
+
+if (!empty(getenv('SETTINGS_ENVIRONMENT'))) {
+  $settings['environment'] = getenv('SETTINGS_ENVIRONMENT');
+}
+
+if (file_exists($app_root . '/' . $site_path . '/settings.' . $settings['environment'] . '.php')) {
+  include $app_root . '/' . $site_path . '/settings.' . $settings['environment'] . '.php';
+}
