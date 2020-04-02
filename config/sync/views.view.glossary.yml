@@ -1,4 +1,4 @@
-uuid: a78441a6-ac35-4da3-b74c-81f5d5a39a1a
+uuid: 1843690c-a5ee-40da-8fbc-80d5f9d55f44
 langcode: en
 status: false
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: _12Vkw1VGBz_s0_W_LLVCrBPpioNSnB6zcd1lUAQubM
+  default_config_hash: Z1Lg95xnf11BTHIugkzple_pdxZdECiqLRcrLVo3bcw
 id: glossary
 label: Glossary
 module: node
@@ -266,7 +266,7 @@ display:
           id: uid
           table: node_field_data
           field: uid
-          plugin_id: minimal
+          plugin_id: standard
           relationship: none
           group_type: group
           admin_label: author

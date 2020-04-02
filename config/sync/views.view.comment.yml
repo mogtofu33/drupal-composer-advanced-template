@@ -1,4 +1,4 @@
-uuid: cb0a78be-6e62-4726-951f-b485eb636d5e
+uuid: 7091636e-dc0a-4007-928a-b894d82401b0
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - comment
     - user
 _core:
-  default_config_hash: cCq1vjj1qmyd39oBIUyOe8YPDsobJ5fZRhp2Xy5O7lA
+  default_config_hash: fsBo_zgUeLyYZdghaw4PkOHA-HqFxu7wmQLilF35XYg
 id: comment
 label: Comments
 module: comment
@@ -849,7 +849,7 @@ display:
           required: false
           entity_type: comment
           entity_field: uid
-          plugin_id: minimal
+          plugin_id: standard
       filter_groups:
         operator: AND
         groups:

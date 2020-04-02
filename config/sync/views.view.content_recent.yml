@@ -1,4 +1,4 @@
-uuid: fcd37905-f24b-46bb-ae37-af6377b149b6
+uuid: 536ba2af-4108-417e-abd3-faa597d1a2a6
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: sqwEJaSgef4rCaRMf-JdNAdV_kCICU1SfQh5Wl2sUrc
+  default_config_hash: MxwbHUmXqKQgTGCTWcMxsfUH9NZJ8ZVqZp6801AOa40
 id: content_recent
 label: 'Recent content'
 module: node
@@ -287,7 +287,7 @@ display:
           required: true
           entity_type: node
           entity_field: uid
-          plugin_id: minimal
+          plugin_id: standard
       arguments: {  }
       display_extenders: {  }
       use_more: false

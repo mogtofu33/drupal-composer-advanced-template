@@ -1,4 +1,4 @@
-uuid: 18beb2aa-ecee-486b-bd4b-6ac5966ce545
+uuid: 98c561ea-d50c-442d-a97b-8b903dd78a8a
 langcode: en
 status: true
 dependencies: {  }
@@ -7,9 +7,11 @@ label: 'Dev config'
 description: 'Configuration for development environment.'
 folder: ../config/dev
 module:
-  update: 0
   devel: 0
+  devel_generate: 0
+  ds_devel: 0
   kint: 0
+  update: 0
   webprofiler: 0
 theme: {  }
 blacklist: {  }
@@ -18,14 +20,14 @@ graylist:
   - contact.form.feedback
   - core.extension
   - dblog.settings
+  - system.cron
   - system.logging
   - system.mail
   - system.maintenance
   - system.performance
   - system.site
-  - views.settings
-  - system.cron
   - update.settings
+  - views.settings
 graylist_dependents: true
 graylist_skip_equal: true
 weight: 0

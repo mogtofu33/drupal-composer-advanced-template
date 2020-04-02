@@ -2,7 +2,7 @@ country:
   default: ''
 first_day: 0
 timezone:
-  default: Pacific/Auckland
+  default: Europe/Paris
   user:
     configurable: true
     warn: false

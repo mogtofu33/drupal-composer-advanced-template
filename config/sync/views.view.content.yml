@@ -1,4 +1,4 @@
-uuid: ee4c0ef6-91c0-463b-a638-3df2deb55f2d
+uuid: 91e9c6d1-a7e0-4dbe-a0ba-2543117b9000
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: tS8PbpJX90aRFC3-UTgXzdqkq7_2frk2pz4TMijEebM
+  default_config_hash: P7F4DFe8BL31DRVqsvS-ix9KZZqvvaPjZ7zEvGo9yNM
 id: content
 label: Content
 module: node
@@ -561,7 +561,7 @@ display:
           field: uid
           admin_label: author
           required: true
-          plugin_id: minimal
+          plugin_id: standard
       show_admin_links: false
       filter_groups:
         operator: AND

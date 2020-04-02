@@ -1,4 +1,4 @@
-uuid: 2acb8ad6-2064-4b8a-9ba6-3f8885596f1e
+uuid: 76dfb3d4-dcc6-44b5-90e8-aad69fd829b3
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - file
     - user
 _core:
-  default_config_hash: rRWxAX-IQkJ5viACQRovRkC784EyCl9493GU_G23n2Q
+  default_config_hash: gLmoA0yjvlXfMRp9ihOhRKSSQQlbdLdvpDkbVwkYPrg
 id: files
 label: Files
 module: file
@@ -912,7 +912,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          plugin_id: minimal
+          plugin_id: standard
         module:
           id: module
           table: file_usage
@@ -961,7 +961,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          plugin_id: minimal
+          plugin_id: standard
         count:
           id: count
           table: file_usage

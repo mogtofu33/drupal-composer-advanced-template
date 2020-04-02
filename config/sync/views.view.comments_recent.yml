@@ -1,4 +1,4 @@
-uuid: ec77cf3e-4b42-4d3e-ad97-13e1e5b8df7d
+uuid: a7b9acc4-54b7-45c6-9b5a-07c2ae8cfc85
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: HacS-nsDH7uyoKhQHNyV_MNRClmPVuhU_fWZgNuEyIs
+  default_config_hash: rX48v_U7vIh1FltSyJnTdpebtM-lj991qL_jO8BmZ2w
 id: comments_recent
 label: 'Recent comments'
 module: views
@@ -57,7 +57,7 @@ display:
           id: node
           table: comment_field_data
           required: true
-          plugin_id: minimal
+          plugin_id: standard
       fields:
         subject:
           id: subject
