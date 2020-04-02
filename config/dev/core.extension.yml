@@ -31,7 +31,6 @@ module:
   dynamic_page_cache: 0
   editor: 0
   entity_browser: 0
-  entity_browser_enhanced: 0
   entity_browser_entity_form: 0
   fast404: 0
   field: 0
@@ -50,8 +49,6 @@ module:
   mailsystem: 0
   markup: 0
   media: 0
-  media_entity_browser: 0
-  media_entity_browser_media_library: 0
   media_library: 0
   menu_ui: 0
   node: 0
