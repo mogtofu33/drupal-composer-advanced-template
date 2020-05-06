@@ -51,6 +51,9 @@ Gemfile.lock
 .ddev/.gitignore
 web/sites/*/drushrc.php
 drush/Commands
+/logs
+/cache
+drupal-debug.yml
 
 # Ignore other gitignore generated
 web/.gitignore

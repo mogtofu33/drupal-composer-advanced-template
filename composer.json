@@ -108,7 +108,6 @@
         "drupal/paragraphs_edit": "^2.0",
         "drupal/paragraphs_previewer": "^1.2",
         "drupal/pathauto": "^1.6",
-        "drupal/radix": "^4.8",
         "drupal/recaptcha": "^2.3",
         "drupal/redirect": "^1.5",
         "drupal/reroute_email": "^1.0",
@@ -147,7 +146,6 @@
         "drupal/webform": "^5.6",
         "drupal/webp": "^1.0@beta",
         "drush/drush": "^10",
-        "mog33/drupal-8-generate-theme": "dev-master",
         "oomphinc/composer-installers-extender": "^1.1.2",
         "twbs/bootstrap": "~3.4 | ~4.4",
         "twbs/bootstrap-sass": "~3.4",
@@ -175,10 +173,9 @@
         "bower-asset/highlightjs": "^9.12",
         "drupal/core-dev": "^8.8.0",
         "drupal/devel": "^2.1",
-        "drupal/upgrade_status": "^2.0",
         "ergebnis/composer-normalize": "^2.2",
         "nymedia/drupal_settings": "^1.0",
-        "phpstan/extension-installer": "^1.0"
+        "zaporylie/composer-drupal-optimizations": "^1.1"
     },
     "config": {
         "discard-changes": true,
@@ -221,8 +218,16 @@
                 "[web-root]/sites/default/default.settings.php": {
                     "append": "assets/settings.append.txt"
                 },
-                "[web-root]/sites/default/settings.dev.php": "assets/settings.dev.php",
-                "[web-root]/sites/default/settings.prod.php": "assets/settings.prod.php"
+                "[web-root]/sites/default/settings.dev.php": {
+                    "mode": "replace",
+                    "path": "assets/settings.dev.php",
+                    "overwrite": false
+                },
+                "[web-root]/sites/default/settings.prod.php": {
+                    "mode": "replace",
+                    "path": "assets/settings.prod.php",
+                    "overwrite": false
+                }
             }
         },
         "enable-patching": true,
