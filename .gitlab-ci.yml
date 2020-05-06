@@ -125,7 +125,26 @@ variables:
   # SKIP_LINT_TWIG: 1
   # SKIP_METRICS: 1
 
+  # QA and Metrics tools.
+  # See Phpqa available tools: https://github.com/EdgedesignCZ/phpqa#available-tools
+  # ':0' is the number of errors allowed, default here is very strict.
+  #
+  TOOLS_QA: phpcs:0,phpmd:1,phpcpd:0,phpstan:10
+  # TOOLS_METRICS: "phpmetrics,phploc,pdepend"
+
 ################################################################################
 # Advanced usage with this file, see doc.
 # https://mog33.gitlab.io/docs-gitlab-ci-drupal/advanced-usage
 ################################################################################
+
+stages:
+  - build
+  - tests
+  - metrics
+  - reports
+
+pages:
+  stage: reports
+  extends: .simple_dashboard
+  rules:
+    - when: always
