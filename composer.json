@@ -21,8 +21,8 @@
         "bower-asset/select2": "^4.0.7",
         "bower-asset/slick-carousel": "^1.8",
         "ckeditor/templates": "^4",
-        "composer/installers": "^1.2",
-        "cweagans/composer-patches": "^1.6.5",
+        "composer/installers": "^1.7",
+        "cweagans/composer-patches": "^1.6.7",
         "drupal/access_unpublished": "^1.0",
         "drupal/admin_toolbar": "^2",
         "drupal/advagg": "^4.0",
@@ -34,12 +34,11 @@
         "drupal/better_normalizers": "^1.0",
         "drupal/blazy": "^2.0",
         "drupal/block_styles": "^1.2",
-        "drupal/bootstrap": "^3.21",
         "drupal/bootstrap_barrio": "^4.22",
         "drupal/bootstrap_carousel_if": "^3.0",
         "drupal/bootstrap_layouts": "^5.1",
         "drupal/bootstrap_paragraphs": "^2.0",
-        "drupal/bootstrap_sass": "^1.9",
+        "drupal/bootstrap_sass": "^4.12",
         "drupal/breakpoint_js_settings": "^1.0",
         "drupal/captcha": "^1.0",
         "drupal/checklistapi": "^1.0",
@@ -54,9 +53,9 @@
         "drupal/config_split": "^1.4",
         "drupal/config_update": "^1.5",
         "drupal/console": "^1.0.2",
-        "drupal/contact_formatter": "^1.0",
+        "drupal/contact_formatter": "^2.0",
         "drupal/contact_storage": "^1.0",
-        "drupal/content_moderation_edit_notify": "^1.1",
+        "drupal/content_moderation_edit_notify": "^1.3",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
@@ -82,7 +81,7 @@
         "drupal/google_analytics": "^3.0",
         "drupal/group": "^1.0@RC",
         "drupal/gutenberg": "^1.10",
-        "drupal/honeypot": "^1.30",
+        "drupal/honeypot": "^2.0",
         "drupal/image_widget_crop": "^2.0",
         "drupal/imageapi_optimize": "^2.0",
         "drupal/inline_entity_form": "^1.0",
@@ -130,13 +129,12 @@
         "drupal/swiftmailer": "^1.0",
         "drupal/taxonomy_access_fix": "^2.7",
         "drupal/token": "^1.6",
-        "drupal/toolbar_anti_flicker": "^3.0",
         "drupal/total_control": "^2.0@beta",
         "drupal/twig_tweak": "^2.1",
         "drupal/update_helper": "^1.1",
         "drupal/userprotect": "^1.0",
         "drupal/video_embed_field": "^2.0",
-        "drupal/views_bootstrap": "^3.1",
+        "drupal/views_bootstrap": "^4.2",
         "drupal/views_bulk_edit": "^2.0",
         "drupal/views_bulk_operations": "^3.2",
         "drupal/views_field_formatter": "^1.7",
@@ -148,8 +146,6 @@
         "drush/drush": "^10",
         "oomphinc/composer-installers-extender": "^1.1.2",
         "twbs/bootstrap": "~3.4 | ~4.4",
-        "twbs/bootstrap-sass": "~3.4",
-        "unicorn-fail/drupal-bootstrap-styles": "^0.0.2",
         "vlucas/phpdotenv": "^4.1",
         "webflo/drupal-finder": "^1.1.0",
         "webmozart/path-util": "^2.3"
@@ -187,7 +183,6 @@
     },
     "extra": {
         "bootstrap-theme": {
-            "base_theme": "bootstrap",
             "title": "My BS subtheme",
             "name": "my_subtheme"
         },
@@ -310,18 +305,6 @@
                 "dist": {
                     "type": "zip",
                     "url": "https://download.ckeditor.com/templates/releases/templates_4.13.1.zip"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "unicorn-fail/drupal-bootstrap-styles",
-                "type": "drupal-library",
-                "version": "0.0.2",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/unicorn-fail/drupal-bootstrap-styles/archive/v0.0.2.zip"
                 }
             }
         }
