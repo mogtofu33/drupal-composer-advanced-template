@@ -79,11 +79,8 @@ ddev start
 
 - Edit `.env` and select `SETTINGS_ENVIRONMENT` value, _dev_ will enable development modules and settings
 
-- Install Drupal and choose profile **Use existing configuration**
 
-- **OR**
-
-- **EXPERIMENTAL Drush 10.x** use Drush command installation to run from **web** folder
+- Use Drush command installation to run from **web** folder
 
 ```bash
 ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
