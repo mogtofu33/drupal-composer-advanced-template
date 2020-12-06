@@ -69,7 +69,7 @@ module:
   views: 10
   minimal: 1000
 theme:
-  stark: 0
+  bartik: 0
   claro: 0
 profile: minimal
 _core:

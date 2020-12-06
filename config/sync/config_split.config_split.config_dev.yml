@@ -9,6 +9,7 @@ folder: ../config/dev
 module:
   devel: 0
   ds_devel: 0
+  webprofiler: 0
 theme: {  }
 blacklist: {  }
 graylist:
