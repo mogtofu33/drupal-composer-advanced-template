@@ -13,8 +13,6 @@ module:
   comment: 0
   config: 0
   config_filter: 0
-  config_inspector: 0
-  config_override_warn: 0
   config_split: 0
   config_update: 0
   config_update_ui: 0
@@ -27,25 +25,20 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
-  entity_browser: 0
-  entity_browser_entity_form: 0
-  fast404: 0
   field: 0
-  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
   help: 0
   history: 0
   image: 0
-  inline_entity_form: 0
   inline_form_errors: 0
   layout_discovery: 0
   link: 0
   mailsystem: 0
-  markup: 0
   media: 0
   media_library: 0
+  menu_link_content: 0
   menu_ui: 0
   node: 0
   options: 0
@@ -61,7 +54,6 @@ module:
   settings_tray: 0
   shortcut: 0
   simplei: 0
-  smart_trim: 0
   system: 0
   taxonomy: 0
   text: 0
@@ -69,23 +61,18 @@ module:
   toolbar: 0
   tour: 0
   twig_tweak: 0
-  update: 0
   user: 0
   views_ui: 0
   ds: 1
-  menu_link_content: 1
   pathauto: 1
   ds_extras: 2
-  vmi: 3
   views: 10
-  minimal: 1000
+  standard: 1000
 theme:
-  stable: 0
-  classy: 0
   bartik: 0
   seven: 0
   bootstrap_barrio: 0
   claro: 0
-profile: minimal
+profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

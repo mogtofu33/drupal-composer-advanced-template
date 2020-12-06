@@ -1,4 +1,4 @@
-uuid: 95aaa024-0dd4-45d5-ad62-6c51c6ff6e07
+uuid: 797603ff-6bcc-45c0-a6f7-81ec6dbc9b2e
 langcode: en
 status: true
 dependencies:
@@ -24,12 +24,6 @@ content:
   language:
     weight: 0
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   timezone:
     weight: 6
     region: content

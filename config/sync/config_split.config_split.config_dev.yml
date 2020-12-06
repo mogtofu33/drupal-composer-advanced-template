@@ -8,17 +8,12 @@ description: 'Configuration for development environment.'
 folder: ../config/dev
 module:
   devel: 0
-  devel_generate: 0
   ds_devel: 0
-  kint: 0
-  update: 0
-  webprofiler: 0
 theme: {  }
 blacklist: {  }
 graylist:
   - automated_cron.settings
   - contact.form.feedback
-  - core.extension
   - dblog.settings
   - system.cron
   - system.logging
@@ -26,7 +21,6 @@ graylist:
   - system.maintenance
   - system.performance
   - system.site
-  - update.settings
   - views.settings
 graylist_dependents: true
 graylist_skip_equal: true
