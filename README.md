@@ -17,7 +17,8 @@ Enhanced Drupal 9 profile to kickstart a website.
 
 ## What's this?
 
-This project is meant to be a starting point for a developper, not a ready to use Drupal with functionnalities.  
+This project is meant to be a starting point for a developper, not a ready to
+use Drupal with functionnalities.  
 For more advanced profiles see:
   - [Varbase](https://www.drupal.org/project/varbase)
   - [Lightning](https://www.drupal.org/project/lightning)
@@ -28,10 +29,12 @@ For more advanced profiles see:
 
 ## What's included / added
 
-- A lot of interesting [contrib modules](./composer.json#L47), some [patches for core / contrib](./composer.json#L271)
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
+  - Local logging with [monolog](https://github.com/Seldaek/monolog) and [chrome
+    logger](https://craig.is/writing/chrome-logger) support
 - Creates environment variables based on your .env file. See [.env.example](./.env.example), inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
+- Some [patches for core](./composer.json#L258)
 - A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install

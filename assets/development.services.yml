@@ -1,0 +1,24 @@
+# Local development services.
+#
+# This file is activated in 'settings.local.php'.
+parameters:
+  monolog.channel_handlers:
+    # Send the php channel to drupal dblog and the chrome console:
+    # Note: browser console seems not working in Drupal.
+    php:
+      handlers: ['drupal.dblog', 'chrome_php']
+      formatter: 'chrome_php'
+    # Default for other logs.
+    default:
+      handlers: ['drupal.dblog']
+      formatter: 'line'
+  monolog.processors: ['message_placeholder', 'current_user', 'request_uri', 'ip', 'referer', 'filter_backtrace', 'memory_usage', 'memory_peak_usage', 'introspection', 'git']
+  # Cache debug settings.
+  http.response.debug_cacheability_headers: true
+  twig.config:
+    debug: true
+    auto_reload: true
+    cache: false
+services:
+  cache.backend.null:
+    class: Drupal\Core\Cache\NullBackendFactory
