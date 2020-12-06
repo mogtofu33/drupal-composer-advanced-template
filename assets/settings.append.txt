@@ -9,8 +9,8 @@ $settings['config_sync_directory'] = '../config/sync';
 // Default environment is prod.
 $settings['environment'] = "prod";
 
-if (!empty(getenv('SETTINGS_ENVIRONMENT'))) {
-  $settings['environment'] = getenv('SETTINGS_ENVIRONMENT');
+if (!empty($_ENV['SETTINGS_ENVIRONMENT'])) {
+  $settings['environment'] = $_ENV['SETTINGS_ENVIRONMENT'];
 }
 
 if (file_exists($app_root . '/' . $site_path . '/settings.' . $settings['environment'] . '.php')) {

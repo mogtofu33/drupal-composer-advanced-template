@@ -12,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @author Jean Valverde <contact@developpeur-drupal.com>
  * @link https://developpeur-drupal.com/en
  */
-class ProjectHelper {
+final class ProjectHelper {
 
   /**
    * Create and copy needed files.
@@ -37,12 +37,12 @@ class ProjectHelper {
 
     foreach ($files as $src => $dest) {
       if ($fs->exists($src)) {
-        if (!$fs->exists($drupalDocRoot . '/.env')) {
-          $io->notice(sprintf('Create %s from %s', $dest, $src));
-          $fs->copy($src, $dest);
+        if ($fs->exists($dest)) {
+          $io->write(sprintf('<info>[SKIP] Existing file %s</info>', $dest));
         }
         else {
-          $io->notice(sprintf('[SKIP] Existing file %s', $dest));
+          $io->write(sprintf('<info>Create %s from %s</info>', $dest, $src));
+          $fs->copy($src, $dest);
         }
       }
       else {
@@ -54,7 +54,7 @@ class ProjectHelper {
       $oldmask = umask(0);
       $fs->chmod($drupalSettings, 0750);
       umask($oldmask);
-      $io->notice('Set sites/default directory to chmod 0750');
+      $io->write('<info>Set sites/default directory to chmod 0750</info>');
     }
     else {
       $io->warning(sprintf('Missing Drupal settings folder: %s', $drupalSettings));

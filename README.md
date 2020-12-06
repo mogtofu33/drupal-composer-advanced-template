@@ -1,9 +1,9 @@
-# Composer template for Drupal 8 projects
+# Composer template for Drupal 9 projects
 
-[![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/8.x-dev/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/8.x-dev)
-[![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=8.x-dev)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
+[![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/9.x-dev/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/9.x-dev)
+[![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=9.x-dev)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
-Enhanced Drupal 8 profile to kickstart a website.
+Enhanced Drupal 9 profile to kickstart a website.
 
 - [What's this?](#whats-this)
 - [What's included / added](#whats-included--added)
@@ -24,38 +24,30 @@ For more advanced profiles see:
   - [Thunder](https://www.drupal.org/project/thunder)
   - [Social](https://www.drupal.org/project/social)
   - [Commerce](https://www.drupal.org/project/commerce)
-  - [and more...](https://www.drupal.org/project/project_distribution?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=sm_core_compatibility%3A8&f%5B3%5D=sm_field_project_type%3Afull&f%5B4%5D=&f%5B5%5D=&text=&solrsort=iss_project_release_usage+desc&op=Search)
+  - [and more...](https://www.drupal.org/project/project_distribution?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=sm_core_compatibility%3A9&f%5B3%5D=sm_field_project_type%3Afull&f%5B4%5D=&f%5B5%5D=&text=&solrsort=iss_project_release_usage+desc&op=Search)
 
 ## What's included / added
 
 - A lot of interesting [contrib modules](./composer.json#L47), some [patches for core / contrib](./composer.json#L271)
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
-- Dotenv support for environment variables, inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
-- A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal8](https://gitlab.com/mog33/gitlab-ci-drupal)
+- Creates environment variables based on your .env file. See [.env.example](./.env.example), inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
+- A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install
 
 ### Requirements
 
-Require [Composer 1.9+](https://getcomposer.org) with [Php 7+](http://php.net/) and Php modules needed for composer.
+Require [Composer 2+](https://getcomposer.org) with [Php 7.3+](http://php.net/) and Php modules needed for composer.
 
 Compiling the Sass file is done through [https://scssphp.github.io/scssphp/](https://scssphp.github.io/scssphp/) but you can install [Sass](https://sass-lang.com/install) if you prefer a more advanced feature (like watch) or use a [Docker image](#using-sass-with-a-docker-image).
-
-Recommended:
-
-- [Composer prestissimo](https://github.com/hirak/prestissimo)
-
-```bash
-composer global require "hirak/prestissimo:^0.3"
-```
 
 ### Grab code and libraries
 
 Get and install this project
 
 ```bash
-composer create-project mog33/drupal-composer-advanced-template:dev-8.x-dev drupal --stability dev --no-interaction
+composer create-project mog33/drupal-composer-advanced-template:9.x-dev drupal --stability dev --no-interaction
 ```
 Set **/web** as root of your host (Apache).
 
