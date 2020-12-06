@@ -1,6 +1,6 @@
-uuid: 92519039-ac6e-474b-b210-582e92574e40
-name: 'Drush Site-Install'
-mail: admin@example.com
+uuid: a3bcc169-8a21-4b54-bd46-64bbd439c9b8
+name: Drupal
+mail: admin@localhost.com
 slogan: ''
 page:
   403: ''
@@ -11,4 +11,4 @@ weight_select_max: 100
 langcode: en
 default_langcode: en
 _core:
-  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
