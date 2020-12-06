@@ -2,17 +2,19 @@
     "name": "mog33/drupal-composer-advanced-template",
     "type": "project",
     "description": "Drupal 9 project with composer, boosted!",
-    "homepage": "https://gitlab.com/mog33/drupal-composer-advanced-template",
-    "license": "GPL-3.0-or-later",
     "keywords": [
         "Drupal",
         "Drupal9"
     ],
-    "authors": [{
-        "name": "Jean Valverde",
-        "homepage": "https://dev-drupal.com/en",
-        "role": "Maintainer"
-    }],
+    "homepage": "https://gitlab.com/mog33/drupal-composer-advanced-template",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Jean Valverde",
+            "homepage": "https://dev-drupal.com/en",
+            "role": "Maintainer"
+        }
+    ],
     "require": {
         "php": ">=7.3",
         "bower-asset/blazy": "^1.8",
@@ -266,9 +268,12 @@
         "classmap": [
             "scripts/composer/ProjectHelper.php"
         ],
-        "files": ["load.environment.php"]
+        "files": [
+            "load.environment.php"
+        ]
     },
-    "repositories": [{
+    "repositories": [
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
