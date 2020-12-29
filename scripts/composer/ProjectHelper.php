@@ -42,7 +42,7 @@ final class ProjectHelper {
       $drupalRoot . '/.env.example' => $drupalRoot . '/.env',
     ];
 
-    if ('dev' === $_ENV['SETTINGS_ENVIRONMENT']) {
+    if (isset($_ENV['SETTINGS_ENVIRONMENT']) && 'dev' === $_ENV['SETTINGS_ENVIRONMENT']) {
       $io->write('<info>Dev environment detected.</info>');
       $files[$drupalRoot . '/sites/example.settings.local.php'] = $drupalRoot . '/sites/default/settings.local.php';
     }
