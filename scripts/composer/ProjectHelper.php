@@ -39,13 +39,8 @@ final class ProjectHelper {
 
     $files = [
       $drupalRoot . '/sites/default/default.settings.php' => $drupalRoot . '/sites/default/settings.php',
-      $drupalRoot . '/.env.example' => $drupalRoot . '/.env',
+      '.env.example' => '.env',
     ];
-
-    if (isset($_ENV['SETTINGS_ENVIRONMENT']) && 'dev' === $_ENV['SETTINGS_ENVIRONMENT']) {
-      $io->write('<info>Dev environment detected.</info>');
-      $files[$drupalRoot . '/sites/example.settings.local.php'] = $drupalRoot . '/sites/default/settings.local.php';
-    }
 
     foreach ($files as $src => $dest) {
       if ($fs->exists($src)) {
