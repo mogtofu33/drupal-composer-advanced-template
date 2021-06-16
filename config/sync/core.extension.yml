@@ -5,6 +5,7 @@ module:
   admin_toolbar_tools: 0
   automated_cron: 0
   big_pipe: 0
+  big_pipe_sessionless: 0
   block: 0
   block_content: 0
   breakpoint: 0
@@ -40,6 +41,7 @@ module:
   media_library: 0
   menu_link_content: 0
   menu_ui: 0
+  monolog: 0
   node: 0
   options: 0
   page_cache: 0
@@ -59,13 +61,10 @@ module:
   text: 0
   token: 0
   toolbar: 0
-  tour: 0
   twig_tweak: 0
   user: 0
   views_ui: 0
-  ds: 1
   pathauto: 1
-  ds_extras: 2
   views: 10
   minimal: 1000
 theme:
