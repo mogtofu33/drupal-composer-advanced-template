@@ -41,7 +41,7 @@ For more advanced profiles see:
 
 ### Requirements
 
-Require [Composer 2+](https://getcomposer.org) with [Php 7.3+](http://php.net/) and Php modules needed for composer.
+Require [Composer 2+](https://getcomposer.org) with [Php 7.4+](http://php.net/) and Php modules needed for composer.
 
 Compiling the Sass file is done through [https://scssphp.github.io/scssphp/](https://scssphp.github.io/scssphp/) but you can install [Sass](https://sass-lang.com/install) if you prefer a more advanced feature (like watch) or use a [Docker image](#using-sass-with-a-docker-image).
 

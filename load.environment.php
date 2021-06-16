@@ -9,7 +9,7 @@ use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 
 /**
- * Load any .env file. See /.env.example.
+ * Load any .env file. See ./.env.example.
  */
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
