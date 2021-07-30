@@ -1,7 +1,7 @@
 # Composer template for Drupal 9 projects
 
-[![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/9.x-dev/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/9.x-dev)
-[![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=9.x-dev)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
+[![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/9.x/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/9.x-dev)
+[![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=9.x)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
 Enhanced Drupal 9 profile to kickstart a website.
 
@@ -31,7 +31,7 @@ For more advanced profiles see:
 
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
-  - Local logging with [monolog](https://github.com/Seldaek/monolog) and [chrome
+  - Local dev logging with [monolog](https://github.com/Seldaek/monolog) and [chrome
     logger](https://craig.is/writing/chrome-logger) support
 - Creates environment variables based on your .env file. See [.env.example](./.env.example), inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
 - Some [patches for core](./composer.json#L258)
@@ -50,7 +50,7 @@ Compiling the Sass file is done through [https://scssphp.github.io/scssphp/](htt
 Get and install this project
 
 ```bash
-composer create-project mog33/drupal-composer-advanced-template:9.x-dev drupal --stability dev --no-interaction
+composer create-project mog33/drupal-composer-advanced-template:9.x drupal --stability dev --no-interaction
 ```
 Set **/web** as root of your host (Apache).
 
