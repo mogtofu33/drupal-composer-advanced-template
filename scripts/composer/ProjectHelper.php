@@ -6,14 +6,12 @@ namespace DrupalProject\composer;
 
 use Composer\Script\Event;
 use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class ProjectHelper.
  *
- * @author Jean Valverde <contact@developpeur-drupal.com>
  * @link https://developpeur-drupal.com/en
  */
 final class ProjectHelper {
