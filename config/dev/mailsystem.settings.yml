@@ -1,0 +1,4 @@
+defaults:
+  formatter: devel_mail_log
+  sender: devel_mail_log
+theme: current

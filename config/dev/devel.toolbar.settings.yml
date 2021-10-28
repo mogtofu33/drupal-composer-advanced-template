@@ -8,6 +8,5 @@ toolbar_items:
   - devel.reinstall
   - devel.route_info
   - devel.run_cron
-  - devel.state_system_page
 _core:
   default_config_hash: IQjf_ytthngZTAk_MU8-74VecArWD3G5g0oEH6PM6GA

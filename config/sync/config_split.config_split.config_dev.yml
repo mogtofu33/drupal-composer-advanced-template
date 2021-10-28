@@ -5,24 +5,23 @@ dependencies: {  }
 id: config_dev
 label: 'Dev config'
 description: 'Configuration for development environment.'
+weight: 0
+storage: folder
 folder: ../config/dev
 module:
   devel: 0
-  ds_devel: 0
-  webprofiler: 0
+  devel_generate: 0
 theme: {  }
-blacklist: {  }
-graylist:
+complete_list:
   - automated_cron.settings
-  - contact.form.feedback
   - dblog.settings
+  - devel.settings
+  - devel.toolbar.settings
+  - mailsystem.settings
   - system.cron
   - system.logging
   - system.mail
   - system.maintenance
   - system.performance
-  - system.site
   - views.settings
-graylist_dependents: true
-graylist_skip_equal: true
-weight: 0
+partial_list: {  }
