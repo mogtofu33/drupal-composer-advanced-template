@@ -1,4 +1,4 @@
 defaults:
-  formatter: devel_mail_log
-  sender: devel_mail_log
+  formatter: php_mail
+  sender: php_mail
 theme: current

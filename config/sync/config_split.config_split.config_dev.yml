@@ -10,6 +10,7 @@ storage: folder
 folder: ../config/dev
 module:
   devel: 0
+  webprofiler: 0
   devel_generate: 0
 theme: {  }
 complete_list:
@@ -20,8 +21,8 @@ complete_list:
   - mailsystem.settings
   - system.cron
   - system.logging
-  - system.mail
-  - system.maintenance
   - system.performance
   - views.settings
+  - system.mail
+  - system.maintenance
 partial_list: {  }
