@@ -1,6 +1,6 @@
 cache:
   page:
-    max_age: 86400
+    max_age: 21600
 css:
   preprocess: true
 js:

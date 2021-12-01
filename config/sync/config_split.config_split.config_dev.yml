@@ -6,6 +6,7 @@ id: config_dev
 label: 'Dev config'
 description: 'Configuration for development environment.'
 weight: 0
+stackable: false
 storage: folder
 folder: ../config/dev
 module:

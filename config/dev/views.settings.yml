@@ -3,11 +3,11 @@ ui:
     default_display: true
     advanced_column: true
     display_embed: true
-    preview_information: false
+    preview_information: true
     sql_query:
-      where: null
-      enabled: false
-    performance_statistics: false
+      where: above
+      enabled: true
+    performance_statistics: true
     additional_queries: false
-  exposed_filter_any_label: old_any
+  exposed_filter_any_label: new_any
   always_live_preview: false

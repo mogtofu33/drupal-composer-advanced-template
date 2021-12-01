@@ -12,9 +12,10 @@ active_toolbar_items:
   devel: devel
   drupal_extension: drupal_extension
   forms: forms
-  php_config: php_config
   performance_timing: performance_timing
   request: request
+  routing: routing
+  services: services
   time: time
   user: user
   views: views
@@ -22,8 +23,7 @@ active_toolbar_items:
   events: '0'
   http: '0'
   mail: '0'
-  routing: '0'
-  services: '0'
+  php_config: '0'
   state: '0'
   theme: '0'
 query_sort: duration
