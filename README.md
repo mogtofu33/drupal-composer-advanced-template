@@ -12,7 +12,7 @@ Enhanced Drupal 9 profile to kickstart a website.
   - [Grab code and libraries](#grab-code-and-libraries)
   - [Drupal installation](#drupal-installation)
     - [Server / remote installation](#server--remote-installation)
-    - [Local setup with ddev](#local-setup-with-ddev)
+    - [Quick local setup with ddev](#quick-local-setup-with-ddev)
 - [Project metrics](#project-metrics)
 
 ## What's this?
@@ -31,10 +31,8 @@ For more advanced profiles see:
 
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
-  - Local dev logging with [monolog](https://github.com/Seldaek/monolog) and [chrome
-    logger](https://craig.is/writing/chrome-logger) support
 - Creates environment variables based on your .env file. See [.env.example](./.env.example), inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
-- Some [patches for core](./composer.json#L258)
+- Some [patches for core](./composer.json#L255)
 - A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install
@@ -66,38 +64,16 @@ Other folders (eg: vendor) should be accessible by Webserver user and not from H
 
 - Install Drupal and choose profile **Use existing configuration**
 
-#### Local setup with ddev
+#### Quick local setup with ddev
 
 This project include a simple **Docker** stack based on great project [Ddev](https://ddev.readthedocs.io/en/latest/).
 
 Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation)
 
-Then launch the ddev stack:
+**On linux:**
 
 ```bash
-ddev start
-```
-
-- Edit `.env` and select `SETTINGS_ENVIRONMENT` value, _dev_ will enable development modules and settings
-
-- Install Drupal and choose profile **Use existing configuration**
-
-- **OR**
-
-- Use Drush command installation to run from **web** folder
-
-```bash
-ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
-```
-
-_Note_: If you have a permission denied, ensure permissions on `web/sites/default` is 750.
-
-Composer install script will create `web/sites/default/settings.php`, `settings.dev.php` and `settings.prod.php`, adapt if you need.
-
-- Login to your new website with user admin / password OR using _drush_:
-
-```bash
-../vendor/bin/drush uli
+make install
 ```
 
 ## Project metrics
