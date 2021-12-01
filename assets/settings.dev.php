@@ -35,6 +35,10 @@
 assert_options(ASSERT_ACTIVE, TRUE);
 \Drupal\Component\Assertion\Handle::register();
 
+// Webprofiler specific settings to have proper performance measure.
+$class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
+$settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';
+
 // Config split compatibility, set FALSE for Prod.
 $config['config_split.config_split.config_dev']['status'] = TRUE;
 
@@ -58,6 +62,12 @@ $settings['cache']['bins']['render'] = 'cache.backend.null';
 $settings['cache']['bins']['page'] = 'cache.backend.null';
 $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 
+// Disable all other caches, can highly slow down the site.
+// $settings['cache']['default'] = 'cache.backend.null';
+// $settings['cache']['bins']['bootstrap'] = 'cache.backend.null';
+// $settings['cache']['bins']['discovery'] = 'cache.backend.null';
+// $settings['cache']['bins']['config'] = 'cache.backend.null';
+
 // When working with migrate.
 // $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
 
@@ -69,7 +79,3 @@ $settings['skip_permissions_hardening'] = TRUE;
 // $config['system.logging']['error_level'] = 'verbose';
 // $config['system.performance']['css']['preprocess'] = FALSE;
 // $config['system.performance']['js']['preprocess'] = FALSE;
-
-// Webprofiler specific settings
-// $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
-// $settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';

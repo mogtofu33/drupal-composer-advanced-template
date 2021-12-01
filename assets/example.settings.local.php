@@ -58,6 +58,12 @@ $settings['cache']['bins']['render'] = 'cache.backend.null';
 $settings['cache']['bins']['page'] = 'cache.backend.null';
 $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 
+// Disable all other caches, can highly slow down the site.
+// $settings['cache']['default'] = 'cache.backend.null';
+// $settings['cache']['bins']['bootstrap'] = 'cache.backend.null';
+// $settings['cache']['bins']['discovery'] = 'cache.backend.null';
+// $settings['cache']['bins']['config'] = 'cache.backend.null';
+
 // When working with migrate.
 // $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
 
