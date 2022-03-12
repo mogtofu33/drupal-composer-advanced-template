@@ -12,11 +12,11 @@
 # - Buy me a coffee: https://bit.ly/34jPKcE
 # - Hire me as a freelance for any Drupal related work
 # - Promote me to any company looking for any Drupal related work
-# - Help me with testing / documentation / grammar fixes / use cases
+# - Help me with testing / documentation / grammar fixes / use cases...
 #
 ################################################################################
 
-# The ref is relative to the version of the project to use, best to use a tag.
+# The ref is relative to the version of the project to use.
 include:
   # If hosted on gitlab.com.
   - project: 'mog33/gitlab-ci-drupal'
@@ -42,15 +42,19 @@ include:
 
 variables:
   # This is mandatory to get default variables.
+  # For list of variables see
+  # https://gitlab.com/mog33/gitlab-ci-drupal/-/raw/3.x-dev/.gitlab-ci/ci/variables.yml
   extends: .default_variables
 
-  # Global config remote files ref.
-  # MUST be the same as include: ref: from above.
-  CI_REF: 3.x-dev
-
   # Minor Drupal version to work with, limited to tags on
-  # https://hub.docker.com/r/mogtofu33/drupal8ci/tags?name=3.x
-  CI_DRUPAL_VERSION: "9.3"
+  # https://hub.docker.com/r/mogtofu33/drupal8ci/tags
+  CI_DRUPAL_VERSION:
+    value: "9.3"
+    description: The version of Drupal to use for this Pipeline.
+
+  # For a project based on Drupal this is 'web'. Can be 'docroot' on some
+  # distributions like 'varbase'.
+  DRUPAL_WEB_ROOT: web
 
   ##############################################################################
   # Tests disabled by default because need a specific setup / configuration.
@@ -58,24 +62,28 @@ variables:
   # Only needed if you have Behat tests, comment or set to 0 to enable.
   # https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#behat-tests
   SKIP_TEST_BEHAT: 1
+  # Can use a profile setup or a dump file in dump/
+  BEHAT_INSTALL_PROFILE: "minimal"
 
-  # Accessibility tests, need a profile and setup.
+  # Accessibility tests.
   # https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#accessibility-with-pa11y
   SKIP_TEST_PA11Y: 1
+  # Can use a profile setup or a dump file in dump/
+  PA11Y_INSTALL_PROFILE: "minimal"
 
   # Only if you have Nightwatch tests in your code.
   # https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#nightwatchjs
   SKIP_TEST_NIGHTWATCH: 1
   # Default is '--skiptags core', add your tag.
-  # NIGHTWATCH_TESTS: --tag my_module
+  NIGHTWATCH_TESTS: '--tag my_module'
 
   # Phpunit tests to run, default provide only custom code or if this variable
   # is empty all tests (including Drupal core).
   # https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#phpunit-tests
-  PHPUNIT_TESTS: "custom"
+  PHPUNIT_TESTS: ""
 
   # Specify a group of tests to run rather than all tests in the suite.
-  # PHPUNIT_GROUP: my_group_1,my_group_2
+  PHPUNIT_GROUP: action
 
   ##############################################################################
   # Override default variables for a module.
@@ -85,16 +93,16 @@ variables:
   # profile). Simply uncomment and adapt dirs to set the CI for a module.
   #
   # CI_TYPE: module
-  # # Code quality dirs, must include your PHP code to check.
-  # # Phpstan need autoloading, that's why we use web_root.
-  # DIRS_QA: "${WEB_ROOT}/modules/custom"
-  # # Eslint / Stylelint files to test.
-  # DIRS_JS: "${CI_PROJECT_DIR}/js/*.js"
-  # DIRS_CSS: "${CI_PROJECT_DIR}/css/*.css"
-  # # Twig files to test.
-  # DIRS_TWIG: "${CI_PROJECT_DIR}/templates"
-  # # phpmetrics / phpstats dirs to include.
-  # DIRS_PHP: "${CI_PROJECT_DIR}"
+  # Code quality dirs, must include your PHP code to check.
+  # Phpstan need autoloading, that's why we use web_root.
+  DIRS_QA: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify"
+  # Eslint / Stylelint files to test.
+  DIRS_JS: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify/js/*.js"
+  DIRS_CSS: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/css/css/*.css"
+  # Twig files to test.
+  DIRS_TWIG: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/templates/templates"
+  # phpmetrics / phpstats dirs to include.
+  DIRS_PHP: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify"
   # # Set SKIP_XXX variable to 1 to skip.
   # # Security is for a Drupal project with third party.
   # SKIP_TEST_SECURITY: 1
@@ -136,17 +144,17 @@ variables:
   # SKIP_BUILD: 1 # if not running any tests or deploy.
   #
   # SKIP_TESTS: 1 # Skip all tests, ignore SKIP_TEST_*.
-  SKIP_TEST_UNITKERNEL: 1
-  SKIP_TEST_FUNCTIONAL: 1
-  SKIP_TEST_FUNCTIONALJS: 1
+  # SKIP_TEST_UNITKERNEL: 1
+  # SKIP_TEST_FUNCTIONAL: 1
+  # SKIP_TEST_FUNCTIONALJS: 1
   # SKIP_TEST_SECURITY: 1
   #
   # SKIP_QA: 1
   #
   # SKIP_LINT: 1 # Skip all lint, ignore SKIP_LINT_*.
-  SKIP_LINT_CSS: 1
+  # SKIP_LINT_CSS: 1
   # SKIP_LINT_JS: 1
-  SKIP_LINT_TWIG: 1
+  # SKIP_LINT_TWIG: 1
   #
   # SKIP_METRICS: 1
 
@@ -154,10 +162,22 @@ variables:
   # See Phpqa available tools: https://github.com/EdgedesignCZ/phpqa#available-tools
   # ':0' is the number of errors allowed, default here is very strict.
   #
-  TOOLS_QA: "phpcs:0,phpmd:0,parallel-lint:0,phpstan"
+  # TOOLS_QA: "phpcs:0,phpmd:0,parallel-lint:0,phpstan:0,phpcpd:0"
   # TOOLS_METRICS: "phpmetrics,phploc,pdepend"
 
 ################################################################################
 # Advanced usage with this file, see doc.
 # https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage
 ################################################################################
+
+stages:
+  - build
+  - tests
+  - metrics
+  - reports
+
+pages:
+  stage: reports
+  extends: .simple_dashboard
+  rules:
+    - when: always
