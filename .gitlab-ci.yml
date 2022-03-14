@@ -98,9 +98,9 @@ variables:
   DIRS_QA: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify"
   # Eslint / Stylelint files to test.
   DIRS_JS: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify/js/*.js"
-  DIRS_CSS: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/css/css/*.css"
+  DIRS_CSS: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/css/*.css"
   # Twig files to test.
-  DIRS_TWIG: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/templates/templates"
+  DIRS_TWIG: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/templates"
   # phpmetrics / phpstats dirs to include.
   DIRS_PHP: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify"
   # # Set SKIP_XXX variable to 1 to skip.
@@ -162,7 +162,7 @@ variables:
   # See Phpqa available tools: https://github.com/EdgedesignCZ/phpqa#available-tools
   # ':0' is the number of errors allowed, default here is very strict.
   #
-  # TOOLS_QA: "phpcs:0,phpmd:0,parallel-lint:0,phpstan:0,phpcpd:0"
+  TOOLS_QA: "phpcs,phpmd:0,parallel-lint:0,phpstan,phpcpd"
   # TOOLS_METRICS: "phpmetrics,phploc,pdepend"
 
 ################################################################################
