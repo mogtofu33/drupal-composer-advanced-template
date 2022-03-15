@@ -93,16 +93,16 @@ variables:
   # profile). Simply uncomment and adapt dirs to set the CI for a module.
   #
   # CI_TYPE: module
-  # Code quality dirs, must include your PHP code to check.
-  # Phpstan need autoloading, that's why we use web_root.
-  DIRS_QA: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify"
-  # Eslint / Stylelint files to test.
-  DIRS_JS: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify/js/*.js"
-  DIRS_CSS: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/css/*.css"
-  # Twig files to test.
-  DIRS_TWIG: "${CI_PROJECT_DIR}/themes/contrib/bootstrap_barrio/templates"
-  # phpmetrics / phpstats dirs to include.
-  DIRS_PHP: "${CI_PROJECT_DIR}/modules/contrib/content_moderation_edit_notify"
+  # # Code quality dirs, must include your PHP code to check.
+  # # Phpstan need autoloading, that's why we use web_root.
+  # DIRS_QA: "${WEB_ROOT}/modules/custom"
+  # # Eslint / Stylelint files to test.
+  # DIRS_JS: "${CI_PROJECT_DIR}/js/*.js"
+  # DIRS_CSS: "${CI_PROJECT_DIR}/css/*.css"
+  # # Twig files to test.
+  # DIRS_TWIG: "${CI_PROJECT_DIR}/templates"
+  # # phpmetrics / phpstats dirs to include.
+  # DIRS_PHP: "${CI_PROJECT_DIR}"
   # # Set SKIP_XXX variable to 1 to skip.
   # # Security is for a Drupal project with third party.
   # SKIP_TEST_SECURITY: 1
@@ -122,23 +122,23 @@ variables:
   # List of DIRS_* variables to define dirs to analyse for specific jobs.
   # Code quality dirs, must include your PHP code to check.
   # 
-  # DIRS_QA: "${WEB_ROOT}/modules/custom,${WEB_ROOT}/themes/custom"
+  DIRS_QA: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify"
   # 
   # Eslint / Stylelint files to test.
   # Space separated for multiple folders.
   # Default is to check files under all custom folders.
   # 
-  # DIRS_JS: "${WEB_ROOT}/**/custom/**/*.js"
-  # DIRS_CSS: "${WEB_ROOT}/**/custom/**/css/*.css"
+  DIRS_JS: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify/js/*.js"
+  DIRS_CSS: "${WEB_ROOT}/themes/contrib/bootstrap_barrio/css/*.css"
   # 
   # Twig files to test, recursive.
   # 
-  # DIRS_TWIG: "${WEB_ROOT}/themes/custom"
+  DIRS_TWIG: "${WEB_ROOT}/themes/contrib/bootstrap_barrio/templates"
   # 
   # Phpmetrics / Phpstats dirs to include.
   # Default is to check all dirs.
   # 
-  # DIRS_PHP: "${WEB_ROOT}/modules/custom,${WEB_ROOT}/themes/custom"
+  DIRS_PHP: "${WEB_ROOT}/modules/contrib/content_moderation_edit_notify"
   #
   # # ALL SKIP variables, uncomment and set to 1 to skip a job.
   # SKIP_BUILD: 1 # if not running any tests or deploy.
