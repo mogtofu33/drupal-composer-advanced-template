@@ -15,4 +15,8 @@ nuke:
 
 st: status
 status:
-	@dddev exec drush status;
+	@ddev exec drush status;
+
+login: uli
+uli:
+	@ddev exec drush uli;
