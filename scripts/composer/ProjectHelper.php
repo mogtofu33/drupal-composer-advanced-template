@@ -56,16 +56,16 @@ final class ProjectHelper {
     }
 
     if ($fs->exists($drupalSettings)) {
-      $oldmask = \umask(0);
+      $oldMask = \umask(0);
       $fs->chmod($drupalSettings, 0750);
-      \umask($oldmask);
+      \umask($oldMask);
       $io->write('<info>Set sites/default directory to chmod 0750</info>');
     }
     else {
       $io->warning(\sprintf('Missing Drupal settings folder: %s', $drupalSettings));
     }
 
-    $io->write('<info>Project setup Done! Happy dev!</info>');
+    $io->write('<info>Project setup Done! Happy dev! ;)</info>');
   }
 
 }
