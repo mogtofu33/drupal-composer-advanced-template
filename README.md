@@ -17,15 +17,16 @@ Enhanced Drupal 9 profile to kickstart a website.
 
 ## What's this?
 
-This project is meant to be a starting point for a developper, not a ready to
-use Drupal with functionnalities.  
+This project is meant to be a starting point for a developer, not a ready to
+use Drupal with functionalities.  
 For more advanced profiles see:
-  - [Varbase](https://www.drupal.org/project/varbase)
-  - [Lightning](https://www.drupal.org/project/lightning)
-  - [Thunder](https://www.drupal.org/project/thunder)
-  - [Social](https://www.drupal.org/project/social)
-  - [Commerce](https://www.drupal.org/project/commerce)
-  - [and more...](https://www.drupal.org/project/project_distribution?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=sm_core_compatibility%3A9&f%5B3%5D=sm_field_project_type%3Afull&f%5B4%5D=&f%5B5%5D=&text=&solrsort=iss_project_release_usage+desc&op=Search)
+
+- [Varbase](https://www.drupal.org/project/varbase)
+- [Lightning](https://www.drupal.org/project/lightning)
+- [Thunder](https://www.drupal.org/project/thunder)
+- [Social](https://www.drupal.org/project/social)
+- [Commerce](https://www.drupal.org/project/commerce)
+- [and more...](https://www.drupal.org/project/project_distribution?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=sm_core_compatibility%3A9&f%5B3%5D=sm_field_project_type%3Afull&f%5B4%5D=&f%5B5%5D=&text=&solrsort=iss_project_release_usage+desc&op=Search)
 
 ## What's included / added
 
@@ -48,6 +49,7 @@ Get and install this project
 ```bash
 composer create-project mog33/drupal-composer-advanced-template:9.x drupal --stability dev --no-interaction
 ```
+
 Set **/web** as root of your host (Apache).
 
 Other folders (eg: vendor) should be accessible by Webserver user and not from HTTP.
