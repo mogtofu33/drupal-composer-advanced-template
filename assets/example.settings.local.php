@@ -35,22 +35,6 @@
 assert_options(ASSERT_ACTIVE, TRUE);
 \Drupal\Component\Assertion\Handle::register();
 
-// Config split compatibility, set FALSE for Prod.
-$config['config_split.config_split.config_dev']['status'] = TRUE;
-
-// Local settings.
-$settings['file_private_path'] = 'sites/default/files/private';
-$settings['simple_environment_indicator'] = 'DarkGreen Dev';
-$settings['simple_environment_anonymous'] = TRUE;
-
-// Trusted host patterns settings.
-// $settings['trusted_host_patterns'][] = '^MY_ENV_IP_OR_DOMAIN$';
-
-// Drupal default dev settings from example.settings.local.php.
-
-/**
- * Enable local development services.
- */
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
 
 // Drupal no cache from example.settings.local.php.
@@ -71,7 +55,7 @@ $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 $settings['rebuild_access'] = TRUE;
 $settings['skip_permissions_hardening'] = TRUE;
 
-// Perfomance and logging is set by config_split, uncomment here to force.
+// Performance and logging is set by config_split, uncomment here to force.
 // $config['system.logging']['error_level'] = 'verbose';
 // $config['system.performance']['css']['preprocess'] = FALSE;
 // $config['system.performance']['js']['preprocess'] = FALSE;
