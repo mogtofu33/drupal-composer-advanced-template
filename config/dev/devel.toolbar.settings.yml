@@ -1,12 +1,13 @@
+_core:
+  default_config_hash: IQjf_ytthngZTAk_MU8-74VecArWD3G5g0oEH6PM6GA
 toolbar_items:
   - devel.configs_list
   - devel.container_info.service
   - devel.route_info.item
+  - devel_generate.generate2
+  - devel.phpinfo
   - devel.menu_rebuild
   - devel.reinstall
   - devel.route_info
-  - devel.run_cron
   - devel.state_system_page
   - devel.theme_registry
-_core:
-  default_config_hash: IQjf_ytthngZTAk_MU8-74VecArWD3G5g0oEH6PM6GA

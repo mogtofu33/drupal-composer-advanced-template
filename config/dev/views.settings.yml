@@ -1,13 +1,13 @@
 ui:
   show:
-    default_display: true
+    additional_queries: false
     advanced_column: true
-    display_embed: true
+    default_display: true
+    performance_statistics: true
     preview_information: true
     sql_query:
-      where: above
       enabled: true
-    performance_statistics: true
-    additional_queries: false
-  exposed_filter_any_label: new_any
+      where: above
+    display_embed: true
   always_live_preview: false
+  exposed_filter_any_label: new_any

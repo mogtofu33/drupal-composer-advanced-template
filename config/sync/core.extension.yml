@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   admin_toolbar: 0
   admin_toolbar_links_access_filter: 0
@@ -34,6 +36,7 @@ module:
   history: 0
   image: 0
   inline_form_errors: 0
+  layout_builder: 0
   layout_discovery: 0
   link: 0
   mailsystem: 0
@@ -53,7 +56,6 @@ module:
   responsive_image: 0
   search: 0
   settings_tray: 0
-  shortcut: 0
   simplei: 0
   system: 0
   taxonomy: 0
@@ -70,5 +72,3 @@ theme:
   claro: 0
   olivero: 0
 profile: minimal
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

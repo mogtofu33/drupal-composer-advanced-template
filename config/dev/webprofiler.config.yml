@@ -1,15 +1,15 @@
+_core:
+  default_config_hash: w1Hg1sJmlqc38y_J-HQH8kLDLRH3wuEhx-Fkwz7m-SI
 purge_on_cache_clear: true
 storage: profiler.database_storage
-exclude: "/admin/*\r\n/contextual/*\r\n/toolbar/*\r\n/edit/*\r\n*.js\r\n*.css"
-ide_link: 'txmt://open?url=file://@file&line=@line'
-ide_link_remote: ''
-ide_link_local: ''
+exclude: "/contextual/*\r\n/toolbar/*\r\n/edit/*\r\n*.js\r\n*.css"
 active_toolbar_items:
   assets: assets
   blocks: blocks
   cache: cache
   database: database
   devel: devel
+  events: events
   drupal_extension: drupal_extension
   forms: forms
   performance_timing: performance_timing
@@ -20,13 +20,13 @@ active_toolbar_items:
   user: user
   views: views
   config: '0'
-  events: '0'
   http: '0'
   mail: '0'
   php_config: '0'
   state: '0'
   theme: '0'
+ide_link: 'txmt://open?url=file://@file&line=@line'
+ide_link_remote: ''
+ide_link_local: ''
 query_sort: duration
 query_highlight: 5
-_core:
-  default_config_hash: w1Hg1sJmlqc38y_J-HQH8kLDLRH3wuEhx-Fkwz7m-SI
