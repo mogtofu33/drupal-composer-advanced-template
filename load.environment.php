@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 
 /**
  * This file is included very early. See autoload.files in composer.json and
@@ -6,7 +6,7 @@
  */
 
 use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
+// use Dotenv\Exception\InvalidPathException;
 
 /**
  * Load any .env file. See /.env.example.
@@ -14,7 +14,7 @@ use Dotenv\Exception\InvalidPathException;
  * Drupal has no official method for loading environment variables and uses
  * getenv() in some places.
  */
-if (!getenv('CI', true)) {
+if (!getenv('CI', TRUE)) {
   $dotenv = Dotenv::createImmutable(__DIR__);
   $dotenv->safeLoad();
 }

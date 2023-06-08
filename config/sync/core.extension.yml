@@ -11,8 +11,6 @@ module:
   block: 0
   block_content: 0
   breakpoint: 0
-  ckeditor: 0
-  color: 0
   comment: 0
   config: 0
   config_filter: 0
@@ -44,13 +42,12 @@ module:
   media_library: 0
   menu_link_content: 0
   menu_ui: 0
+  mysql: 0
   node: 0
   options: 0
   page_cache: 0
   path: 0
   path_alias: 0
-  quickedit: 0
-  rdf: 0
   redirect: 0
   redirect_404: 0
   responsive_image: 0
