@@ -8,6 +8,6 @@ ui:
     sql_query:
       enabled: true
       where: above
-    display_embed: true
+    display_embed: false
   always_live_preview: false
-  exposed_filter_any_label: new_any
+  exposed_filter_any_label: old_any

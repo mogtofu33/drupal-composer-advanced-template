@@ -11,6 +11,7 @@ module:
   block: 0
   block_content: 0
   breakpoint: 0
+  ckeditor5: 0
   comment: 0
   config: 0
   config_filter: 0
@@ -60,6 +61,7 @@ module:
   token: 0
   toolbar: 0
   twig_tweak: 0
+  update: 0
   user: 0
   views_ui: 0
   pathauto: 1

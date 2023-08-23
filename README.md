@@ -1,9 +1,9 @@
-# Composer template for Drupal 9 projects
+# Composer template for Drupal 10 projects
 
 [![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/9.x/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/9.x-dev)
 [![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=9.x)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
-Enhanced Drupal 9 profile to kickstart a website.
+Enhanced Drupal 10 profile to kickstart a website.
 
 - [What's this?](#whats-this)
 - [What's included / added](#whats-included--added)

@@ -1,6 +1,7 @@
 <?php
 
 // @codingStandardsIgnoreFile
+// phpcs:ignoreFile
 
 /**
  * @file
@@ -26,14 +27,14 @@
  * @see http://php.net/assert
  * @see https://www.drupal.org/node/2492225
  *
- * If you are using PHP 7.0 it is strongly recommended that you set
- * zend.assertions=1 in the PHP.ini file (It cannot be changed from .htaccess
- * or runtime) on development machines and to 0 in production.
+ * It is strongly recommended that you set zend.assertions=1 in the PHP.ini file
+ * (It cannot be changed from .htaccess or runtime) on development machines and
+ * to 0 or -1 in production.
  *
  * @see https://wiki.php.net/rfc/expectations
  */
 assert_options(ASSERT_ACTIVE, TRUE);
-\Drupal\Component\Assertion\Handle::register();
+assert_options(ASSERT_EXCEPTION, TRUE);
 
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
 
@@ -51,14 +52,15 @@ $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 // When working with migrate.
 // $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
 
-// $settings['extension_discovery_scan_tests'] = TRUE;
+# $settings['extension_discovery_scan_tests'] = TRUE;
 $settings['rebuild_access'] = TRUE;
 $settings['skip_permissions_hardening'] = TRUE;
+// $settings['config_exclude_modules'] = ['devel', 'stage_file_proxy'];
 
 // Performance and logging is set by config_split, uncomment here to force.
-// $config['system.logging']['error_level'] = 'verbose';
-// $config['system.performance']['css']['preprocess'] = FALSE;
-// $config['system.performance']['js']['preprocess'] = FALSE;
+$config['system.logging']['error_level'] = 'verbose';
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
 
 // Webprofiler specific settings
 // $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);

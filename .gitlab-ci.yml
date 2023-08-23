@@ -1,5 +1,5 @@
 ################################################################################
-# Gitlab CI integration for Drupal 9+ project or module: tests, code quality,
+# Gitlab CI integration for Drupal 10+ project or module: tests, code quality,
 # linting, metrics and deploy samples.
 #
 # @project: https://gitlab.com/mog33/gitlab-ci-drupal
@@ -45,7 +45,7 @@ variables:
   # Minor Drupal version to work with.
   # @see https://hub.docker.com/r/mogtofu33/drupal-ci/tags
   CI_DRUPAL_VERSION:
-    value: "10.0"
+    value: "10.1"
     description: The version of Drupal to use for this Pipeline.
   # Relative path to the Drupal web root.
   # For a project based on Drupal this is 'web'. Can be 'docroot' or 'html' on
