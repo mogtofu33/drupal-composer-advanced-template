@@ -1,7 +1,6 @@
 # Composer template for Drupal 10 projects
 
 [![pipeline status](https://gitlab.com/mog33/drupal-composer-advanced-template/badges/9.x/pipeline.svg)](https://gitlab.com/mog33/drupal-composer-advanced-template/commits/9.x-dev)
-[![Build Status](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template.svg?branch=9.x)](https://travis-ci.org/Mogtofu33/drupal-composer-advanced-template)
 
 Enhanced Drupal 10 profile to kickstart a website.
 
@@ -13,12 +12,11 @@ Enhanced Drupal 10 profile to kickstart a website.
   - [Drupal installation](#drupal-installation)
     - [Server / remote installation](#server--remote-installation)
     - [Quick local setup with ddev](#quick-local-setup-with-ddev)
-- [Project metrics](#project-metrics)
 
 ## What's this?
 
 This project is meant to be a starting point for a developer, not a ready to
-use Drupal with functionalities.  
+use Drupal with functionalities.
 For more advanced profiles see:
 
 - [Varbase](https://www.drupal.org/project/varbase)
@@ -33,21 +31,21 @@ For more advanced profiles see:
 - Third party libraries download with [Asset packagist](https://asset-packagist.org)
 - Drupal basic configuration with Dev / Prod environment, see [Workflow readme](config/README.md)
 - Creates environment variables based on your .env file. See [.env.example](./.env.example), inspired from [drupal-project](https://github.com/drupal-composer/drupal-project)
-- Some [patches for core](./composer.json#L255)
+- Some [patches for core](./composer.json#L260)
 - A Full [Gitlab-CI support](https://gitlab.com/mog33/gitlab-ci-drupal) for build, tests, code quality, linting, metrics and deploy, see [Gitlab-CI for Drupal](https://gitlab.com/mog33/gitlab-ci-drupal)
 
 ## Install
 
 ### Requirements
 
-Require [Composer 2+](https://getcomposer.org) with [Php 7.4+](http://php.net/) and Php modules needed for composer.
+Require [Composer 2+](https://getcomposer.org) with [Php 8.1+](http://php.net/) and Php modules needed for composer.
 
 ### Grab code and libraries
 
 Get and install this project
 
 ```bash
-composer create-project mog33/drupal-composer-advanced-template:9.x drupal --stability dev --no-interaction
+composer create-project mog33/drupal-composer-advanced-template:10.x drupal --stability dev --no-interaction
 ```
 
 Set **/web** as root of your host (Apache).
@@ -77,9 +75,3 @@ Install [Ddev](https://ddev.readthedocs.io/en/latest/#installation)
 ```bash
 make install
 ```
-
-## Project metrics
-
-You want an idea of what's in this project ?
-
-Just take a peek at [Phpmetrics for this project](https://mog33.gitlab.io/-/drupal-composer-advanced-template/-/jobs/265433512/artifacts/reports/phpmetrics/index.html)

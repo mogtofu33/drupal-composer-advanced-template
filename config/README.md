@@ -7,9 +7,11 @@ More information on the offical documentation [Creating a simple split configura
 ## Summary
 
 * /dev
+>
 > * Include dev modules, contact mail and global site name and mail, performance and logging settings for dev.
 
 * /sync
+>
 > * Include main configuration, common for all environments.
 
 ## Settings and pre requisites
@@ -100,6 +102,6 @@ drush cr
 drush csim config_dev
 ```
 
-#### Check for config overrides from production, and get those back into code.
+#### Check for config overrides from production, and get those back into code
 
 ```drush cex```
