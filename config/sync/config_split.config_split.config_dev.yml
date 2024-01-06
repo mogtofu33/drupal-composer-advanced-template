@@ -7,6 +7,7 @@ label: 'Config Dev'
 description: 'Configuration for development environment.'
 weight: 0
 stackable: false
+no_patching: false
 storage: folder
 folder: ../config/dev
 module:
