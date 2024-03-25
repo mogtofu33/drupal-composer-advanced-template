@@ -2,6 +2,11 @@
  * Drupal Composer advanced template configuration common for all environments.
  */
 
+// Automatically generated include for settings managed by ddev.
+if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev.php')) {
+  include __DIR__ . '/settings.ddev.php';
+}
+
 // This specifies the default configuration sync directory.
 $settings['config_sync_directory'] = '../config/sync';
 
