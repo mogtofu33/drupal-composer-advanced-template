@@ -16,5 +16,11 @@ module:
   tracer: 0
   webprofiler: 0
 theme: {  }
-complete_list: {  }
+complete_list:
+  - automated_cron.settings
+  - dblog.settings
+  - system.cron
+  - system.logging
+  - system.performance
+  - views.settings
 partial_list: {  }
