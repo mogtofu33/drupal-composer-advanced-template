@@ -1,3 +1,8 @@
+display_extenders:
+  metatag_display_extender: '0'
+  simple_sitemap_display_extender: '0'
+  ui_styles: '0'
+sql_signature: false
 ui:
   show:
     additional_queries: false
@@ -10,4 +15,34 @@ ui:
       where: above
     display_embed: true
   always_live_preview: false
-  exposed_filter_any_label: old_any
+  exposed_filter_any_label: new_any
+field_rewrite_elements:
+  div: DIV
+  span: SPAN
+  h1: H1
+  h2: H2
+  h3: H3
+  h4: H4
+  h5: H5
+  h6: H6
+  p: P
+  header: HEADER
+  footer: FOOTER
+  article: ARTICLE
+  section: SECTION
+  aside: ASIDE
+  details: DETAILS
+  blockquote: BLOCKQUOTE
+  figure: FIGURE
+  address: ADDRESS
+  code: CODE
+  pre: PRE
+  var: VAR
+  samp: SAMP
+  kbd: KBD
+  strong: STRONG
+  em: EM
+  del: DEL
+  ins: INS
+  q: Q
+  s: S
