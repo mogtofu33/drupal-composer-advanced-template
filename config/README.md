@@ -104,4 +104,4 @@ drush config-split:import config_dev
 
 #### Check for config overrides from production, and get those back into code
 
-```drush cex```
+```drush config:diff```

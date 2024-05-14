@@ -1,10 +1,10 @@
-uuid: 88de0fd2-5a56-4e5f-b08e-48df2a07d5ac
+uuid: ecc4e84d-7105-4d16-b2a4-bada495d40e5
 langcode: en
 status: true
 dependencies: {  }
 id: config_dev
-label: 'Config Dev'
-description: 'Configuration for development environment.'
+label: 'Config dev'
+description: 'Development configuration fro Drupal.'
 weight: 0
 stackable: false
 no_patching: false
@@ -13,14 +13,10 @@ folder: ../config/dev
 module:
   devel: 0
   devel_generate: 0
-  tracer: 0
-  webprofiler: 0
 theme: {  }
-complete_list:
+complete_list: {  }
+partial_list:
   - automated_cron.settings
   - dblog.settings
-  - system.cron
   - system.logging
   - system.performance
-  - views.settings
-partial_list: {  }
