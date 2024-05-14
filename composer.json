@@ -20,6 +20,8 @@
         "bower-asset/cropper": "^4.1",
         "bower-asset/dropzone": "^5.9",
         "bower-asset/exif-js": "^2.3",
+        "bower-asset/jquery-mousewheel": "^3.1",
+        "bower-asset/jquery.easing": "^1.3",
         "bower-asset/select2": "^4.0",
         "bower-asset/slick-carousel": "^1.8",
         "composer/installers": "^2.2",
@@ -32,7 +34,7 @@
         "drupal/back_to_top": "^3.0",
         "drupal/backup_migrate": "^5.0",
         "drupal/big_pipe_sessionless": "^2.2",
-        "drupal/blazy": "^2.23",
+        "drupal/blazy": "^3.0",
         "drupal/block_styles": "^2.0",
         "drupal/bootstrap_barrio": "^5.5",
         "drupal/bootstrap_layouts": "^5.3",
@@ -53,21 +55,21 @@
         "drupal/crop": "^2.3",
         "drupal/ctools": "^4.0",
         "drupal/dropzonejs": "^2.10",
-        "drupal/ds": "^3.19",
+        "drupal/ds": "^3.21",
         "drupal/dynamic_layouts": "^2.0",
         "drupal/embed": "^1.7",
         "drupal/entity": "^1.4",
         "drupal/entity_browser": "^2.10",
         "drupal/entity_browser_block": "^1.3",
         "drupal/entity_browser_enhanced": "^2.0",
-        "drupal/entity_embed": "^1.5",
+        "drupal/entity_embed": "^1.6",
         "drupal/entity_reference_revisions": "^1.11",
         "drupal/entity_usage": "^2@BETA",
         "drupal/field_display_label": "^1.3",
         "drupal/field_group": "^3.4",
         "drupal/file_management": "^2.1",
         "drupal/flood_settings": "^2.0",
-        "drupal/focal_point": "^2.0",
+        "drupal/focal_point": "^2.1",
         "drupal/form_options_attributes": "^2.0",
         "drupal/google_analytics": "^4.0",
         "drupal/group": "^3.2",
@@ -83,15 +85,15 @@
         "drupal/media_entity_browser": "^2@ALPHA",
         "drupal/media_entity_slideshow": "^2.5",
         "drupal/menu_admin_per_menu": "^1.5",
-        "drupal/menu_block": "^1.10",
+        "drupal/menu_block": "^1.11",
         "drupal/menu_breadcrumb": "^2@ALPHA",
         "drupal/metatag": "^2.0",
         "drupal/multiple_fields_remove_button": "^2.2",
         "drupal/options_table": "^2.1",
-        "drupal/override_node_options": "^2.7",
+        "drupal/override_node_options": "^2.8",
         "drupal/paragraphs": "^1.17",
         "drupal/paragraphs_edit": "^3.0",
-        "drupal/paragraphs_previewer": "^1.8",
+        "drupal/paragraphs_previewer": "^1.9",
         "drupal/pathauto": "^1.12",
         "drupal/pathologic": "^2@ALPHA",
         "drupal/redirect": "^1.9",
@@ -99,16 +101,16 @@
         "drupal/revision_log_default": "^1.3",
         "drupal/scheduler": "^2.0",
         "drupal/scheduler_content_moderation_integration": "^2@BETA",
-        "drupal/search_api": "^1.31",
+        "drupal/search_api": "^1.34",
         "drupal/search_api_sorts": "^1.1",
         "drupal/select2": "^1.15",
         "drupal/simple_sitemap": "^4.1",
         "drupal/simplei": "^2.1",
-        "drupal/slick": "^2.10",
-        "drupal/slick_views": "^2.8",
+        "drupal/slick": "^3.0",
+        "drupal/slick_views": "^3.0",
         "drupal/smart_trim": "^2.1",
         "drupal/styleguide": "^2.1",
-        "drupal/token": "^1.13",
+        "drupal/token": "^1.14",
         "drupal/twig_tweak": "^3.3",
         "drupal/userprotect": "^1.2",
         "drupal/video_embed_field": "^2.5",
@@ -120,6 +122,7 @@
         "drupal/viewsreference": "^2@BETA",
         "drupal/webp": "^1@RC",
         "drush/drush": "^12",
+        "npm-asset/accessible360--accessible-slick": "^1.8",
         "oomphinc/composer-installers-extender": "^2.0",
         "vlucas/phpdotenv": "^5.6"
     },
@@ -202,11 +205,6 @@
                     "overwrite": false,
                     "path": "assets/settings.prod.php"
                 },
-                "[web-root]/sites/development.services.yml": {
-                    "mode": "replace",
-                    "overwrite": true,
-                    "path": "assets/development.services.yml"
-                },
                 "[web-root]/sites/example.settings.local.php": {
                     "mode": "replace",
                     "overwrite": true,
@@ -227,6 +225,15 @@
             ],
             "web/libraries/slick": [
                 "bower-asset/slick-carousel"
+            ],
+            "web/libraries/accessible-slick": [
+                "npm-asset/accessible360--accessible-slick"
+            ],
+            "web/libraries/mousewheel": [
+                "bower-asset/jquery-mousewheel"
+            ],
+            "web/libraries/easing": [
+                "bower-asset/jquery.easing"
             ],
             "web/libraries/{$name}": [
                 "type:drupal-library",
@@ -256,16 +263,10 @@
             "bower-asset",
             "npm-asset"
         ],
-        "patchLevel": {
-            "drupal/core": "-p2"
-        },
         "patches": {
             "drupal/core": {
                 "Fix Claro styles for exposed views filters wrapped in fieldsets": "https://www.drupal.org/files/issues/2021-05-31/3133639.19.patch",
                 "Let users configure the text of the \"Add media\" button": "https://www.drupal.org/files/issues/2021-10-01/3169956-34.patch"
-            },
-            "drupal/focal_point": {
-                "Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-06/3162210-17.patch"
             }
         }
     },
