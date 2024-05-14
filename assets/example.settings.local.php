@@ -30,11 +30,7 @@
  * It is strongly recommended that you set zend.assertions=1 in the PHP.ini file
  * (It cannot be changed from .htaccess or runtime) on development machines and
  * to 0 or -1 in production.
- *
- * @see https://wiki.php.net/rfc/expectations
  */
-assert_options(ASSERT_ACTIVE, TRUE);
-assert_options(ASSERT_EXCEPTION, TRUE);
 
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
 
@@ -62,6 +58,7 @@ $config['system.logging']['error_level'] = 'verbose';
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;
 
-// Webprofiler specific settings
-// $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
-// $settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';
+// Webprofiler tracer
+$settings['tracer_plugin'] = 'stopwatch_tracer';
+// Handle errors outside of webprofiler, @see https://git.drupalcode.org/project/webprofiler/-/blob/10.1.x/README.md
+// $settings['webprofiler_error_page_disabled'] = TRUE;
