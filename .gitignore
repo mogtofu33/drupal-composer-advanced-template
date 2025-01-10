@@ -15,6 +15,7 @@
 /web/sites/*/settings.php
 /web/sites/*/settings.*.php
 /web/sites/*/default.services.yml
+/web/sites/*/default.settings.php
 # Ignore .env files as they are personal.
 /.env
 

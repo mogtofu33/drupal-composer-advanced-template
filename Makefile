@@ -20,3 +20,11 @@ status:
 login: uli
 uli:
 	@ddev exec drush uli;
+
+qa:
+	@ echo '>> Run PHPcs from config file phpcs.xml.dist...'
+	@ if ddev exec vendor/bin/phpcs --colors -s -p --parallel=75 --report-full --report-summary; then exit 0; else exit 0; fi
+	@ echo '>> Run PHPMD from config file phpmd.xml.dist...'
+	@ if ddev exec vendor/bin/phpmd web/modules/custom/ --exclude 'tests/*,**/tests/*' text phpmd.xml.dist --ignore-errors-on-exit --ignore-violations-on-exit; then exit 0; else exit 0; fi
+	@ echo '>> Run PHPStan from config file phpsta.neon.dist...'
+	@ if ddev exec vendor/bin/phpstan analyse web/modules/custom; then exit 0; else exit 0; fi
