@@ -1,0 +1,6 @@
+bootstrap_icons:
+  version: VERSION
+  css:
+    component:
+      # CDN example, could use a local downloaded file.
+      https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css: {}

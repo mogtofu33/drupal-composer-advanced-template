@@ -1,0 +1,46 @@
+# Recommended sprite version, only one file.
+bootstrap:
+  enabled: true
+  label: "Bootstrap"
+  description: "Bootstrap icons from SVG Sprite single source."
+  links:
+    - https://icons.getbootstrap.com/#usage
+  version: 1.13.1
+  license:
+    name: MIT
+    url: https://github.com/twbs/icons/blob/main/LICENSE
+    gpl-compatible: true
+  extractor: svg_sprite
+  config:
+    sources:
+      - /libraries/bootstrap-icons/bootstrap-icons.svg
+  settings:
+    size:
+      title: "Size"
+      type: "integer"
+      default: 32
+    color:
+      title: "Color"
+      type: "string"
+      format: "color"
+    alt:
+      title: "Alt text"
+      type: "string"
+      description: "Accessibility alternative text, leave empty for decorative icon."
+    class:
+      title: "Class"
+      type: "string"
+  template: >-
+    <svg
+      class="bi bi-{{ icon_id|clean_class }} {{ class }}"
+      width="{{ size|default(32) }}"
+      height="{{ size|default(32) }}"
+      fill="{{ color|default('currentColor') }}"
+      {% if alt is empty %}
+        aria-hidden="true"
+      {% else %}
+        aria-label="{{ alt }}"
+      {% endif %}
+    >
+      <use href="{{ source }}#{{ icon_id }}"/>
+    </svg>

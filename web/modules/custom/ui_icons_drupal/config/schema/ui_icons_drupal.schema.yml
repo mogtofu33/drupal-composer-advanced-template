@@ -1,0 +1,117 @@
+# Schema example to keep Drupal configuration valid when saving settings, like
+# with Field API.
+ui_icons.icon_pack_options.core:
+  type: mapping
+  label: 'Icons SVG Sprite settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    width:
+      type: integer
+      label: 'Width'
+      constraints:
+        Range:
+          min: 0
+    height:
+      type: integer
+      label: 'Height'
+      constraints:
+        Range:
+          min: 0
+    alt:
+      type: string
+      label: 'Alt text'
+    title:
+      type: string
+      label: 'Semantic title'
+
+ui_icons.icon_pack_options.navigation:
+  type: mapping
+  label: 'Icons SVG settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    size:
+      type: integer
+      label: 'Size'
+      constraints:
+        Range:
+          min: 0
+    class:
+      type: string
+      label: 'Custom class'
+
+ui_icons.icon_pack_options.olivero:
+  type: mapping
+  label: 'Icons SVG files in img settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    width:
+      type: integer
+      label: 'Width'
+      constraints:
+        Range:
+          min: 0
+    height:
+      type: integer
+      label: 'Height'
+      constraints:
+        Range:
+          min: 0
+    alt:
+      type: string
+      label: 'Alt text'
+    title:
+      type: string
+      label: 'Semantic title'
+
+ui_icons.icon_pack_options.claro:
+  type: mapping
+  label: 'Icons from CSS name settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    width:
+      type: integer
+      label: 'Width'
+      constraints:
+        Range:
+          min: 0
+    height:
+      type: integer
+      label: 'Height'
+      constraints:
+        Range:
+          min: 0
+    alt:
+      type: string
+      label: 'Alt text'
+    title:
+      type: string
+      label: 'Semantic title'
+
+ui_icons.icon_pack_options.starterkit:
+  type: mapping
+  label: 'Icons from CSS name settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    width:
+      type: integer
+      label: 'Width'
+      constraints:
+        Range:
+          min: 0
+    height:
+      type: integer
+      label: 'Height'
+      constraints:
+        Range:
+          min: 0
+    alt:
+      type: string
+      label: 'Alt text'
+    title:
+      type: string
+      label: 'Semantic title'

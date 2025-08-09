@@ -1,0 +1,21 @@
+ui_icons.icon_pack_options.bootstrap:
+  type: mapping
+  label: 'Icons SVG Sprite settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    color:
+      type: string
+      label: 'Color'
+    size:
+      type: integer
+      label: 'Size'
+      constraints:
+        Range:
+          min: 0
+    alt:
+      type: string
+      label: 'Alt text'
+    class:
+      type: string
+      label: 'Custom class'
