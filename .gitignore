@@ -62,3 +62,4 @@ Gemfile.lock
 /logs
 /cache
 /drupal-debug.yml
+/dump/

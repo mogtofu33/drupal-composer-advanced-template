@@ -1,0 +1,211 @@
+# Example to allow Drupal core Icons to be available.
+core:
+  enabled: true
+  label: "Drupal"
+  description: "Drupal core icons available within Drupal."
+  version: 11.x
+  license:
+    name: GPL2-or-later
+    url: https://api.drupal.org/api/drupal/core%21LICENSE.txt/11.x
+    gpl-compatible: true
+  extractor: path
+  config:
+    sources:
+      # From https://www.drupal.org/about/media-kit/logos
+      - https://www.drupal.org/files/drupal-wordmark.png
+      - https://www.drupal.org/files/EL_blue_RGB%281%29.png
+      - https://www.drupal.org/files/Wordmark2_blue_RGB%281%29.png
+      - https://www.drupal.org/files/Wordmark_blue_RGB.png
+      - https://www.drupal.org/files/D10-logo.png
+      - https://www.drupal.org/files/druplicon-small.png
+      # External PHP logo.
+      - https://www.php.net/images/php8/logo_php8.svg
+      - https://www.php.net/images/php8/logo_php8_3.svg
+      # Drupal core misc icons.
+      - /core/{group}/logo/*.svg
+      - /core/{group}/icons/*/*.svg
+      # CKEditor5 icons.
+      - /core/{group}/ckeditor5/icons/*.svg
+      - /core/{group}/ckeditor5/js/ckeditor5_plugins/drupalMedia/theme/icons/*.svg
+      - /core/{group}/image/images/error.svg
+      - /core/{group}/image/images/upload.svg
+      # Umami demo icons.
+      - /core/profiles/demo_umami/themes/{group}/components/badge/icons/*.svg
+      - /core/profiles/demo_umami/themes/{group}/images/svg/*.svg
+
+  settings:
+    # Because we can have wild icons not with a square ratio, do not use size.
+    width:
+      title: "Width"
+      description: "Set a width for this icon."
+      type: "integer"
+      default: 32
+    height:
+      title: "Height"
+      description: "Set a height for this icon."
+      type: "integer"
+      default: 32
+    alt:
+      title: "Alt text"
+      type: "string"
+      description: "Accessibility alternative text, leave empty for decorative icon."
+    title:
+      title: "Semantic title"
+      type: "string"
+      description: "If this icon convey meaning, provide text-based alternatives, leave empty for decorative icon."
+  template: >-
+    <img
+      class="icon icon-{{ icon_id|clean_class }}"
+      src="{{ source }}"
+      width="{{ width|default(32) }}"
+      height="{{ height|default(32) }}"
+      alt="{{ alt }}"
+      {% if alt is empty %}
+        role="presentation"
+        aria-hidden="true"
+      {% elseif title %}
+        title="{{ title }}"
+      {% endif %}
+    >
+
+navigation:
+  enabled: true
+  label: "Drupal Navigation"
+  description: "Drupal core icons available within Drupal Navigation module."
+  version: 11.x
+  license:
+    name: GPL2-or-later
+    url: https://api.drupal.org/api/drupal/core%21LICENSE.txt/11.x
+    gpl-compatible: true
+  extractor: svg
+  config:
+    sources:
+      - /core/modules/navigation/assets/icons/*.svg
+      - /core/modules/navigation/components/toolbar-button/assets/*.svg
+  settings:
+    size:
+      title: "Size"
+      description: "Set a size for this icon."
+      type: "integer"
+      default: 32
+    class:
+      title: "Class"
+      type: "string"
+  template: >-
+    <svg{{
+        attributes
+          .addClass('icon')
+          .addClass(class)
+          .setAttribute('viewBox', attributes.viewBox|default('0 0 32 32'))
+          .setAttribute('width', size|default('32'))
+          .setAttribute('height', size|default('32'))
+          .setAttribute('aria-hidden', 'true')
+          .setAttribute('role', 'presentation')
+    }}>
+      {{ content }}
+    </svg>
+
+olivero:
+  enabled: true
+  label: "Drupal Olivero"
+  description: "Drupal core icons available within Drupal theme Olivero."
+  version: 11.x
+  license:
+    name: GPL2-or-later
+    url: https://api.drupal.org/api/drupal/core%21LICENSE.txt/11.x
+    gpl-compatible: true
+  extractor: path
+  config:
+    sources:
+      - /core/themes/olivero/images/*.svg
+  settings:
+    # Because we can have wild icons not with a square ratio, do not use size.
+    width:
+      title: "Width"
+      description: "Set a width for this icon."
+      type: "integer"
+      default: 32
+    height:
+      title: "Height"
+      description: "Set a height for this icon."
+      type: "integer"
+      default: 32
+    alt:
+      title: "Alt text"
+      type: "string"
+      description: "Accessibility alternative text, leave empty for decorative icon."
+    title:
+      title: "Semantic title"
+      type: "string"
+      description: "If this icon convey meaning, provide text-based alternatives, leave empty for decorative icon."
+  template: >-
+    <img
+      class="icon icon-{{ icon_id|clean_class }}"
+      src="{{ source }}"
+      width="{{ width|default(32) }}"
+      height="{{ height|default(32) }}"
+      alt="{{ alt }}"
+      {% if alt is empty %}
+        role="presentation"
+        aria-hidden="true"
+      {% elseif title %}
+        title="{{ title }}"
+      {% endif %}
+    >
+
+claro:
+  enabled: true
+  label: "Drupal Claro"
+  description: "Drupal core icons available within Drupal theme Claro."
+  version: 11.x
+  license:
+    name: GPL2-or-later
+    url: https://api.drupal.org/api/drupal/core%21LICENSE.txt/11.x
+    gpl-compatible: true
+  extractor: path
+  config:
+    sources:
+      # Same icon id in color named folders are not supported, pick grey version
+      # and cherry pick some icons. Order is important for icon discovery, lower
+      # with some icon_id (filename) will override previous.
+      - /core/themes/claro/images/icons/003ecc/*.svg
+      - /core/themes/claro/images/icons/000f33/*.svg
+      - /core/themes/claro/images/icons/82828c/circle.svg
+      - /core/themes/claro/images/icons/545560/*.svg
+      - /core/themes/claro/images/icons/e0ac00/*.svg
+      - /core/themes/claro/images/icons/e34f4f/*.svg
+      - /core/themes/claro/images/icons/868686/*.svg
+  settings:
+    # Because we can have wild icons not with a square ratio, do not use size.
+    width:
+      title: "Width"
+      description: "Set a width for this icon."
+      type: "integer"
+      default: 32
+    height:
+      title: "Height"
+      description: "Set a height for this icon."
+      type: "integer"
+      default: 32
+    alt:
+      title: "Alt text"
+      type: "string"
+      description: "Accessibility alternative text, leave empty for decorative icon."
+    title:
+      title: "Semantic title"
+      type: "string"
+      description: "If this icon convey meaning, provide text-based alternatives, leave empty for decorative icon."
+  template: >-
+    <img
+      class="icon icon-{{ icon_id|clean_class }}"
+      src="{{ source }}"
+      width="{{ width|default(32) }}"
+      height="{{ height|default(32) }}"
+      alt="{{ alt }}"
+      {% if alt is empty %}
+        role="presentation"
+        aria-hidden="true"
+      {% elseif title %}
+        title="{{ title }}"
+      {% endif %}
+    >

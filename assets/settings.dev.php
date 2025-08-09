@@ -15,8 +15,8 @@ $settings['simple_environment_indicator'] = 'DarkGreen Dev';
 $settings['simple_environment_anonymous'] = TRUE;
 
 // Webprofiler tracer
-$settings['tracer_plugin'] = 'stopwatch_tracer';
-// Handle errors outside of webprofiler, @see https://git.drupalcode.org/project/webprofiler/-/blob/10.1.x/README.md
+$settings['tracer_plugin'] = \Drupal\webprofiler\Plugin\Tracer\StopwatchTracer::class;
+// Handle errors outside of webprofiler, @see https://git.drupalcode.org/project/webprofiler/-/blob/11.0.x/README.md
 // $settings['webprofiler_error_page_disabled'] = TRUE;
 
 // Drupal default dev settings from example.settings.local.php.

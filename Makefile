@@ -1,6 +1,10 @@
 .PHONY: install nuke status
 
 install:
+	@ddev start -y
+	@ddev composer install -v
+
+install-site:
 	@if [ ! -f ./.env ]; then cp ./.env.example ./.env; fi;
 	@sed -i "s/# SETTINGS_ENVIRONMENT=\"dev\"/SETTINGS_ENVIRONMENT=\"dev\"/g" ./.env;
 	@sed -i "s/SETTINGS_ENVIRONMENT=\"prod\"/# SETTINGS_ENVIRONMENT=\"prod\"/g" ./.env;
@@ -8,6 +12,22 @@ install:
 	@ddev start -y
 	@ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
 	@echo "Login with: admin / password at https://drupal-tpl.ddev.site/user/login"
+	@echo "Or use this direct link:"
+	@ddev drush uli
+
+install-from-config:
+	@ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
+	@ddev drush uli
+
+quick-dump:
+	@ ddev drush sqlq "TRUNCATE TABLE cachetags; TRUNCATE TABLE cache_access_policy; \
+		TRUNCATE TABLE cache_bootstrap; TRUNCATE TABLE cache_config; TRUNCATE TABLE cache_container; \
+		TRUNCATE TABLE cache_data; TRUNCATE TABLE cache_default; TRUNCATE TABLE cache_entity; \
+		TRUNCATE TABLE cache_menu; TRUNCATE TABLE cache_toolbar; TRUNCATE TABLE watchdog;"
+	@ ddev drush sql:dump --result-file=/var/www/html/dump/dump.sql
+
+quick-restore:
+	@ ddev drush sql:drop -y && ddev drush sql:query --file=/var/www/html/dump/dump.sql && ddev drush uli
 
 nuke:
 	@composer nuke
