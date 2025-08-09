@@ -1,6 +1,10 @@
 .PHONY: install nuke status
 
 install:
+	@ddev start -y
+	@ddev composer install -v
+
+install-site:
 	@if [ ! -f ./.env ]; then cp ./.env.example ./.env; fi;
 	@sed -i "s/# SETTINGS_ENVIRONMENT=\"dev\"/SETTINGS_ENVIRONMENT=\"dev\"/g" ./.env;
 	@sed -i "s/SETTINGS_ENVIRONMENT=\"prod\"/# SETTINGS_ENVIRONMENT=\"prod\"/g" ./.env;
@@ -8,6 +12,8 @@ install:
 	@ddev start -y
 	@ddev exec drush -y si --existing-config --account-name=admin --account-pass=password
 	@echo "Login with: admin / password at https://drupal-tpl.ddev.site/user/login"
+	@echo "Or use this direct link:"
+	@echo ddev drush uli
 
 nuke:
 	@composer nuke
